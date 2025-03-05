@@ -5,7 +5,7 @@
   import 'package:image_picker/image_picker.dart';
   import 'package:flutter/material.dart';
   import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:tour_guide/services/components/themes/light_theme.dart';
+import 'package:tour_guide/core/themes/darkTheme.dart';
 
   class ImagePickerHelper{
     File? image;

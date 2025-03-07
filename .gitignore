@@ -44,5 +44,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-#assets/model
-#assets/labels.txt
+assets/model
+assets/labels.txt

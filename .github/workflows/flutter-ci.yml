@@ -19,11 +19,16 @@ jobs:
           channel: 'stable'
           cache: true
 
+      - name: Clean project
+        run: flutter clean
+
       - name: Install dependencies
         run: flutter pub get
 
       - name: Build APK
-        run: flutter build apk
+        run: |
+          export GRADLE_OPTS="-Xmx4g -XX:MaxMetaspaceSize=512m"
+          flutter build apk --no-shrink
 
       - name: Upload APK
         uses: actions/upload-artifact@v4

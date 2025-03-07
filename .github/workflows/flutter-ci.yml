@@ -19,12 +19,6 @@ jobs:
           channel: 'stable'
           cache: true
 
-
-      - name: Downgrade AGP version
-        run: |
-          sed -i 's/com.android.tools.build:gradle:.*$/com.android.tools.build:gradle:7.4/' android/build.gradle
-          sed -i 's/distributions\/gradle-.*-all.zip/distributions\/gradle-7.5-all.zip/' android/gradle/wrapper/gradle-wrapper.properties
-
       - name: Install dependencies
         run: flutter pub get
 

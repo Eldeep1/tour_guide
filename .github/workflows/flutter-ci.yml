@@ -19,14 +19,12 @@ jobs:
           channel: 'stable'
           cache: true
 
+      - name: Modify build.gradle to add namespace
+        run: |
+          sed -i '/^android {/a\    namespace "com.depogramming.tour_guide"' android/app/build.gradle
+
       - name: Install dependencies
         run: flutter pub get
-
-#      - name: Analyze project source
-#        run: flutter analyze
-#
-#      - name: Run tests
-#        run: flutter test
 
       - name: Build APK
         run: flutter build apk
@@ -36,7 +34,7 @@ jobs:
         with:
           name: release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
-          retention-days: 5  # Specify how long to keep the artifact
+          retention-days: 5
 
   deploy:
     needs: build

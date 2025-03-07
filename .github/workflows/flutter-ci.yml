@@ -19,13 +19,11 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Modify build.gradle to add namespace
-        run: |
-          sed -i '/^android {/a\    namespace "com.depogramming.tour_guide"' android/app/build.gradle
 
       - name: Downgrade AGP version
         run: |
-          sed -i 's/com.android.tools.build:gradle:.*$/com.android.tools.build:gradle:7.3.1/' android/build.gradle
+          sed -i 's/com.android.tools.build:gradle:.*$/com.android.tools.build:gradle:7.4/' android/build.gradle
+          sed -i 's/distributions\/gradle-.*-all.zip/distributions\/gradle-7.5-all.zip/' android/gradle/wrapper/gradle-wrapper.properties
 
       - name: Install dependencies
         run: flutter pub get

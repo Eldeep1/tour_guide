@@ -1,11 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tour_guide/features/Chat/shared/providers/new_messages_provider.dart';
+import 'package:tour_guide/features/Chat/shared/widgets/send_message_form_field_builder.dart';
 
-Widget newChatPageBodyBuilder(context){
+Widget newChatPageBodyBuilder(context,String header){
 
-  return SizedBox(
-    height: MediaQuery.sizeOf(context).height,
-    child: Center(
-      child: Text("What Can I Help With",),
-    ),
-  );
+  return Consumer(
+    builder: (BuildContext context, WidgetRef ref, Widget? child) {
+      final newMessages = ref.watch(newMessagesProvider);
+      final messageProvider = ref.read(newMessagesProvider.notifier); // Read for calling methods
+
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            if(newMessages.isEmpty)
+            Expanded(
+              child: Center(
+                child: Text(header,),
+              ),
+            ),
+            if(newMessages.isNotEmpty)
+              Expanded(
+                child: SingleChildScrollView(
+                  controller: messageProvider.pageScrollController,
+                  child: Column(
+                    children: [
+                      ...newMessages,
+                    ],
+                  
+                  ),
+                ),
+              ),
+            SendMessageFormFieldBuilder(),
+
+          ],
+        ),
+      );
+    },);
 }

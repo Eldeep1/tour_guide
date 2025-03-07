@@ -1,49 +1,49 @@
-#name: Flutter CI/CD
+name: Flutter CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.29'
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+#      - name: Analyze project source
+#        run: flutter analyze
 #
-#on:
-#  push:
-#    branches:
-#      - main
-#
-#jobs:
-#  build:
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - uses: actions/checkout@v4
-#
-#      - name: Setup Flutter
-#        uses: subosito/flutter-action@v2
-#        with:
-#          flutter-version: '3.27'
-#          channel: 'stable'
-#          cache: true
-#
-#      - name: Install dependencies
-#        run: flutter pub get
-#
-##      - name: Analyze project source
-##        run: flutter analyze
-##
-##      - name: Run tests
-##        run: flutter test
-#
-#      - name: Build APK
-#        run: flutter build apk
-#
-#      - name: Upload APK
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: release-apk
-#          path: build/app/outputs/flutter-apk/app-release.apk
-#          retention-days: 5  # Specify how long to keep the artifact
-#
-#  deploy:
-#    needs: build
-#    runs-on: ubuntu-latest
-#    if: github.ref == 'refs/heads/main'
-#
-#    steps:
-#      - uses: actions/download-artifact@v4
-#        with:
-#          name: release-apk
+#      - name: Run tests
+#        run: flutter test
+
+      - name: Build APK
+        run: flutter build apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 5  # Specify how long to keep the artifact
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-apk

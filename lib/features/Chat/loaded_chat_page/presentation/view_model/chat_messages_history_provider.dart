@@ -27,19 +27,19 @@ class ChatMessagesHistory extends FamilyAsyncNotifier<List<ChatModel>,int>{
   Future<void> sendMessage(String message) async {
     ChatModel chatModel = ChatModel(message, "testinggg");
 
-    // 1️⃣ Keep the old messages and optimistically add the new one
+    // 1️ Keep the old messages and optimistically add the new one
     state = AsyncData([
       ...(state.value ?? []),
       chatModel, // Add new message without triggering a loading state
     ]);
 
     try {
-      // 2️⃣ Simulate sending message (backend request)
+      // Simulate sending message (backend request)
       await Future.delayed(Duration(seconds: 3));
 
-      // 3️⃣ If the message is successfully sent, we can do nothing (state is already updated)
+      //  If the message is successfully sent, we can do nothing (state is already updated)
     } catch (e) {
-      // 4️⃣ If sending fails, rollback the message
+      // If sending fails, rollback the message
       state = AsyncData(state.value ?? []);
     }
   }

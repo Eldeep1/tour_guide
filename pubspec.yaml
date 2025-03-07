@@ -46,8 +46,10 @@ dependencies:
   camera: ^0.11.1
 #  image: ^4.5.2
   flutter_vision: ^1.1.4
+  image: ^4.5.3
+#  camerawesome: ^2.1.0
 #  ultralytics_yolo: ^0.0.3
-
+#  camerax: ^0.1.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

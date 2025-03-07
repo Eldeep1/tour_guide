@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tour_guide/core/themes/darkTheme.dart';
 import 'package:tour_guide/core/utils/Assets/assets.dart';
-import 'package:tour_guide/features/ObjectDetection/presentation/view/object_detection_page.dart';
+import 'package:tour_guide/features/object_detection_page/presentation/view/object_detection_page_beta.dart';
 
 PreferredSizeWidget appBarBuilder (context){
   return AppBar(
@@ -27,7 +28,7 @@ PreferredSizeWidget appBarBuilder (context){
         tooltip: "new chat",
         onPressed: () async {
 
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ObjectDetectionPage(),));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => ProviderScope(child: ObjectDetectionPage()),));
         },
         icon: Icon(
           Icons.camera_alt_outlined,

@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tour_guide/constants.dart';
 import 'package:tour_guide/core/themes/darkTheme.dart';
 import 'package:tour_guide/features/Authentication/register/presentation/view/register_page_view.dart';
 import 'package:tour_guide/features/Authentication/widgets/main_button_builder.dart';
@@ -18,7 +19,7 @@ Widget pageBodyBuilder(context,itemsWidth)=>Padding(
       txtHeader(context,"Sign in","Log in to your account"),
       formFieldBuilder("Email",width: itemsWidth),
       formFieldBuilder("password",width: itemsWidth),
-      mainButtonBuilder("Sign in",context, (){Navigator.push(context, MaterialPageRoute(builder: (context) => ProviderScope(child: NewChatPageView()),));}),
+      mainButtonBuilder("Sign in",context, (){Navigator.push(context, MaterialPageRoute(builder: (context) => ProviderScope(child: NewChatPageView(header: newChatMessage,)),));}),
       textLinkWidget("New Tourist?"," Create New Account",(){
         Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage(),));
       },context),

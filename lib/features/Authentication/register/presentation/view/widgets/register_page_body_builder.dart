@@ -9,26 +9,28 @@ import 'package:tour_guide/features/Authentication/widgets/txt_header.dart';
 
 Widget signUpPageBodyBuilder(context, itemsWidth)=>Padding(
   padding: const EdgeInsets.all(screenPadding),
-  child: Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      txtHeader(context,"Sign up","Create a new account"),
-
-
-      formFieldBuilder("Name",width: itemsWidth),
-      formFieldBuilder("Email",width: itemsWidth),
-      formFieldBuilder("Phone",width: itemsWidth),
-      formFieldBuilder("password",width: itemsWidth),
-
-      Row(
-        children: [
-          Checkbox(value:true , onChanged: (value){}),
-          textLinkWidget("I agree the ", "Terms and Conditions", (){}, context),
-        ],
-      ),
-      mainButtonBuilder("Sign Up",context,(){Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPageView(),));}),
-
-    ],
+  child: SingleChildScrollView(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        txtHeader(context,"Sign up","Create a new account"),
+    
+    
+        formFieldBuilder("Name",width: itemsWidth),
+        formFieldBuilder("Email",width: itemsWidth),
+        formFieldBuilder("Phone",width: itemsWidth),
+        formFieldBuilder("password",width: itemsWidth),
+    
+        Row(
+          children: [
+            Checkbox(value:true , onChanged: (value){}),
+            textLinkWidget("I agree the ", "Terms and Conditions", (){}, context),
+          ],
+        ),
+        mainButtonBuilder("Sign Up",context,(){Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPageView(),));}),
+    
+      ],
+    ),
   ),
 );

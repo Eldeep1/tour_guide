@@ -23,6 +23,10 @@ jobs:
         run: |
           sed -i '/^android {/a\    namespace "com.depogramming.tour_guide"' android/app/build.gradle
 
+      - name: Downgrade AGP version
+        run: |
+          sed -i 's/com.android.tools.build:gradle:.*$/com.android.tools.build:gradle:7.3.1/' android/build.gradle
+
       - name: Install dependencies
         run: flutter pub get
 

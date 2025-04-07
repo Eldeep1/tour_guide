@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:tour_guide/core/themes/darkTheme.dart';
@@ -52,16 +53,18 @@ Widget answerMessageBuilder({required String message, bool isLoading = false}) {
     },
   );
 }
-Widget responseMessageContainer(context,String message){
+Widget responseMessageContainer(context,String message,{bool error=false}){
   final messageStyle = Theme.of(context).textTheme.bodyMedium;
 
   return Container(
-    decoration: messageDecoration(color: answerMessageColor),
+    decoration: messageDecoration(color:error?Colors.red: answerMessageColor),
     child: Padding(
       padding: messagePadding,
-      child: Text(
-        message,
-        style: messageStyle,
+      child: MarkdownBody(
+        data: message,
+        styleSheet: MarkdownStyleSheet(
+          h3: messageStyle!.copyWith(fontWeight: FontWeight.bold),
+        ),
       ),
     ),
   );
@@ -123,5 +126,29 @@ Widget promptMessageContainer(context, String message){
         style: Theme.of(context).textTheme.titleMedium,
       ),
     ),
+  );
+}
+
+Widget errorMessageBuilder(String message) {
+  return LayoutBuilder(
+    builder: (context, constraints) {
+      // Extract common container decoration
+
+      return Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              alignment: AlignmentDirectional.topStart,
+              width: (constraints.maxWidth / 2) + 30,
+
+                   child: responseMessageContainer(context,message,error: true),
+            ),
+          ),
+        ],
+      );
+    },
   );
 }

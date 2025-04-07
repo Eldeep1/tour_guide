@@ -25,7 +25,7 @@ PreferredSizeWidget appBarBuilder (context){
     }),
     actions: [
       IconButton(
-        tooltip: "new chat",
+        tooltip: "Start Detection",
         onPressed: () async {
 
           Navigator.push(context, MaterialPageRoute(builder: (context) => ProviderScope(child: ObjectDetectionPage()),));

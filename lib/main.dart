@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tour_guide/core/themes/darkTheme.dart';
 import 'package:tour_guide/features/Authentication/login/presentation/view/login_page_view.dart';
+import 'package:tour_guide/features/Chat/new_chat_page/presentation/view/new_chat_page_view.dart';
 
 
 void main() {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'AI Tour Guide',
       theme: lightTheme,
       debugShowCheckedModeBanner: false,
-      home: ProviderScope(child:  LoginPageView()),
+      home: ProviderScope(child:  NewChatPageView(header: "Ask About Anything")),
     );
   }
 }

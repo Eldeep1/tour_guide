@@ -3,16 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tour_guide/core/themes/darkTheme.dart';
 import 'package:tour_guide/features/Chat/shared/providers/new_messages_provider.dart';
+import 'package:tour_guide/features/Chat/shared/providers/tmp_shit.dart';
 
 
 class SendMessageFormFieldBuilder extends StatelessWidget {
-  const SendMessageFormFieldBuilder({super.key});
+   SendMessageFormFieldBuilder({super.key,this.talkingAbout});
 
+
+  String? talkingAbout;
   @override
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, child) {
-        final newMessage=ref.read(newMessagesProvider.notifier);
+        final newMessage=ref.read(tmpNewMessagesProvider.notifier);
         return SizedBox(
           height: 100,
           child: TextFormField(
@@ -32,7 +35,7 @@ class SendMessageFormFieldBuilder extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {
-                        newMessage.sendMessage();
+                        newMessage.sendMessage(talkingAbout);
                       },
                       icon: CircleAvatar(
                         backgroundColor: mainColor,

@@ -49,7 +49,11 @@ Widget detectionButtonsRawBuilder(modelNotifier,context)=>Positioned(
           Text("No Monuments Detected"),
           if(!modelNotifier.isDetecting&&modelNotifier.kingName.isNotEmpty&&modelNotifier.kingName.compareTo("firstTime")!=0)
           ElevatedButton(onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ProviderScope(child: NewChatPageView(header: "Chatting About ${modelNotifier.kingName}"))));
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => ProviderScope(child: NewChatPageView(header: "Chatting About ${modelNotifier.kingName}"))),
+              (Route<dynamic> route) => false, // This removes all previous routes
+            );
           }, child: Text("Chat About ${modelNotifier.kingName}")),
         ],
       )

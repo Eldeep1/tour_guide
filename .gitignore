@@ -12,6 +12,20 @@
 .swiftpm/
 migrate_working_dir/
 
+# Native Android NDK builds
+**/.cxx/
+**/CMakeFiles/
+**/CMakeCache.txt
+**/cmake-build-debug/
+**/cmake-build-release/
+**/build.ninja
+**/*.ninja
+**/compile_commands.json
+**/*.so
+**/*.o
+**/*.bin
+**/*.json
+
 # IntelliJ related
 *.iml
 *.ipr

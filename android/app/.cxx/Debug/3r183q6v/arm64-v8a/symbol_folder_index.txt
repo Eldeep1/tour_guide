@@ -1,1 +1,0 @@
-O:\android_projects\tour_guide\build\app\intermediates\cxx\Debug\3r183q6v\obj\arm64-v8a

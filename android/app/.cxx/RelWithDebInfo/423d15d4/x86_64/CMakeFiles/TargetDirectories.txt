@@ -1,2 +1,0 @@
-O:/android_projects/tour_guide/android/app/.cxx/RelWithDebInfo/423d15d4/x86_64/CMakeFiles/edit_cache.dir
-O:/android_projects/tour_guide/android/app/.cxx/RelWithDebInfo/423d15d4/x86_64/CMakeFiles/rebuild_cache.dir

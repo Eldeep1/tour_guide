@@ -65,8 +65,24 @@ class ServerFailure extends Failure {
           final data = e.response?.data;
 
           String message = "Something went wrong.";
-          if (data is Map && data.containsKey('detail')) {
-            message = data['detail'].toString();
+
+          if (data is Map) {
+            if (data.containsKey('detail')) {
+              message = data['detail'].toString();
+            } else if (data.containsKey('error')) {
+              final errorData = data['error'];
+              if (errorData is Map) {
+                message = errorData.entries.map((e) {
+                  final field = e.key;
+                  final messages = (e.value as List).join(", ");
+                  return "$field: $messages";
+                }).join("\n");
+              } else {
+                message = errorData.toString();
+              }
+            } else if (data.containsKey('message')) {
+              message = data['message'].toString();
+            }
           } else if (data is String) {
             message = data;
           }
@@ -89,6 +105,7 @@ class ServerFailure extends Failure {
         } catch (_) {
           return ServerFailure("Failed to parse server error.", type: ServerErrorType.unknown);
         }
+
 
       case DioExceptionType.unknown:
       return ServerFailure("An unexpected error occurred.", type: ServerErrorType.unknown);

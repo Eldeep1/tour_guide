@@ -8,9 +8,10 @@ LoginResponse({
 });
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
+    final data = json['data'] ?? json; // fallback if data is already the inner map
     return LoginResponse(
-      accessToken: json['access'],
-      refreshToken: json['refresh'],
+      accessToken: data['access'],
+      refreshToken: data['refresh'],
     );
   }
 }

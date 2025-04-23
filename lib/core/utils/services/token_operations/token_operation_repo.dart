@@ -1,6 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:ehgezly/core/errors/failure.dart';
-import 'package:ehgezly/features/Authentication/login/data/models/login_response.dart';
+import 'package:tour_guide/core/errors/failure.dart';
+import 'package:tour_guide/features/Authentication/login/data/models/login_response.dart';
+import 'package:tour_guide/features/Chat/chat_headers/data/chat_headers_model.dart';
+
 
 abstract class TokenOperation{
   //1- save token to device
@@ -17,7 +19,7 @@ abstract class TokenOperation{
   });
 
   //is that even useful?
-  Future<Either<Failure,void>> verifyToken({
+  Future<Either<Failure,ChatHeaders>> verifyToken({
     required LoginResponse loginResponse,
   });
 

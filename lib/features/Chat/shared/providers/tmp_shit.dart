@@ -1,10 +1,11 @@
 import 'dart:async';
 
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tour_guide/constants.dart';
-import 'package:tour_guide/core/utils/network/api_service.dart';
+import 'package:tour_guide/core/utils/services/network/api_service.dart';
 import 'package:tour_guide/features/Chat/shared/model/shit_model.dart';
 
 import '../widgets/messages.dart';
@@ -16,7 +17,7 @@ class TmpMessageProvider extends Notifier<List<Widget>> {
   bool receiving = false;
 
   String chatHeader="";
-   ApiService apiService=ApiService();
+   ApiService apiService=ApiService(Dio());
 
   TextEditingController chatFormController = TextEditingController();
   ScrollController pageScrollController = ScrollController();
@@ -99,13 +100,11 @@ String? sessionId;
   }
 
   Future<void> receiveMessage(String? response) async {
-
       final newMessages = [...state];
       newMessages[newMessages.length - 1] = answerMessageBuilder(
           message:"$response"
       ); // Replace last message
       state = newMessages;
       receiving = false;
-
   }
 }

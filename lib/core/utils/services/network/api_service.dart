@@ -1,24 +1,28 @@
 import 'package:dio/dio.dart';
-import 'package:tour_guide/constants.dart';
+import 'package:tour_guide/core/utils/api_end_points.dart';
 
 class ApiService {
-  final Dio _dio=Dio();
+  final Dio _dio;
+  Map<String,dynamic> requestHeaders={
+    "Content-Type": "application/json",
+  };
+  final baseUrl = ApiEndpoints.baseUrl;
 
-  // change it with your api url, when getting it
-  final baseUrl = apiLink;
+  ApiService(this._dio);
 
-  // ApiService(this._dio);
 
   Future<Map<String, dynamic>> get({
     required String endPoint,
     Map<String,dynamic>? parameters,
-    Map<String,dynamic>? headers
-  }) async {
-    var response = await _dio.get(
-        '$baseUrl$endPoint',
-        queryParameters: parameters,
-        options: Options(headers: headers,),
-    );
+    String? bearerToken,
+    Map<String,dynamic>? headers}) async {
+    if (bearerToken != null) {
+      requestHeaders["Authorization"] = "Bearer $bearerToken";
+    }
+    if(headers!=null) {
+      requestHeaders.addAll(headers);
+    }
+    var response = await _dio.get('$baseUrl$endPoint',queryParameters: parameters,options: Options(headers: requestHeaders));
     return response.data;
   }
 
@@ -27,9 +31,7 @@ class ApiService {
     Map<String,dynamic>? parameters,
     Map<String,dynamic>? headers
   }) async {
-    Map<String,dynamic> requestHeaders={
-      "Content-Type": "application/json",
-    };
+
     if(headers!=null) {
       requestHeaders.addAll(headers);
     }
@@ -38,8 +40,8 @@ class ApiService {
       data: parameters,
       options: Options(headers: requestHeaders,),
     );
+
     return response.data;
   }
-
 
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tour_guide/core/themes/darkTheme.dart';
-import 'package:tour_guide/features/Chat/chat_side_bar/presentation/view/widgets/side_bar_body_builder.dart';
+import 'package:tour_guide/features/Chat/chat_headers/presentation/view/widgets/side_bar_body_builder.dart';
 
 class ChatPageSideBar extends StatelessWidget {
   const ChatPageSideBar({super.key});

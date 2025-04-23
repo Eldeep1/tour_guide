@@ -1,11 +1,14 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:ehgezly/core/errors/failure.dart';
-import 'package:ehgezly/core/utils/services/api_service.dart';
-import 'package:ehgezly/core/utils/services/token_operations/token_operation_repo.dart';
-import 'package:ehgezly/features/Authentication/login/data/models/login_request.dart';
-import 'package:ehgezly/features/Authentication/login/data/models/login_response.dart';
-import 'package:ehgezly/features/Authentication/login/data/repos/login_repo.dart';
+import 'package:tour_guide/core/errors/failure.dart';
+import 'package:tour_guide/core/utils/api_end_points.dart';
+import 'package:tour_guide/core/utils/services/network/api_service.dart';
+import 'package:tour_guide/core/utils/services/token_operations/token_operation_repo.dart';
+import 'package:tour_guide/features/Authentication/login/data/models/login_request.dart';
+import 'package:tour_guide/features/Authentication/login/data/models/login_response.dart';
+
+import 'login_repo.dart';
+
 
 class LoginRepoImpl extends LoginRepo{
   ApiService apiService;
@@ -20,7 +23,7 @@ class LoginRepoImpl extends LoginRepo{
 
       // 1. Send request to backend
       final response = await apiService.post(
-        endPoint: "auth/token/",
+        endPoint: ApiEndpoints.login,
         parameters: loginRequest.toJson(),
       );
       // 2. Convert response to LoginResponse

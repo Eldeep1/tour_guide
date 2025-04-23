@@ -2,53 +2,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tour_guide/core/themes/darkTheme.dart';
-import 'package:tour_guide/features/Chat/chat_side_bar/presentation/view/widgets/chat_headers_history.dart';
-import 'package:tour_guide/features/Chat/chat_side_bar/presentation/view/widgets/new_chat_button_builder.dart';
-import 'package:tour_guide/features/Chat/chat_side_bar/presentation/view_model/side_bar_provider.dart';
+import 'package:tour_guide/core/utils/services/providers/providers.dart';
 
-class SideBarBodyBuilder extends StatelessWidget {
+import 'chat_headers_history.dart';
+import 'new_chat_button_builder.dart';
+
+class SideBarBodyBuilder extends ConsumerWidget {
   const SideBarBodyBuilder({super.key});
 
+
   @override
-  Widget build(BuildContext context) {
-    return   Consumer(
-      builder: (BuildContext context, WidgetRef ref, Widget? child) {
-        final sideBarData = ref.watch(sideBarProvider('sidebar'));
-        return sideBarData.when(
-          data: (data) => dataLoadingSuccess(context, data),
-          error: (err, stack) => Center(
-            child: Column(
-              children: [
-                Text('Error Loading Chats'),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.restart_alt_outlined),
-                ),
-              ],
-            ),
-          ),
-          loading: () => Center(
-            child: CircularProgressIndicator(
-              color: Colors.red,
-            ),
-          ),
-        );
-      },
+  Widget build(BuildContext context, WidgetRef ref) {
+    final sideBarData = ref.watch(chatHeadersProvider);
+    return Column(
+      children: [
+        newChatButtonBuilder(context),
+        separator(),
+        chatHeaderHistory(headers: sideBarData),
+      ],
     );
   }
-}
+  }
 
-
-
-Widget dataLoadingSuccess(context,data){
-  return Column(
-    children: [
-      newChatButtonBuilder(context),
-      separator(),
-      chatHeaderHistory(data),
-    ],
-  );
-}
 Widget separator(){
   return Container(
     decoration: BoxDecoration(

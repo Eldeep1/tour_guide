@@ -1,11 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:ehgezly/core/errors/failure.dart';
-import 'package:ehgezly/core/utils/services/api_service.dart';
-import 'package:ehgezly/core/utils/services/storage/secure_storage.dart';
-import 'package:ehgezly/core/utils/services/token_operations/token_operation_repo.dart';
-import 'package:ehgezly/features/Authentication/login/data/models/login_response.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:tour_guide/core/errors/failure.dart';
+import 'package:tour_guide/core/utils/api_end_points.dart';
+import 'package:tour_guide/core/utils/services/network/api_service.dart';
+import 'package:tour_guide/core/utils/services/storage/secure_storage.dart';
+import 'package:tour_guide/core/utils/services/token_operations/token_operation_repo.dart';
+import 'package:tour_guide/features/Authentication/login/data/models/login_response.dart';
+import 'package:tour_guide/features/Chat/chat_headers/data/chat_headers_model.dart';
 
 class TokenOperationsImp extends TokenOperation {
   final secureStorage = SecureStorage();
@@ -72,15 +74,18 @@ class TokenOperationsImp extends TokenOperation {
   }
 
   @override
-  Future<Either<Failure, void>> verifyToken(
+  Future<Either<Failure, ChatHeaders>> verifyToken(
       {required LoginResponse loginResponse}) async {
     try {
-      Map<String, String> requestParameter = {
-        "token": loginResponse.accessToken
-      };
-      await apiService.post(
-          endPoint: "auth/token/verify/", parameters: requestParameter);
-      return right(null);
+
+
+    final chatHeaders= await apiService.get(
+        endPoint: ApiEndpoints.getAllChats,
+        bearerToken: loginResponse.accessToken,
+      );
+
+    return right(ChatHeaders.fromJson(chatHeaders));
+
     } catch (e) {
       if (e is DioException) {
         return left(ServerFailure.fromDioError(e));
@@ -96,10 +101,10 @@ class TokenOperationsImp extends TokenOperation {
     Map<String, String> requestParameter = {"refresh": refreshToken};
     try {
       Map<String, dynamic> response = await apiService.post(
-        endPoint: "token/refresh/",
+        endPoint: ApiEndpoints.refreshAccess,
         parameters: requestParameter,
       );
-      final newToken = response['access'];
+      final newToken = response['data']["access"];
       if (newToken != null) {
         return right(newToken);
       } else {

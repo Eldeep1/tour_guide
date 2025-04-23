@@ -19,14 +19,14 @@ class RegisterPage extends ConsumerWidget {
           double itemsWidth=constraints.maxWidth/3;
           return Row(
             children: [
-              Expanded(child: signUpPageBodyBuilder(context, itemsWidth)),
+              Expanded(child: SignUpPageBodyBuilder(itemsWidth: itemsWidth)),
               Expanded(child: backgroundImage(1))
             ],
           );
         }
         else{
           double itemsWidth=constraints.maxWidth/2;
-          return signUpPageBodyBuilder(context, itemsWidth);
+          return SignUpPageBodyBuilder(itemsWidth: itemsWidth);
         }
       },),
 

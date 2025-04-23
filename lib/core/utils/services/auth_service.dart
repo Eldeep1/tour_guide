@@ -7,11 +7,14 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
-import 'package:ehgezly/core/errors/failure.dart';
-import 'package:ehgezly/core/utils/services/providers/providers.dart';
-import 'package:ehgezly/core/utils/services/token_operations/token_operation_repo.dart';
-import 'package:ehgezly/features/Authentication/login/data/models/login_response.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tour_guide/core/errors/failure.dart';
+import 'package:tour_guide/core/utils/services/providers/providers.dart';
+import 'package:tour_guide/features/Authentication/login/data/models/login_response.dart';
+import 'package:tour_guide/features/Chat/chat_headers/data/chat_headers_model.dart';
+
+import 'token_operations/token_operation_repo.dart';
 
 enum AuthStatus {
   authenticated,
@@ -29,7 +32,7 @@ class AuthServiceNotifier extends AsyncNotifier<AuthStatus>{
 
   @override
   Future<AuthStatus> build() async {
-    tokenOperation = ref.watch(tokenOperationsProvider); // ✅ inject here
+    tokenOperation = ref.watch(tokenOperationsProvider); 
 
     state = AsyncValue.loading();
 
@@ -44,13 +47,13 @@ class AuthServiceNotifier extends AsyncNotifier<AuthStatus>{
     if (!exists) {
       return AuthStatus.notAuthenticated;
     }
-    final tokenVerified = await verifyTheToken();
+    final tokenVerified = await getChatHeaders();
     if (tokenVerified.isRight()) {
       return AuthStatus.authenticated;
     }
 
     final failure = tokenVerified.swap().getOrElse(() => NewFailure("unknown"));
-    if (failure is ServerFailure && failure.type == ServerErrorType.network) {
+    if (failure is ServerFailure &&( failure.type != ServerErrorType.authentication || failure.type !=ServerErrorType.client )) {
       return AuthStatus.networkError;
     }
 
@@ -60,10 +63,11 @@ class AuthServiceNotifier extends AsyncNotifier<AuthStatus>{
     }
 
     final refreshFailure = tokenRefreshed.swap().getOrElse(() => NewFailure("unknown"));
-    if (refreshFailure is ServerFailure && refreshFailure.type == ServerErrorType.network) {
+    if (refreshFailure is ServerFailure &&( refreshFailure.type != ServerErrorType.authentication || refreshFailure.type !=ServerErrorType.client )) {
       return AuthStatus.networkError;
     }
-
+    // clear the tokens if it exists and expired
+    clearTheTokens();
     print("did we really hit it!");
     return AuthStatus.notAuthenticated;
   }
@@ -113,5 +117,24 @@ class AuthServiceNotifier extends AsyncNotifier<AuthStatus>{
           return right(true);
         }
     );
+  }
+
+  Future<Either<Failure,bool>> getChatHeaders() async {
+    final Either<Failure, ChatHeaders> chatHeaders= await tokenOperation.verifyToken(loginResponse: ref.read(loginResponseProvider));
+    return chatHeaders.fold(
+            (failure) {
+          print("verification errrror");
+          print(failure.message);
+          return left(failure);
+        },
+            (chatHeaders){
+              ref.read(chatHeadersProvider.notifier).state=chatHeaders;
+          print("token verified yaaay");
+          return right(true);
+        }
+    );
+  }
+  Future<void> clearTheTokens()async{
+    await tokenOperation.deleteTokens();
   }
 }

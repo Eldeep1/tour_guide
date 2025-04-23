@@ -1,0 +1,2 @@
+O:/android_projects/tour_guide/android/app/.cxx/Debug/r5a1br4i/armeabi-v7a/CMakeFiles/edit_cache.dir
+O:/android_projects/tour_guide/android/app/.cxx/Debug/r5a1br4i/armeabi-v7a/CMakeFiles/rebuild_cache.dir

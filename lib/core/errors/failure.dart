@@ -80,6 +80,7 @@ class ServerFailure extends Failure {
               } else {
                 message = errorData.toString();
               }
+
             } else if (data.containsKey('message')) {
               message = data['message'].toString();
             }

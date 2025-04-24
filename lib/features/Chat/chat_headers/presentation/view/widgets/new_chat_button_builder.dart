@@ -13,7 +13,7 @@ Widget newChatButtonBuilder(context){
           fixedSize: WidgetStatePropertyAll(Size.fromHeight(60)),
         ),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) =>ProviderScope(child: NewChatPageView(header: newChatMessage,)),));
+          Navigator.push(context, MaterialPageRoute(builder: (context) =>NewChatPageView(header: newChatMessage,),));
         },
         child: Align(
           alignment: AlignmentDirectional.center,

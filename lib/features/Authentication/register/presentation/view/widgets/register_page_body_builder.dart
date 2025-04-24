@@ -46,8 +46,12 @@ class SignUpPageBodyBuilder extends ConsumerWidget {
             ref.watch(registerPageProvider).when(
                 data: (data) {
                   if(data.data!=null){
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPageView(),));
-                  }
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const LoginPageView()),
+                      );
+                    });                  }
                 return  mainButtonBuilder("Sign Up",
                     context,
                         (){

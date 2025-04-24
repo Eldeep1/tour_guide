@@ -2,24 +2,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tour_guide/core/themes/darkTheme.dart';
-import 'package:tour_guide/features/Chat/shared/providers/new_messages_provider.dart';
-import 'package:tour_guide/features/Chat/shared/providers/tmp_shit.dart';
-
+import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/chat_messages_provider.dart';
+import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/page_variables_provider.dart';
 
 class SendMessageFormFieldBuilder extends StatelessWidget {
-   SendMessageFormFieldBuilder({super.key,this.talkingAbout});
+   const SendMessageFormFieldBuilder({super.key});
 
-
-  String? talkingAbout;
-  @override
+   @override
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, child) {
-        final newMessage=ref.read(tmpNewMessagesProvider.notifier);
+        final newMessage=ref.read(chatDataProvider.notifier);
+        final controller=ref.read(formController);
         return SizedBox(
           height: 100,
           child: TextFormField(
-            controller: newMessage.chatFormController,
+            controller: controller,
             style: Theme.of(context).textTheme.bodyMedium,
             minLines: null,
             maxLines: null,
@@ -35,7 +33,7 @@ class SendMessageFormFieldBuilder extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {
-                        newMessage.sendMessage(talkingAbout);
+                        newMessage.sendMessage(prompt: controller.text);
                       },
                       icon: CircleAvatar(
                         backgroundColor: mainColor,

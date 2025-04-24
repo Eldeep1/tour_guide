@@ -6,3 +6,7 @@
 2. the view_model layer of loaded chat page
 ### computer vision:
 1. add the new model implementation!
+
+## notes:
+- will dio request headers change over time?
+- what about adding analytics?

@@ -51,7 +51,7 @@ Widget detectionButtonsRawBuilder(modelNotifier,context)=>Positioned(
           ElevatedButton(onPressed: (){
             Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => ProviderScope(child: NewChatPageView(header: "Chatting About ${modelNotifier.kingName}"))),
+                MaterialPageRoute(builder: (context) => NewChatPageView(header: "Chatting About ${modelNotifier.kingName}")),
               (Route<dynamic> route) => false, // This removes all previous routes
             );
           }, child: Text("Chat About ${modelNotifier.kingName}")),

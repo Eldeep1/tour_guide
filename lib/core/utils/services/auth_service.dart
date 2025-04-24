@@ -12,7 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tour_guide/core/errors/failure.dart';
 import 'package:tour_guide/core/utils/services/providers/providers.dart';
 import 'package:tour_guide/features/Authentication/login/data/models/login_response.dart';
-import 'package:tour_guide/features/Chat/chat_headers/data/chat_headers_model.dart';
+import 'package:tour_guide/features/Chat/chat_headers/data/model/chat_headers_model.dart';
 
 import 'token_operations/token_operation_repo.dart';
 

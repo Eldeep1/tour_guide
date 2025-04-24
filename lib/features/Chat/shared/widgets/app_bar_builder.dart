@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tour_guide/core/themes/darkTheme.dart';
 import 'package:tour_guide/core/utils/Assets/assets.dart';
@@ -28,7 +27,7 @@ PreferredSizeWidget appBarBuilder (context){
         tooltip: "Start Detection",
         onPressed: () async {
 
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ProviderScope(child: ObjectDetectionPage()),));
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => ObjectDetectionPage(),));
         },
         icon: Icon(
           Icons.camera_alt_outlined,

@@ -16,7 +16,6 @@ class ApiEndpoints {
   static const String askAQuestion = "chat/messages/response";
   // give the message ID to it!
   static  String getAllMessages ({required int chatID}){
-    return "chat/messages/getAll/$chatID/";
+    return "chat/messages/getAll/$chatID";
   }
-
 }

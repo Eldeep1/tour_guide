@@ -18,6 +18,23 @@ Color answerMessageColor = mainColor.withAlpha(51);
 Color promptMessageColor = mainColor;
 Color shimmerBaseColor = Colors.grey;
 
+Widget responseMessageContainer(context,String message,{bool error=false}){
+  final messageStyle = Theme.of(context).textTheme.bodyMedium;
+
+  return Container(
+    decoration: messageDecoration(color:error?Colors.red: answerMessageColor),
+    child: Padding(
+      padding: messagePadding,
+      child: MarkdownBody(
+        data: message,
+        styleSheet: MarkdownStyleSheet(
+          h3: messageStyle!.copyWith(fontWeight: FontWeight.bold),
+        ),
+      ),
+    ),
+  );
+}
+
 Widget answerMessageBuilder({required String message, bool isLoading = false}) {
   return LayoutBuilder(
     builder: (context, constraints) {
@@ -53,22 +70,7 @@ Widget answerMessageBuilder({required String message, bool isLoading = false}) {
     },
   );
 }
-Widget responseMessageContainer(context,String message,{bool error=false}){
-  final messageStyle = Theme.of(context).textTheme.bodyMedium;
 
-  return Container(
-    decoration: messageDecoration(color:error?Colors.red: answerMessageColor),
-    child: Padding(
-      padding: messagePadding,
-      child: MarkdownBody(
-        data: message,
-        styleSheet: MarkdownStyleSheet(
-          h3: messageStyle!.copyWith(fontWeight: FontWeight.bold),
-        ),
-      ),
-    ),
-  );
-}
 Widget promptMessageBuilder(
   String message, {
   bool isLoading = false,
@@ -115,6 +117,7 @@ Widget promptMessageBuilder(
     ),
   );
 }
+
 Widget promptMessageContainer(context, String message){
   return Container(
     decoration:

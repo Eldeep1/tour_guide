@@ -19,6 +19,8 @@ class LoginPageView extends ConsumerWidget {
       next.whenOrNull(
         data: (data) {
           if (data.refreshToken.isNotEmpty) {
+            print(data.refreshToken);
+            print("alooooooo");
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(

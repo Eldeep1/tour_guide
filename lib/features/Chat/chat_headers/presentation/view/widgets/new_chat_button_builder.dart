@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tour_guide/constants.dart';
 import 'package:tour_guide/core/themes/darkTheme.dart';
+import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/chat_messages_provider.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/presentation/view/new_chat_page_view.dart';
 
-Widget newChatButtonBuilder(context){
-  return Padding(
+class NewChatButtonBuilder extends ConsumerWidget{
+  const NewChatButtonBuilder({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final chatData=ref.read(chatDataProvider.notifier);
+    return Padding(
       padding: const EdgeInsets.all(4.0),
       child: TextButton(
         style: ButtonStyle(
@@ -13,7 +19,8 @@ Widget newChatButtonBuilder(context){
           fixedSize: WidgetStatePropertyAll(Size.fromHeight(60)),
         ),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) =>NewChatPageView(header: newChatMessage,),));
+          chatData.newChat();
+          Scaffold.of(context).closeDrawer();
         },
         child: Align(
           alignment: AlignmentDirectional.center,
@@ -28,4 +35,6 @@ Widget newChatButtonBuilder(context){
         ),
       ),
     );
+  }
+
 }

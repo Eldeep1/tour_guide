@@ -13,7 +13,7 @@ class SendMessageFormFieldBuilder extends StatelessWidget {
     return Consumer(
       builder: (context, ref, child) {
         final newMessage=ref.read(chatDataProvider.notifier);
-        final controller=ref.read(formController);
+        final controller=ref.read(sendMessageFormController);
         return SizedBox(
           height: 100,
           child: TextFormField(

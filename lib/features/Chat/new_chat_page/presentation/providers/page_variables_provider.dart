@@ -6,9 +6,18 @@ final chatIDProvider = StateProvider<int?>(
     return null;
   },
 );
+final appBarHeaderProvider = StateProvider<String>(
+  (ref) {
+    return "AI TOUR GUIDE";
+  },
+);
 
-final formController = Provider<TextEditingController>(
+final sendMessageFormController = Provider<TextEditingController>(
       (ref) {
     return TextEditingController();
   },
 );
+
+final sendingMessage=StateProvider<bool>((ref) {
+  return false;
+},);

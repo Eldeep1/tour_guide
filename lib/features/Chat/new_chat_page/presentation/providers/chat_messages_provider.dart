@@ -50,6 +50,12 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
     final chatID = ref.watch(chatIDProvider);
     final existing = state.value ?? [];
 
+    if(ref.read(sendingMessage)){
+      return ;
+    }
+    ref.read(sendingMessage.notifier).state=true;
+    ref.read(sendMessageFormController).text="";
+
     // Add a loading placeholder
     final loadingMessage = Data(prompt: prompt, response: null);
     final withLoading = [...existing, loadingMessage];
@@ -57,6 +63,8 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
 
     print(chatID);
     final result = await chatRepo.sendMessage(message: prompt, chatID: chatID);
+
+    ref.read(sendingMessage.notifier).state=false;
 
     result.fold(
           (failure) {
@@ -68,6 +76,8 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
           (response) {
         ref.read(chatIDProvider.notifier).state = response.chatId;
 
+        print("this is the chat title : ${response.chatTitle}");
+        ref.read(appBarHeaderProvider.notifier).state=response.chatTitle??"AI TOUR GUIDE";
         // Replace the last item (loading) with actual response
         final successMessage = Data(prompt: prompt, response: response.response);
         final updated = [...existing, successMessage];
@@ -76,5 +86,16 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
     );
   }
 
+
+  void newChat() {
+    // Clear the chat messages
+    state = const AsyncData([]);
+    // Reset chat ID to null (new session)
+    ref.read(chatIDProvider.notifier).state = null;
+    // Optionally reset app bar title
+    ref.read(appBarHeaderProvider.notifier).state = "AI TOUR GUIDE";
+    // Reset the input field as well if needed
+    ref.read(sendMessageFormController).text = "";
+  }
 
 }

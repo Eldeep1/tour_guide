@@ -86,8 +86,8 @@ flutter:
   assets:
     - assets/images/lol.png
     - assets/icons/mobile/sidebar_open.svg
-    - assets/model/best_float16.tflite
-    - assets/model/metadata.yaml
+#    - assets/model/best_float16.tflite
+#    - assets/model/metadata.yaml
     - assets/labels.txt
 
   # The following line ensures that the Material Icons font is

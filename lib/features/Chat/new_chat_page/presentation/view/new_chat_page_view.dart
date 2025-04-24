@@ -4,13 +4,12 @@ import 'package:tour_guide/features/Chat/new_chat_page/presentation/view/widgets
 import 'package:tour_guide/features/Chat/shared/widgets/app_bar_builder.dart';
 
 class NewChatPageView extends StatelessWidget {
-    const NewChatPageView({super.key,required this.header});
+    const NewChatPageView({super.key});
 
-  final String header;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarBuilder(context),
+      appBar: CustomAppBar(),
       drawer: ChatPageSideBar(),
       body: Padding(
         padding:const EdgeInsets.only(bottom: 30.0, left: 30, right: 30),

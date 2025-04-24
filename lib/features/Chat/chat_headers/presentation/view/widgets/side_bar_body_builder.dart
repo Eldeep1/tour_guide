@@ -16,7 +16,7 @@ class SideBarBodyBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        newChatButtonBuilder(context),
+        NewChatButtonBuilder(),
         separator(),
 
         ChatHeaderHistory(),

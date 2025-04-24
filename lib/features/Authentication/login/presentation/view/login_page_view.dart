@@ -24,7 +24,7 @@ class LoginPageView extends ConsumerWidget {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const NewChatPageView(header: newChatMessage),
+                builder: (context) => const NewChatPageView(),
               ),
             );
           }

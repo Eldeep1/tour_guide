@@ -57,7 +57,7 @@ class AuthGate extends ConsumerWidget {
         print(status);
         switch (status) {
           case AuthStatus.authenticated:
-            return const NewChatPageView(header: newChatMessage);
+            return const NewChatPageView();
           case AuthStatus.notAuthenticated:
             return const LoginPageView();
         // case AuthStatus.networkError:

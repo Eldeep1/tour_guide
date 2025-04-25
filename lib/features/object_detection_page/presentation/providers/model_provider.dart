@@ -1,0 +1,69 @@
+
+import 'dart:async';
+import 'dart:typed_data';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tour_guide/features/object_detection_page/data/model/detection_state.dart';
+import 'package:tour_guide/features/object_detection_page/presentation/providers/image_path_provider.dart';
+import 'package:ultralytics_yolo/yolo.dart';
+
+enum DetectionOutput{
+  detected,
+  noDetection,
+  firstTime
+}
+final detectionProvider = AsyncNotifierProvider<DetectionNotifier, DetectionState>(() {
+  return DetectionNotifier();
+});
+
+class DetectionNotifier extends AsyncNotifier<DetectionState> {
+  late YOLO _yolo;
+  DetectionOutput detectionOutput=DetectionOutput.firstTime;
+
+  @override
+  FutureOr<DetectionState> build() async {
+    _yolo = YOLO(modelPath: 'best_float16.tflite', task: YOLOTask.detect);
+    try {
+      await _yolo.loadModel();
+      return DetectionState(isModelLoaded: true);
+    } catch (e, st) {
+      // If model loading fails, return error state
+      throw AsyncError(e, st);
+    }
+  }
+
+  Future<void> predict() async {
+    state = AsyncLoading();
+    try{
+      final  file = ref.read(imagePathProvider);
+      if (file == null) return;
+
+      final bytes = await file.readAsBytes();
+      final result = await _yolo.predict(bytes);
+
+      final detections = List<Map<String, dynamic>>.from(result['boxes']);
+
+      final annotatedImage = result['annotatedImage'] is Uint8List
+          ? result['annotatedImage'] as Uint8List
+          : null;
+
+      await Future.delayed(Duration(seconds: 1));
+
+      state = AsyncData(state.value!.copyWith(
+        imageBytes: bytes,
+        annotatedImage: annotatedImage,
+        detections: detections,
+      ));
+      print(detections);
+      print(detections.runtimeType);
+      print("testttttttttttttttt");
+      detectionOutput=DetectionOutput.detected;
+
+    }
+    catch(e){
+      state=AsyncError(e.toString(), StackTrace.current);
+      detectionOutput=DetectionOutput.noDetection;
+
+    }
+  }
+}

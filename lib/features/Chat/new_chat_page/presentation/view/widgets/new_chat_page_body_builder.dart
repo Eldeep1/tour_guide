@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/chat_messages_provider.dart';
-import 'package:tour_guide/features/Chat/shared/widgets/messages.dart';
-import 'package:tour_guide/features/Chat/shared/widgets/send_message_form_field_builder.dart';
+
+
+import 'messages.dart';
+import 'send_message_form_field_builder.dart';
 
 class NewChatPageBodyBuilder extends ConsumerWidget {
   const NewChatPageBodyBuilder({super.key});
@@ -27,7 +29,12 @@ class NewChatPageBodyBuilder extends ConsumerWidget {
                   final message = messages[index];
 
                   if (message.response == null) {
-                    return promptMessageBuilder(message.prompt!,isLoading: true);
+                    return Column(
+                      children: [
+                        promptMessageBuilder(message.prompt!,isLoading: false),
+                        answerMessageBuilder(message:"Loading Response",isLoading: true),
+                      ],
+                    );
                     // Loading bubble
                   }
 

@@ -1,0 +1,43 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lottie/lottie.dart';
+import 'package:tour_guide/features/object_detection_page/presentation/providers/model_provider.dart';
+
+class ImagePreview extends ConsumerWidget {
+  const ImagePreview({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final detectionAsync = ref.watch(detectionProvider);
+
+    return detectionAsync.when(
+      data: (state) => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+
+          if (state.annotatedImage != null)
+            Image.memory(state.annotatedImage!, width: double.infinity,fit: BoxFit.fill,)
+          else if (state.imageBytes != null)
+             Image.memory(state.imageBytes!,width: double.infinity,fit: BoxFit.fill,),
+          const SizedBox(height: 10),
+
+        ],
+      ),
+      loading: () {
+        return Center(
+          child: Lottie.asset(
+            'assets/lotties/detection.json',
+            fit: BoxFit.contain,
+            repeat: true,
+            animate: true,
+            width: double.maxFinite,
+            height: double.maxFinite,
+
+          ),
+        );
+
+      },
+      error: (e, st) => Text('Error: $e'),
+    );
+  }
+}

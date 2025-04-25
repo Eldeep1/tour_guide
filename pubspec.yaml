@@ -48,6 +48,8 @@ dependencies:
   dartz: ^0.10.1
   jwt_decoder: ^2.0.1
   fluttertoast: ^8.2.12
+  ultralytics_yolo: ^0.0.7
+  lottie: ^3.3.1
 
 dev_dependencies:
   flutter_launcher_icons: "^0.14.3"
@@ -89,6 +91,7 @@ flutter:
 #    - assets/model/best_float16.tflite
 #    - assets/model/metadata.yaml
     - assets/labels.txt
+    - assets/lotties/detection.json
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

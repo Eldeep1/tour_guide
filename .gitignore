@@ -25,7 +25,8 @@ migrate_working_dir/
 **/*.o
 **/*.bin
 **/*.json
-!assets/lotties/
+!assets/lotties/*.json
+
 
 # IntelliJ related
 *.iml

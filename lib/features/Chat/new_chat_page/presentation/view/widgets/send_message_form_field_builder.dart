@@ -36,15 +36,8 @@ class SendMessageFormFieldBuilder extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                      onPressed: () {
-                        newMessage.sendMessage(prompt: controller.text);
-                      },
-                      icon: CircleAvatar(
-                        backgroundColor: mainColor,
-                        radius: 16,
-                        child: Icon(Icons.arrow_upward_sharp,),
-                      ),
-                    ),IconButton(
+                      padding: EdgeInsetsDirectional.zero,
+                      visualDensity: VisualDensity.compact,
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) {
                           return ObjectDetectionPage();
@@ -53,7 +46,19 @@ class SendMessageFormFieldBuilder extends StatelessWidget {
                       icon: CircleAvatar(
                         backgroundColor: mainColor,
                         radius: 16,
-                        child: Icon(Icons.add_a_photo,),
+                        child: Icon(Icons.smart_toy_outlined,),
+                      ),
+                    ),
+                    IconButton(
+                      padding: EdgeInsetsDirectional.zero,
+                      visualDensity: VisualDensity.compact,
+                      onPressed: () {
+                        newMessage.sendMessage(prompt: controller.text);
+                      },
+                      icon: CircleAvatar(
+                        backgroundColor: mainColor,
+                        radius: 16,
+                        child: Icon(Icons.arrow_upward_sharp,),
                       ),
                     ),
                   ],

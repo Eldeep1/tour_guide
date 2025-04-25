@@ -13,12 +13,12 @@ import 'core/utils/services/auth_service.dart';
 
 void main() {
 
-  // runApp(ProviderScope(child: const MyApp()));
-  runApp(ProviderScope(
-    child: MaterialApp(
-        theme: lightTheme,
-        home: ObjectDetectionPage()),
-  ));
+  runApp(ProviderScope(child: const MyApp()));
+  // runApp(ProviderScope(
+  //   child: MaterialApp(
+  //       theme: lightTheme,
+  //       home: ObjectDetectionPage()),
+  // ));
 }
 
 class MyApp extends StatelessWidget {
@@ -66,6 +66,9 @@ class AuthGate extends ConsumerWidget {
             return const NewChatPageView();
           case AuthStatus.notAuthenticated:
             return const LoginPageView();
+            //need to create an offline flag when there's network error, it should contains
+        //1. refresh button
+        //2. go to object detection page
         // case AuthStatus.networkError:
         //   return const NoInternetScreen(); // Optional screen
         // case AuthStatus.storageError:

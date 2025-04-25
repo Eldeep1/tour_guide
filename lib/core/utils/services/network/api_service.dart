@@ -3,7 +3,7 @@ import 'package:tour_guide/core/utils/api_end_points.dart';
 
 class ApiService {
   final Dio _dio;
-  Map<String,dynamic> requestHeaders={
+  final Map<String,dynamic> requestHeaders={
     "Content-Type": "application/json",
   };
   final _baseUrl = ApiEndpoints.baseUrl;

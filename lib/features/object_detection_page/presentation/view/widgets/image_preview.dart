@@ -24,17 +24,7 @@ class ImagePreview extends ConsumerWidget {
         ],
       ),
       loading: () {
-        return Center(
-          child: Lottie.asset(
-            'assets/lotties/detection.json',
-            fit: BoxFit.contain,
-            repeat: true,
-            animate: true,
-            width: double.maxFinite,
-            height: double.maxFinite,
-
-          ),
-        );
+        return CircularProgressIndicator(backgroundColor: Colors.red,);
 
       },
       error: (e, st) => Text('Error: $e'),

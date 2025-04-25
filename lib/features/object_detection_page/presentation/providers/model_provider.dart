@@ -47,7 +47,6 @@ class DetectionNotifier extends AsyncNotifier<DetectionState> {
           ? result['annotatedImage'] as Uint8List
           : null;
 
-      await Future.delayed(Duration(seconds: 1));
 
       state = AsyncData(state.value!.copyWith(
         imageBytes: bytes,

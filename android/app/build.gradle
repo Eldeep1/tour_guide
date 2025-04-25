@@ -12,7 +12,10 @@ android {
         }
     namespace = "com.depogramming.tour_guide"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = "29.0.13113456"
+    //uncomment this when publishing to github
+    ndkVersion = flutter.ndkVersion
+    //comment when locally
+//    ndkVersion = "29.0.13113456"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8

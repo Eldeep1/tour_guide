@@ -92,6 +92,7 @@ flutter:
 #    - assets/model/metadata.yaml
     - assets/labels.txt
     - assets/lotties/detection.json
+    - assets/lotties/detect.json
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

@@ -7,7 +7,7 @@
 4. user settings?
 5. white theme
 6. theme transition
-7. splash screen
+7. ~~splash screen~~
 8. no internet page
 9. ~~logout button~~
 10. ~~messages shouldn't divide the page horizontally~~

@@ -5,4 +5,6 @@ class Assets{
   static const String modelPath="assets/model/best_float16.tflite";
   static const String modelMetaData="assets/model/metadata.yaml";
   static const String modelIcon="assets/icons/robot2.png";
+
+  static const String splashScreen="assets/lotties/robot.json";
 }

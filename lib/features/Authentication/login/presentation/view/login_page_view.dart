@@ -21,7 +21,12 @@ class LoginPageView extends ConsumerWidget {
           if (data.refreshToken.isNotEmpty) {
             print(data.refreshToken);
             print("alooooooo");
-
+            // Navigator.pushReplacement(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => const NewChatPageView(),
+            //   ),
+            // );
           }
         },
         error: (error, _) {

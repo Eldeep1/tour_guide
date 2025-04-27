@@ -51,6 +51,7 @@ dependencies:
   ultralytics_yolo: ^0.0.7
   lottie: ^3.3.1
   popover: ^0.3.1
+  animated_text_kit: ^4.2.3
 
 dev_dependencies:
   flutter_launcher_icons: "^0.14.3"

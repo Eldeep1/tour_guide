@@ -1,4 +1,6 @@
 name: Flutter CI/CD
+permissions:
+  contents: write
 
 on:
   push:
@@ -64,7 +66,6 @@ jobs:
           draft: false
           prerelease: false
           files: app-release.apk
-          token: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
     needs: build

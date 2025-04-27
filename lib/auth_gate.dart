@@ -31,6 +31,7 @@ class _AuthGateState extends ConsumerState<AuthGate> {
     final authStatus = ref.watch(authServiceProvider);
     final splashTimerCompleted = ref.watch(splashTimerProvider);
 
+    print("are you still alive?");
     // Return splash screen if either auth is loading OR minimum time hasn't passed
     if (authStatus is AsyncLoading || !splashTimerCompleted) {
       return SplashScreen();
@@ -53,14 +54,18 @@ class _AuthGateState extends ConsumerState<AuthGate> {
         case AuthStatus.authenticated:
           return const NewChatPageView();
         case AuthStatus.notAuthenticated:
-          return const LoginPageView();
-      //need to create an offline flag when there's network error, it should contains
+          const LoginPageView();
       //1. refresh button
       //2. go to object detection page
       // case AuthStatus.networkError:
-      //   return const NoInternetScreen(); // Optional screen
-      // case AuthStatus.storageError:
+      //   WidgetsBinding.instance.addPostFrameCallback((_) {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(builder: (_) => const LoginPageView()),
+      //     );
+      //   });       // case AuthStatus.storageError:
       //   return const LoginPageView(); // Or custom error screen
+        break;
         default:
           return const LoginPageView();
       }

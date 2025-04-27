@@ -1,6 +1,10 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tour_guide/core/utils/services/providers/providers.dart';
+import 'package:tour_guide/features/Chat/chat_headers/data/model/chat_headers_model.dart';
+import 'package:tour_guide/features/Chat/chat_headers/presentation/providers/side_bar_provider.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/data/model/chat_history.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/data/repo/chat_repo.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/page_variables_provider.dart';
@@ -12,12 +16,12 @@ final chatDataProvider = AsyncNotifierProvider<ChatDataNotifier, List<Data>>(
 
 class ChatDataNotifier extends AsyncNotifier<List<Data>> {
 
-  late final ChatRepo chatRepo;
+   ChatRepo? chatRepo;
 
   @override
   FutureOr<List<Data>> build() {
 
-    chatRepo=ref.read(chatRepoProvider);
+    chatRepo=ref.watch(chatRepoProvider);
     state = const AsyncLoading();
 
     return [];
@@ -29,7 +33,7 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
     //1. delete old messages
     // state = const AsyncData([]);
     state = const AsyncLoading();
-    final result = await chatRepo.gelAllChats(ref.read(chatIDProvider));
+    final result = await chatRepo!.gelAllChats(ref.read(chatIDProvider));
     result.fold(
           (failure) {
             print("no messssssssssssages");
@@ -40,7 +44,6 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
           (messages) {
             print("we got the messsssagesss");
             print(messages.data![0].prompt);
-            scrollToTheEnd();
             return state = AsyncData(messages.data ?? []);
           },
     );
@@ -51,9 +54,13 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
   }) async {
     final chatID = ref.read(chatIDProvider);
     final existing = state.value ?? [];
+    final chatWasEmpty = existing.isEmpty; // <--- check BEFORE adding loading
 
     if(ref.read(sendingMessage)){
       return ;
+    }
+    if(state.value!.isNotEmpty) {
+      scrollToTheEnd();
     }
     ref.read(sendingMessage.notifier).state=true;
     ref.read(sendMessageFormController).text="";
@@ -64,9 +71,10 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
     state = AsyncData(withLoading);
 
     print(chatID);
-    final result = await chatRepo.sendMessage(message: prompt, chatID: chatID);
+    final result = await chatRepo!.sendMessage(message: prompt, chatID: chatID);
 
     ref.read(sendingMessage.notifier).state=false;
+    scrollToTheEnd();
 
     result.fold(
           (failure) {
@@ -79,6 +87,12 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
           (response) {
         ref.read(chatIDProvider.notifier).state = response.chatId;
 
+
+
+        if (chatWasEmpty) {
+          newHeader(response);
+        }
+        print(response);
         print("this is the chat title : ${response.chatTitle}");
         ref.read(appBarHeaderProvider.notifier).state=response.chatTitle??"AI TOUR GUIDE";
         // Replace the last item (loading) with actual response
@@ -88,6 +102,14 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
         scrollToTheEnd();
       },
     );
+  }
+  void newHeader(response){
+    print("we are here");
+    print("new header!");
+    print(ref.read(chatHeadersProvider).data!.length);
+
+    final currentSideBar=ref.read(sideBarProvider.notifier);
+    currentSideBar.addNewHeader(HeadersData(title: response.chatTitle,id: response.chatId));
   }
 
 
@@ -102,9 +124,19 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
     ref.read(sendMessageFormController).text = "";
   }
 
-void scrollToTheEnd(){
-    ref.read(scrollController).jumpTo(ref.read(scrollController).position.maxScrollExtent);
-}
+  void scrollToTheEnd() {
+    print("we should scroll now");
 
+    // Check if the user is at the bottom of the list already
+    if (ref.read(scrollController).position.pixels ==
+        ref.read(scrollController).position.maxScrollExtent) {
+      return; // No need to scroll if we're already at the bottom
+    }
+
+    // If not at the bottom, scroll to the end
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(scrollController).jumpTo(ref.read(scrollController).position.maxScrollExtent);
+    });
+  }
 
 }

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:tour_guide/auth_gate.dart';
 import 'package:tour_guide/core/themes/darkTheme.dart';
 import 'package:tour_guide/features/Authentication/login/presentation/view/login_page_view.dart';
 import 'package:tour_guide/features/Authentication/register/data/models/register_request.dart';
@@ -56,10 +57,12 @@ class SignUpPageBodyBuilder extends ConsumerWidget {
                 data: (data) {
                   if(data.data!=null){
                     WidgetsBinding.instance.addPostFrameCallback((_) {
-                      Navigator.pushReplacement(
+                      Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (context) => const LoginPageView()),
+                        MaterialPageRoute(builder: (_) => const AuthGate()),
+                            (Route<dynamic> route) => false, // Remove all previous routes
                       );
+
                     });                  }
                 return  mainButtonBuilder("Sign Up",
                     context,

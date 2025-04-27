@@ -62,7 +62,9 @@ class ServerFailure extends Failure {
       case DioExceptionType.badResponse:
         try {
           final statusCode = e.response?.statusCode ?? 0;
+          print("here comes the data");
           final data = e.response?.data;
+          print(data);
 
           String message = "Something went wrong.";
 

@@ -15,10 +15,12 @@
 12. ~~changing the text form field height~~
 13. ~~changing the text form field icons!~~
 14. add validation on login, register and chat page!
+15. what about iphone?
 
 
 ## notes:
-- will dio request headers change over time?
-- what about adding analytics?
+- will dio request headers change over time? ّّ
+- think that chat headers provider is uselss
+- - what about adding analytics?
 - when logout, we are simply deleting the token from the storage and call the endpoint
     - what if the end point returned bad response?

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:tour_guide/constants.dart';
+import 'package:tour_guide/core/utils/services/auth_service.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/presentation/view/new_chat_page_view.dart';
 
 import '../../../widgets/back_ground_image.dart';
@@ -21,6 +22,7 @@ class LoginPageView extends ConsumerWidget {
           if (data.refreshToken.isNotEmpty) {
             print(data.refreshToken);
             print("alooooooo");
+            print(ref.read(authServiceProvider).value);
             // Navigator.pushReplacement(
             //   context,
             //   MaterialPageRoute(

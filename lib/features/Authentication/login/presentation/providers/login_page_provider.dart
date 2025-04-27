@@ -13,7 +13,7 @@ import 'package:tour_guide/features/Authentication/login/presentation/providers/
 final loginPageProvider= AsyncNotifierProvider<LoginPageNotifier,LoginResponse>(LoginPageNotifier.new);
 class LoginPageNotifier extends AsyncNotifier<LoginResponse>{
 
-  late LoginRepo loginRepo;
+   LoginRepo? loginRepo;
   @override
   FutureOr<LoginResponse> build() {
     loginRepo=ref.watch(loginRepoProvider);
@@ -28,13 +28,14 @@ class LoginPageNotifier extends AsyncNotifier<LoginResponse>{
     final loginResponseNotifier = ref.read(loginResponseProvider.notifier);
     final authStatusNotifier = ref.read(authServiceProvider.notifier);
 
-    final result = await loginRepo.login(loginRequest: loginRequest);
+    final result = await loginRepo!.login(loginRequest: loginRequest);
 
     result.fold(
           (failure) {
         state = AsyncValue.error(failure.message, StackTrace.current);
       },
           (loginResponse) {
+            print("we are actually here");
         loginResponseNotifier.state = loginResponse;
         authStatusNotifier.state = const AsyncValue.data(AuthStatus.authenticated);
         state = AsyncValue.data(loginResponse);

@@ -13,6 +13,10 @@ import 'package:tour_guide/core/errors/failure.dart';
 import 'package:tour_guide/core/utils/services/providers/providers.dart';
 import 'package:tour_guide/features/Authentication/login/data/models/login_response.dart';
 import 'package:tour_guide/features/Chat/chat_headers/data/model/chat_headers_model.dart';
+import 'package:tour_guide/features/Chat/chat_headers/presentation/providers/side_bar_provider.dart';
+import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/chat_messages_provider.dart';
+import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/chat_repo_provider.dart';
+import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/page_variables_provider.dart';
 
 import 'token_operations/token_operation_repo.dart';
 
@@ -32,6 +36,9 @@ class AuthServiceNotifier extends AsyncNotifier<AuthStatus>{
 
   @override
   Future<AuthStatus> build() async {
+    ref.onDispose(() {
+      print("the most important one disposed!");
+    },);
     tokenOperation = ref.watch(tokenOperationsProvider); 
 
     state = AsyncValue.loading();
@@ -143,6 +150,15 @@ class AuthServiceNotifier extends AsyncNotifier<AuthStatus>{
     // state = AsyncData(AuthStatus.notAuthenticated);
     state = AsyncData(AuthStatus.notAuthenticated);
     try{
+       ref.read(apiServiceProvider).cancelAllRequests();
+
+       ref.invalidate(loginResponseProvider);
+       ref.invalidate(chatHeadersProvider);
+       ref.invalidate(sideBarProvider);
+       ref.invalidate(chatDataProvider);
+       ref.invalidate(chatRepoProvider);
+       ref.invalidate(appBarHeaderProvider);
+
       state = AsyncData(AuthStatus.notAuthenticated);
 
       await tokenOperation.logout(refreshToken: ref.read(loginResponseProvider).refreshToken);
@@ -150,6 +166,7 @@ class AuthServiceNotifier extends AsyncNotifier<AuthStatus>{
     catch(e){
       state = AsyncData(AuthStatus.notAuthenticated);
 
+      print(e);
     print("we are having an error");
     }
   }

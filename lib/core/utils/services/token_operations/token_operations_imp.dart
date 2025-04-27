@@ -125,6 +125,6 @@ class TokenOperationsImp extends TokenOperation {
 })async {
     Map<String, dynamic> parameters={"refresh":refreshToken};
     await deleteTokens();
-    await apiService.post(endPoint: ApiEndpoints.logOut,parameters: parameters);
+    // await apiService.post(endPoint: ApiEndpoints.logOut,parameters: parameters);
   }
 }

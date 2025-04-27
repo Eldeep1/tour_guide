@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tour_guide/auth_gate.dart';
 import 'package:tour_guide/core/utils/services/auth_service.dart';
+import 'package:tour_guide/features/Authentication/login/presentation/view/login_page_view.dart';
 
 class MenuItems extends StatelessWidget {
   const MenuItems({super.key});
@@ -22,6 +24,7 @@ class MenuItems extends StatelessWidget {
 
                       ref.read(authServiceProvider.notifier).logOut();
                       Navigator.of(context, rootNavigator: true).pop();
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AuthGate(),));
                       print(ref.read(authServiceProvider));
                     }, child: Text(
                     "Logout",

@@ -12,7 +12,7 @@ final appBarHeaderProvider = StateProvider<String>(
   },
 );
 
-final sendMessageFormController = Provider<TextEditingController>(
+final sendMessageFormController = Provider.autoDispose<TextEditingController>(
       (ref) {
     return TextEditingController();
   },
@@ -22,4 +22,4 @@ final sendingMessage=StateProvider<bool>((ref) {
   return false;
 },);
 
-final scrollController=Provider<ScrollController>((ref) => ScrollController(),);
+final scrollController=Provider.autoDispose<ScrollController>((ref) => ScrollController(),);

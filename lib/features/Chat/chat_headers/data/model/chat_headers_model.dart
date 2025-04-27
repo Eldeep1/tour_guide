@@ -1,29 +1,29 @@
 class ChatHeaders {
   String? status;
-  List<Data>? data;
+  List<HeadersData>? data;
 
   ChatHeaders({this.status, this.data});
 
   ChatHeaders.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <HeadersData>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(HeadersData.fromJson(v));
       });
     }
   }
 
 }
 
-class Data {
+class HeadersData {
   int? id;
   String? title;
   String? createdAt;
 
-  Data({this.id, this.title, this.createdAt});
+  HeadersData({this.id, this.title, this.createdAt});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  HeadersData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     createdAt = json['created_at'];

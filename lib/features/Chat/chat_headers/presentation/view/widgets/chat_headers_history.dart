@@ -35,7 +35,7 @@ class ChatHeaderHistory extends ConsumerWidget {
                 child: Align(
                   alignment: AlignmentDirectional.centerStart,
                   child: Text(
-                    "${headers.data![index].title}",
+                    "${headers.data![headers.data!.length-index-1].title}",
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),

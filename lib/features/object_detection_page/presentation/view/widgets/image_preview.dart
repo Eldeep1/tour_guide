@@ -15,9 +15,9 @@ class ImagePreview extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
 
-          if (state.annotatedImage != null)
-            Image.memory(state.annotatedImage!, width: double.infinity,fit: BoxFit.fill,)
-          else if (state.imageBytes != null)
+          // if (state.annotatedImage != null)
+          //   Image.memory(state.annotatedImage!, width: double.infinity,fit: BoxFit.fill,)
+           if (state.imageBytes != null)
              Image.memory(state.imageBytes!,width: double.infinity,fit: BoxFit.fill,),
           const SizedBox(height: 10),
 

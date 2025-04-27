@@ -7,39 +7,61 @@ import 'package:tour_guide/features/Chat/chat_headers/presentation/providers/cha
 final sideBarProvider = AsyncNotifierProvider<SideBarNotifier,ChatHeaders>(() {
   return SideBarNotifier();
 },);
-ChatHeaders? _cachedChatHeaders;
+// ChatHeaders? _cachedChatHeaders;
 
 class SideBarNotifier extends AsyncNotifier<ChatHeaders> {
-  late final ChatHeadersRepo chatHeadersRepo;
+    ChatHeadersRepo? chatHeadersRepo;
 
   @override
   FutureOr<ChatHeaders> build() async {
+    // if (_cachedChatHeaders != null) {
+    //   return _cachedChatHeaders!;
+    // }
     chatHeadersRepo = ref.watch(chatHeadersRepoProvider);
 
-    if (_cachedChatHeaders != null) {
-      return _cachedChatHeaders!;
-    }
-
-    final result = await chatHeadersRepo.getChatHeaders();
+    final result = await chatHeadersRepo!.getChatHeaders();
     return result.fold((failure) {
       throw Exception(failure.message);
     }, (chatHeaders) {
-      _cachedChatHeaders = chatHeaders;
+      // _cachedChatHeaders = chatHeaders;
       return chatHeaders;
     });
   }
 
+
+
   Future<void> refreshHeaders() async {
+
     state = const AsyncLoading();
-    final result = await chatHeadersRepo.getChatHeaders();
+    final result = await chatHeadersRepo!.getChatHeaders();
     result.fold(
           (failure) {
         state = AsyncError(failure.message, StackTrace.current);
       },
           (chatHeaders) {
-        _cachedChatHeaders = chatHeaders;
+        // _cachedChatHeaders = chatHeaders;
         state = AsyncData(chatHeaders);
       },
     );
   }
+
+    Future<void> addNewHeader(HeadersData newHeader) async {
+      final currentState = state;
+
+      if (currentState is AsyncData<ChatHeaders>) {
+        final chatHeaders = currentState.value;
+
+        // Safely initialize list if null
+        chatHeaders.data ??= [];
+
+        // Add the new header
+        chatHeaders.data!.add(newHeader);
+
+        // Update the state with the modified ChatHeaders
+        state = AsyncData(chatHeaders);
+      } else {
+        // Optional: handle cases where current state is loading/error
+        print('Cannot add header because state is not ready.');
+      }
+    }
 }

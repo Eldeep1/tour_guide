@@ -11,9 +11,11 @@ class ObjectDetectionBody extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        SizedBox(height: 15,),
         PageButtons(),
         Flexible(fit: FlexFit.loose,child: ImagePreview()),
         ChatButton(),
+        SizedBox(height: 15,),
 
       ],
     );

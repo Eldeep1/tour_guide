@@ -56,8 +56,12 @@ class DetectionNotifier extends AsyncNotifier<DetectionState> {
       print(detections);
       print(detections.runtimeType);
       print("testttttttttttttttt");
-      detectionOutput=DetectionOutput.detected;
-
+      if(detections.isEmpty){
+        detectionOutput=DetectionOutput.noDetection;
+      }
+      else {
+        detectionOutput = DetectionOutput.detected;
+      }
     }
     catch(e){
       state=AsyncError(e.toString(), StackTrace.current);

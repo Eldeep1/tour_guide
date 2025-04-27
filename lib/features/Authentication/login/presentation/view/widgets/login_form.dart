@@ -20,6 +20,7 @@ class LoginForm extends ConsumerWidget {
     final loginProvider = ref.watch(loginPageProvider);
     final loginProviderData = ref.read(loginPageProvider.notifier);
 
+    bool passwordVisible=ref.watch(obscurePassword);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -33,6 +34,11 @@ class LoginForm extends ConsumerWidget {
           textEditingController: passwordController,
           width: itemsWidth,
           label: "Password",
+          obscureText: passwordVisible,
+            suffixIconClick: () {
+              ref.read(obscurePassword.notifier).state = !ref.read(obscurePassword);
+            },
+          suffixIcon: Icons.remove_red_eye_outlined
         ),
         const SizedBox(height: 12),
         loginProvider.when(

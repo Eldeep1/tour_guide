@@ -16,7 +16,8 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
 
   @override
   FutureOr<List<Data>> build() {
-    chatRepo=ref.watch(chatRepoProvider);
+
+    chatRepo=ref.read(chatRepoProvider);
     state = const AsyncLoading();
 
     return [];
@@ -39,6 +40,7 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
           (messages) {
             print("we got the messsssagesss");
             print(messages.data![0].prompt);
+            scrollToTheEnd();
             return state = AsyncData(messages.data ?? []);
           },
     );
@@ -47,7 +49,7 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
   Future<void> sendMessage({
     required String prompt,
   }) async {
-    final chatID = ref.watch(chatIDProvider);
+    final chatID = ref.read(chatIDProvider);
     final existing = state.value ?? [];
 
     if(ref.read(sendingMessage)){
@@ -68,6 +70,7 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
 
     result.fold(
           (failure) {
+            print(failure.message);
         // Replace the last item (the loading one) with an error message
         final errorMessage = Data(prompt: prompt, response: "Error: ${failure.message}");
         final updated = [...existing, errorMessage];
@@ -82,6 +85,7 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
         final successMessage = Data(prompt: prompt, response: response.response);
         final updated = [...existing, successMessage];
         state = AsyncData(updated);
+        scrollToTheEnd();
       },
     );
   }
@@ -97,5 +101,10 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
     // Reset the input field as well if needed
     ref.read(sendMessageFormController).text = "";
   }
+
+void scrollToTheEnd(){
+    ref.read(scrollController).jumpTo(ref.read(scrollController).position.maxScrollExtent);
+}
+
 
 }

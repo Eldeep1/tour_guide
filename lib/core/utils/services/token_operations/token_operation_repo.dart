@@ -32,4 +32,5 @@ abstract class TokenOperation{
   Future<Either<Failure, String>> refreshTheToken({
     required String refreshToken,
   });
+  Future<void> logout({required String refreshToken});
 }

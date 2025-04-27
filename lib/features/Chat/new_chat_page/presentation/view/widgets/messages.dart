@@ -1,16 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:lottie/lottie.dart';
 import 'package:tour_guide/core/themes/darkTheme.dart';
+import 'package:tour_guide/core/utils/Assets/assets.dart';
 
-BoxDecoration messageDecoration({
-  required color,
-}) =>
+BoxDecoration responseMessageDecoration=    BoxDecoration(
+  color: Color(0xff10183a),
+  borderRadius: BorderRadius.circular(12), // Add border radius once
+);
+
+BoxDecoration errorMessageDecoration= BoxDecoration(
+  color: Colors.red,
+  borderRadius: BorderRadius.circular(12), // Add border radius once
+);
+BoxDecoration requestMessageDecoration=
     BoxDecoration(
-      color: color,
+      gradient: LinearGradient(colors: [Color(0xff2c41ff),Color(0xff00a3ff)]),
       borderRadius: BorderRadius.circular(12), // Add border radius once
     );
+
+Widget chatIcon = Image.asset(
+  width: 60,
+  height: 70,
+  Assets.modelIcon,
+  fit: BoxFit.cover, // or BoxFit.fill depending on how you want it
+);
 
 const messagePadding = EdgeInsets.all(16.0);
 
@@ -22,7 +36,8 @@ Widget responseMessageContainer(context,String message,{bool error=false}){
   final messageStyle = Theme.of(context).textTheme.bodyMedium;
 
   return Container(
-    decoration: messageDecoration(color:error?Colors.red: answerMessageColor),
+
+    decoration:error? errorMessageDecoration:responseMessageDecoration,
     child: Padding(
       padding: messagePadding,
       child: MarkdownBody(
@@ -43,27 +58,17 @@ Widget answerMessageBuilder({required String message, bool isLoading = false}) {
       return Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              alignment: AlignmentDirectional.topStart,
-              width: (constraints.maxWidth / 2) + 30,
-              child: isLoading
-                  ? Stack(
-                      children: [
-                        // responseMessageContainer(context,"Loading Response"),
-
-                        Shimmer.fromColors(
-                          baseColor: shimmerBaseColor,
-                          highlightColor: answerMessageColor,
-                          child: responseMessageContainer(context,message),
-
-                        ),
-                      ],
-                    )
-                  : responseMessageContainer(context,message),
-            ),
+          chatIcon,
+          Container(
+            alignment: AlignmentDirectional.topStart,
+            width: constraints.maxWidth/1.3 ,
+            child: isLoading
+                ? Align(
+                alignment: AlignmentDirectional.topStart,
+                child: LottieBuilder.asset("assets/lotties/loading_message.json"))
+                : responseMessageContainer(context,message),
           ),
         ],
       );
@@ -72,9 +77,7 @@ Widget answerMessageBuilder({required String message, bool isLoading = false}) {
 }
 
 Widget promptMessageBuilder(
-  String message, {
-  bool isLoading = false,
-}) {
+  String message) {
   return LayoutBuilder(
     builder: (context, constraints) => Row(
       mainAxisSize: MainAxisSize.max,
@@ -85,31 +88,15 @@ Widget promptMessageBuilder(
           child: Container(
             alignment: AlignmentDirectional.topEnd,
             width: (constraints.maxWidth / 2) + 30,
-            child: Consumer(
-              builder: (context, ref, child) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Stack(
                   children: [
-                      Stack(
-                        children: [
-                          promptMessageContainer(context,message),
-                          if (isLoading)
-                          Shimmer.fromColors(
-                              baseColor: Colors.amber.withAlpha(150),
-                              highlightColor: Colors.amberAccent.withAlpha(150),
-                              child: Padding(
-                                padding: messagePadding,
-                                child: Text(
-                                  message,
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
-                                ),
-                              )),
-                        ],
-                      ),
+                    promptMessageContainer(context,message),
                   ],
-                );
-              },
+                ),
+              ],
             ),
           ),
         ),
@@ -121,7 +108,7 @@ Widget promptMessageBuilder(
 Widget promptMessageContainer(context, String message){
   return Container(
     decoration:
-    messageDecoration(color: promptMessageColor),
+    requestMessageDecoration,
     child: Padding(
       padding: messagePadding,
       child: Text(
@@ -140,15 +127,14 @@ Widget errorMessageBuilder(String message) {
       return Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              alignment: AlignmentDirectional.topStart,
-              width: (constraints.maxWidth / 2) + 30,
+          chatIcon,
+          Container(
+            alignment: AlignmentDirectional.topStart,
+            width: (constraints.maxWidth / 2) + 30,
 
-                   child: responseMessageContainer(context,message,error: true),
-            ),
+                 child: responseMessageContainer(context,message,error: true),
           ),
         ],
       );

@@ -21,7 +21,7 @@ class PageButtons extends ConsumerWidget {
             onPressed: ()  async {
 
               ref.read(imagePathProvider.notifier).state=await ImagePickerService.captureImage();
-
+              ref.read(detectionProvider.notifier).predict();
 
             }, child: Text("Take Picture!",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 16),)),
         SizedBox(width: 12,),

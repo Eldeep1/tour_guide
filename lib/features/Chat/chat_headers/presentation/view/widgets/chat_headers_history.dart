@@ -48,28 +48,44 @@ class ChatHeaderHistory extends ConsumerWidget {
       );
 
     }, error: (error, stackTrace) {
-      return Padding(
-        padding: const EdgeInsets.only(top: 16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            OutlinedButton(onPressed: (){
-              ref.read(sideBarProvider.notifier).refreshHeaders();
-            }, child: Icon(Icons.refresh,color: Colors.redAccent,size: 30,),),
-
-            SizedBox(height: 8,),
-
-            Text(error.toString(),style: TextStyle(color: Colors.red),)
-          ],
+      return Expanded( // <-- Important to expand like your data case
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min, // <-- Important! Makes the Column take only the needed space
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              OutlinedButton(
+                onPressed: () {
+                  ref.read(sideBarProvider.notifier).refreshHeaders();
+                },
+                child: Icon(Icons.refresh, color: Colors.amber, size: 30),
+              ),
+              SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16), // Optional if you want spacing
+                child: Text(
+                  error.toString(),
+                  textAlign: TextAlign.center, // Optional to center text
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
+            ],
+          ),
         ),
       );
-    }, loading: () {
+    },
+        loading: () {
+          return Expanded(
+            child: Center(
+              child: Shimmer.fromColors(
+                baseColor: Colors.grey,
+                highlightColor: Colors.amber,
+                child: const CircularProgressIndicator(),
+              ),
+            ),
+          );
+        },
 
-      return Shimmer.fromColors(
-        baseColor: Colors.grey,
-        highlightColor: Colors.amber,
-        child: const CircularProgressIndicator(),
-      );
-    },);
+        );
   }
 }

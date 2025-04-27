@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/chat_messages_provider.dart';
+import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/page_variables_provider.dart';
 
 
 import 'messages.dart';
@@ -23,6 +24,7 @@ class NewChatPageBodyBuilder extends ConsumerWidget {
               }
 
               return ListView.builder(
+                controller: ref.watch(scrollController),
                 padding: const EdgeInsets.all(8),
                 itemCount: messages.length,
                 itemBuilder: (context, index) {
@@ -31,7 +33,7 @@ class NewChatPageBodyBuilder extends ConsumerWidget {
                   if (message.response == null) {
                     return Column(
                       children: [
-                        promptMessageBuilder(message.prompt!,isLoading: false),
+                        promptMessageBuilder(message.prompt!),
                         answerMessageBuilder(message:"Loading Response",isLoading: true),
                       ],
                     );
@@ -58,7 +60,11 @@ class NewChatPageBodyBuilder extends ConsumerWidget {
               );
             },
             loading: () => const Center(child: CircularProgressIndicator()),
-            error: (error, _) => SingleChildScrollView(child: Center(child: Text("Error: $error"))),
+            error: (error, _) {
+              print("hmm, interesting");
+              print(error);
+              return SingleChildScrollView(child: Center(child: Text("Error: $error")));
+            },
           ),
         ),
          SendMessageFormFieldBuilder(),

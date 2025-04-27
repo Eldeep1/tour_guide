@@ -21,3 +21,5 @@ final sendMessageFormController = Provider<TextEditingController>(
 final sendingMessage=StateProvider<bool>((ref) {
   return false;
 },);
+
+final scrollController=Provider<ScrollController>((ref) => ScrollController(),);

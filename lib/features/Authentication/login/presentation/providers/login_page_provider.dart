@@ -19,19 +19,27 @@ class LoginPageNotifier extends AsyncNotifier<LoginResponse>{
     loginRepo=ref.watch(loginRepoProvider);
     return ref.watch(loginResponseProvider);
   }
-  Future<void>login({
+  Future<void> login({
     required LoginRequest loginRequest,
-}) async {
-    state = AsyncValue.loading();
-    final result =await loginRepo.login(loginRequest: loginRequest);
+  }) async {
+    state = const AsyncValue.loading();
+
+    // 🛑 cache the providers before the await
+    final loginResponseNotifier = ref.read(loginResponseProvider.notifier);
+    final authStatusNotifier = ref.read(authServiceProvider.notifier);
+
+    final result = await loginRepo.login(loginRequest: loginRequest);
 
     result.fold(
-        (failure){
-         state= AsyncError(failure.message, StackTrace.current);
-        }, (loginResponse){
-          ref.read(loginResponseProvider.notifier).state=loginResponse;
-          ref.read(authServiceProvider.notifier).state=AsyncValue.data(AuthStatus.authenticated);
-          state= AsyncData(loginResponse);
-    });
+          (failure) {
+        state = AsyncValue.error(failure.message, StackTrace.current);
+      },
+          (loginResponse) {
+        loginResponseNotifier.state = loginResponse;
+        authStatusNotifier.state = const AsyncValue.data(AuthStatus.authenticated);
+        state = AsyncValue.data(loginResponse);
+      },
+    );
   }
+
 }

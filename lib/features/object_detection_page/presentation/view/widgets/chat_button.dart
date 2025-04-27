@@ -17,7 +17,20 @@ class ChatButton extends ConsumerWidget {
         style: ButtonStyle(
           backgroundColor: WidgetStatePropertyAll(Colors.amber),
         ),
-        onPressed: () {}, // optional action
+        onPressed: () {showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            backgroundColor: Colors.black,
+            content: Column(
+              mainAxisSize: MainAxisSize.min, // 👈 VERY IMPORTANT
+              children: const [
+                Text("الحقنا بال endpoint يا لطفي",textDirection: TextDirection.rtl,),
+              ],
+            ),
+          ),
+        );
+
+        },
         child: Text(
           "Chat About ${state!.detections.map((d) => d['class'].toString()).join(', ')}",
           style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),

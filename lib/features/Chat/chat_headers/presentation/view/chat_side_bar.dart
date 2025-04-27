@@ -8,11 +8,7 @@ class ChatPageSideBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.black,
-      child: Padding(
-        padding: const EdgeInsets.all(screenPadding),
-        child: SideBarBodyBuilder()
-      ),
+      child: SideBarBodyBuilder(),
     );
   }
 }

@@ -14,6 +14,7 @@ Widget formFieldBuilder({
   VoidCallback? suffixIconClick,
   TextInputType? keyBoardType,
   bool enabled = true,
+  bool obscureText = false,
   // TextStyle labelTextStyle = textFormFieldTextStyle,
 }) {
   return SizedBox(
@@ -21,6 +22,7 @@ Widget formFieldBuilder({
   child:Padding(
     padding: EdgeInsets.symmetric( vertical: 5), // Reduced outer padding
     child: TextFormField(
+      obscureText: obscureText,
       controller: textEditingController,
       enabled: enabled,
       keyboardType: keyBoardType,

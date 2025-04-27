@@ -18,9 +18,11 @@ class SignUpPageBodyBuilder extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final nameController=ref.read(registerFormProvider.notifier).nameController;
-    final emailController=ref.read(registerFormProvider.notifier).emailController;
-    final passwordController=ref.read(registerFormProvider.notifier).passwordController;
+    final form = ref.watch(registerFormProvider); // <--- watch the provider itself
+    final nameController = form.nameController;
+    final emailController = form.emailController;
+    final passwordController = form.passwordController;
+    bool passwordVisibility = form.isPasswordVisible;
     return Padding(
       padding: const EdgeInsets.all(screenPadding),
       child: SingleChildScrollView(
@@ -30,11 +32,18 @@ class SignUpPageBodyBuilder extends ConsumerWidget {
           children: [
             txtHeader(context,"Sign up","Create a new account"),
 
+            SizedBox(height: 12,),
 
-            formFieldBuilder(label: "Name",width: itemsWidth,textEditingController: nameController),
-            formFieldBuilder(label: "Email",width: itemsWidth,textEditingController: emailController),
+            formFieldBuilder(label: "Name",width: itemsWidth,textEditingController: nameController,keyBoardType: TextInputType.name),
+            formFieldBuilder(label: "Email",width: itemsWidth,textEditingController: emailController,keyBoardType: TextInputType.emailAddress),
             // formFieldBuilder(label: "Phone",width: itemsWidth),
-            formFieldBuilder(label: "password",width: itemsWidth,textEditingController:passwordController),
+            formFieldBuilder(label: "password",width: itemsWidth,
+              textEditingController:passwordController,obscureText: !passwordVisibility,
+              suffixIcon: Icons.remove_red_eye_outlined,suffixIconClick: () {
+
+              ref.read(registerFormProvider.notifier).togglePasswordVisibility();
+            },),
+            SizedBox(height: 12,),
 
             Row(
               children: [

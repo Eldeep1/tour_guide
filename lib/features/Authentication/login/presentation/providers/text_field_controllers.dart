@@ -14,3 +14,6 @@ final passwordControllerProvider = Provider.autoDispose<TextEditingController>((
   ref.onDispose(() => controller.dispose());
   return controller;
 });
+final obscurePassword = StateProvider<bool>((ref) {
+  return true;
+});

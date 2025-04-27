@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 const Color mainColor=Colors.amber;
-const Color widgetsInMainColor=Colors.black;
+const Color widgetsInMainColor=Colors.white;
+const Color appBarColor=Color(0xff0A0F2C);
+
+const buttonColor=Color(0xff1e2f73);
+
 //we are having three colors
 //1- the main color, which is the app bar and buttons color ->amber
 //3- the text inside the buttons ->black
@@ -65,14 +69,14 @@ final ThemeData lightTheme=ThemeData(
     appBarTheme: AppBarTheme(
         color: mainColor,
         actionsIconTheme: IconThemeData(
-          size: 40,
+          size: 30,
           color: widgetsInMainColor,
         )
     ),
     textTheme: TextTheme(
       titleLarge: TextStyle(
         fontWeight: FontWeight.bold,
-        fontSize: 18,
+        fontSize: 16,
         color: widgetsInMainColor,
 
       ),

@@ -21,12 +21,7 @@ class LoginPageView extends ConsumerWidget {
           if (data.refreshToken.isNotEmpty) {
             print(data.refreshToken);
             print("alooooooo");
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const NewChatPageView(),
-              ),
-            );
+
           }
         },
         error: (error, _) {
@@ -46,7 +41,7 @@ class LoginPageView extends ConsumerWidget {
                 ? constraints.maxWidth / 3
                 : constraints.maxWidth / 2;
 
-            Widget body = pageBodyBuilder(context, itemsWidth);
+            Widget body = Center(child: pageBodyBuilder(context, itemsWidth));
 
             return constraints.maxWidth > largeScreenSize
                 ? Row(
@@ -57,7 +52,15 @@ class LoginPageView extends ConsumerWidget {
             )
                 : Stack(
               children: [
-                backgroundImage(.5),
+                // backgroundImage(.5),
+            Container(
+            decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xff000412), Color(0xff070E26), Colors.deepPurple,],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            ),),
                 body,
               ],
             );

@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tour_guide/core/themes/darkTheme.dart';
 import 'package:tour_guide/features/Authentication/widgets/back_ground_image.dart';
 import 'package:tour_guide/constants.dart';
 
@@ -12,7 +13,12 @@ class RegisterPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: appBarColor,
+        iconTheme: IconThemeData(
+          color: Colors.white, // Set the back icon color to white
+        ),
+      ),
       body: LayoutBuilder(builder: (context, constraints) {
         if(constraints.maxWidth>largeScreenSize)
         {
@@ -26,7 +32,13 @@ class RegisterPage extends ConsumerWidget {
         }
         else{
           double itemsWidth=constraints.maxWidth/2;
-          return SignUpPageBodyBuilder(itemsWidth: itemsWidth);
+          return Stack(
+
+            children: [
+              backgroundGradient,
+              Center(child: SignUpPageBodyBuilder(itemsWidth: itemsWidth)),
+            ],
+          );
         }
       },),
 

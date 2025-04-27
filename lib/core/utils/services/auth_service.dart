@@ -137,4 +137,20 @@ class AuthServiceNotifier extends AsyncNotifier<AuthStatus>{
   Future<void> clearTheTokens()async{
     await tokenOperation.deleteTokens();
   }
+  Future<void> logOut()async{
+    print("we are on the logut");
+
+    // state = AsyncData(AuthStatus.notAuthenticated);
+    state = AsyncData(AuthStatus.notAuthenticated);
+    try{
+      state = AsyncData(AuthStatus.notAuthenticated);
+
+      await tokenOperation.logout(refreshToken: ref.read(loginResponseProvider).refreshToken);
+    }
+    catch(e){
+      state = AsyncData(AuthStatus.notAuthenticated);
+
+    print("we are having an error");
+    }
+  }
 }

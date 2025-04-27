@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tour_guide/core/themes/darkTheme.dart';
-import 'package:tour_guide/core/utils/services/token_operations/token_operation_repo.dart';
-import 'package:tour_guide/core/utils/services/token_operations/token_operations_imp.dart';
+
 import 'package:tour_guide/features/Authentication/login/presentation/view/login_page_view.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/presentation/view/new_chat_page_view.dart';
-import 'package:tour_guide/features/object_detection_page/presentation/view/object_detection_page.dart';
 
-import 'constants.dart';
 import 'core/utils/services/auth_service.dart';
 
 
@@ -60,6 +57,7 @@ class AuthGate extends ConsumerWidget {
         return const LoginPageView();
       },
       data: (status) {
+        print("this is the status from the main");
         print(status);
         switch (status) {
           case AuthStatus.authenticated:

@@ -119,4 +119,12 @@ class TokenOperationsImp extends TokenOperation {
       return left(NewFailure(e.toString()));
     }
   }
+  
+  Future<void> logout({
+    required String refreshToken,
+})async {
+    Map<String, dynamic> parameters={"refresh":refreshToken};
+    await deleteTokens();
+    await apiService.post(endPoint: ApiEndpoints.logOut,parameters: parameters);
+  }
 }

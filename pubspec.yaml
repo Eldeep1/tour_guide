@@ -50,6 +50,7 @@ dependencies:
   fluttertoast: ^8.2.12
   ultralytics_yolo: ^0.0.7
   lottie: ^3.3.1
+  popover: ^0.3.1
 
 dev_dependencies:
   flutter_launcher_icons: "^0.14.3"
@@ -87,12 +88,12 @@ flutter_launcher_icons:
 flutter:
   assets:
     - assets/images/lol.png
-    - assets/icons/mobile/sidebar_open.svg
+    - assets/icons/mobile/robot_icon.svg
 #    - assets/model/best_float16.tflite
 #    - assets/model/metadata.yaml
     - assets/labels.txt
-    - assets/lotties/detection.json
-    - assets/lotties/detect.json
+    - assets/lotties/
+    - assets/icons/robot2.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

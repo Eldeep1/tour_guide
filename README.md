@@ -1,12 +1,24 @@
 # tour_guide
 
 ## didn't done yet:
-### loaded chat page & new chat page:
-1. the data layer of loaded chat page
-2. the view_model layer of loaded chat page
-### computer vision:
-1. add the new model implementation!
+1. adding scrolling controller
+2. lottie animation
+3. navigation animations
+4. user settings?
+5. white theme
+6. theme transition
+7. splash screen
+8. no internet page
+9. logout button
+10. ~~messages shouldn't divide the page horizontally~~
+11. ~~hide passwords when bing written and add eye icon~~
+12. ~~changing the text form field height~~
+13. ~~changing the text form field icons!~~
+14. add validation on login, register and chat page!
+
 
 ## notes:
 - will dio request headers change over time?
 - what about adding analytics?
+- when logout, we are simply deleting the token from the storage and call the endpoint
+    - what if the end point returned bad response?

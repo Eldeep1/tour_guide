@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:tour_guide/core/themes/darkTheme.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/chat_messages_provider.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/page_variables_provider.dart';
@@ -19,20 +18,27 @@ class SendMessageFormFieldBuilder extends StatelessWidget {
         final newMessage=ref.read(chatDataProvider.notifier);
         final controller=ref.read(sendMessageFormController);
         return SizedBox(
-          height: 100,
-          child: TextFormField(
-            controller: controller,
-            style: Theme.of(context).textTheme.bodyMedium,
-            minLines: null,
-            maxLines: null,
-            expands: true,
-            // textAlignVertical: TextAlignVertical.top,
-            decoration: InputDecoration(
-              hintText: "Ask anything",
-              // contentPadding: EdgeInsets.fromLTRB(16, 16, 16, 16),
-              suffixIcon: Padding(
-                padding: const EdgeInsets.only(right: 8.0),
+          height: 70,
+          child: Row(
+            children: [
+              Expanded(
+                child: TextFormField(
+                  controller: controller,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  minLines: null,
+                  maxLines: null,
+                  expands: true,
+                  // textAlignVertical: TextAlignVertical.top,
+                  decoration: InputDecoration(
+                    hintText: "Ask anything",
+                    // contentPadding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Row(
+
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
@@ -44,11 +50,13 @@ class SendMessageFormFieldBuilder extends StatelessWidget {
                         },));
                       },
                       icon: CircleAvatar(
-                        backgroundColor: mainColor,
-                        radius: 16,
-                        child: Icon(Icons.smart_toy_outlined,),
+                        backgroundColor: buttonColor,
+                        radius: 30,
+                        child: Icon(Icons.smart_toy_outlined,color: Colors.white,),
                       ),
                     ),
+
+                    SizedBox(width: 8,),
                     IconButton(
                       padding: EdgeInsetsDirectional.zero,
                       visualDensity: VisualDensity.compact,
@@ -56,15 +64,15 @@ class SendMessageFormFieldBuilder extends StatelessWidget {
                         newMessage.sendMessage(prompt: controller.text);
                       },
                       icon: CircleAvatar(
-                        backgroundColor: mainColor,
-                        radius: 16,
-                        child: Icon(Icons.arrow_upward_sharp,),
+                        backgroundColor: buttonColor,
+                        radius: 30,
+                        child: Icon(Icons.send_outlined,color: Colors.white,),
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
+            ],
           ),
         );
       },

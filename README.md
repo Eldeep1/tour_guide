@@ -1,7 +1,7 @@
 # tour_guide
 
 ## didn't done yet:
-1. adding scrolling controller
+1. ~~adding scrolling controller~~
 2. lottie animation
 3. navigation animations
 4. user settings?
@@ -9,7 +9,7 @@
 6. theme transition
 7. splash screen
 8. no internet page
-9. logout button
+9. ~~logout button~~
 10. ~~messages shouldn't divide the page horizontally~~
 11. ~~hide passwords when bing written and add eye icon~~
 12. ~~changing the text form field height~~

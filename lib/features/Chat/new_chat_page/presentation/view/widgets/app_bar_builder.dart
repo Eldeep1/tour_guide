@@ -42,8 +42,8 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
                 context: buttonContext,
                 bodyBuilder: (context) => MenuItems(),
                 direction: PopoverDirection.top,
-                width: 100,
-                height: 50,
+                width: 120,
+                height: 100,
                 backgroundColor:Color(0xff1e2f73),
               );
             },

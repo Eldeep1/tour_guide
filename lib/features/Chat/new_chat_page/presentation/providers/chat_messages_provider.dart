@@ -90,11 +90,12 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
 
 
         if (chatWasEmpty) {
+          print("we are here");
           newHeader(response);
+          ref.read(appBarHeaderProvider.notifier).state=response.chatTitle??"AI TOUR GUIDE";
         }
         print(response);
         print("this is the chat title : ${response.chatTitle}");
-        ref.read(appBarHeaderProvider.notifier).state=response.chatTitle??"AI TOUR GUIDE";
         // Replace the last item (loading) with actual response
         final successMessage = Data(prompt: prompt, response: response.response);
         final updated = [...existing, successMessage];
@@ -106,7 +107,6 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
   void newHeader(response){
     print("we are here");
     print("new header!");
-    print(ref.read(chatHeadersProvider).data!.length);
 
     final currentSideBar=ref.read(sideBarProvider.notifier);
     currentSideBar.addNewHeader(HeadersData(title: response.chatTitle,id: response.chatId));

@@ -18,7 +18,10 @@ class ImagePreview extends ConsumerWidget {
           // if (state.annotatedImage != null)
           //   Image.memory(state.annotatedImage!, width: double.infinity,fit: BoxFit.fill,)
            if (state.imageBytes != null)
-             Image.memory(state.imageBytes!,width: double.infinity,fit: BoxFit.fill,),
+             SizedBox(
+                 width: MediaQuery.of(context).size.width/2,
+                 height: MediaQuery.of(context).size.height/2,
+                 child: Image.memory(state.imageBytes!,width: double.infinity,fit: BoxFit.fill,)),
           const SizedBox(height: 10),
 
         ],

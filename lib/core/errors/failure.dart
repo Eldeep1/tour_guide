@@ -58,13 +58,10 @@ class ServerFailure extends Failure {
           "Invalid security certificate. Try a different network.",
           type: ServerErrorType.network,
         );
-
       case DioExceptionType.badResponse:
         try {
           final statusCode = e.response?.statusCode ?? 0;
-          print("here comes the data");
           final data = e.response?.data;
-          print(data);
 
           String message = "Something went wrong.";
 
@@ -73,16 +70,20 @@ class ServerFailure extends Failure {
               message = data['detail'].toString();
             } else if (data.containsKey('error')) {
               final errorData = data['error'];
+
               if (errorData is Map) {
-                message = errorData.entries.map((e) {
-                  final field = e.key;
-                  final messages = (e.value as List).join(", ");
-                  return "$field: $messages";
-                }).join("\n");
+                // Check if 'detail' exists inside 'error'
+                if (errorData.containsKey('detail')) {
+                  message = errorData['detail'].toString();
+                } else {
+                  // Otherwise, parse all entries normally
+                  message = errorData.entries.map((entry) {
+                    return "${entry.key}: ${entry.value}";
+                  }).join("\n");
+                }
               } else {
                 message = errorData.toString();
               }
-
             } else if (data.containsKey('message')) {
               message = data['message'].toString();
             }
@@ -93,7 +94,7 @@ class ServerFailure extends Failure {
           if (statusCode >= 400 && statusCode < 500) {
             return ServerFailure(
               message,
-              type: statusCode == 401 || statusCode == 403
+              type: (statusCode == 401 || statusCode == 403)
                   ? ServerErrorType.authentication
                   : ServerErrorType.client,
             );

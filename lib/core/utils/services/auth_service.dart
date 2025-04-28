@@ -155,6 +155,7 @@ class AuthServiceNotifier extends AsyncNotifier<AuthStatus>{
        ref.invalidate(loginResponseProvider);
        ref.invalidate(chatHeadersProvider);
        ref.invalidate(sideBarProvider);
+       ref.invalidate(sideBarProvider);
        ref.invalidate(chatDataProvider);
        ref.invalidate(chatRepoProvider);
        ref.invalidate(appBarHeaderProvider);

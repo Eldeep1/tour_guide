@@ -16,6 +16,7 @@
 13. ~~changing the text form field icons!~~
 14. add validation on login, register and chat page!
 15. what about iphone?
+16. delete the form fields when navigating to another pages?
 
 
 ## notes:

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final registerFormProvider=ChangeNotifierProvider<RegisterFormProvider>((ref) {
+final registerFormProvider=AutoDisposeChangeNotifierProvider<RegisterFormProvider>((ref) {
   return RegisterFormProvider();
 },);
 

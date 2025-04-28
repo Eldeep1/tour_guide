@@ -44,7 +44,6 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
-    # Only create a release when a tag is pushed
     if: startsWith(github.ref, 'refs/tags/')
 
     steps:
@@ -53,19 +52,24 @@ jobs:
         with:
           name: release-apk
 
-      - name: Get version from tag
-        id: get_version
-        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+      - name: Install GitHub CLI
+        run: sudo apt-get update && sudo apt-get install gh -y
 
-      - name: Create Release
-        id: create_release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ github.ref }}
-          name: Release ${{ steps.get_version.outputs.VERSION }}
-          draft: false
-          prerelease: false
-          files: app-release.apk
+      - name: Prepare variables
+        id: vars
+        run: |
+          echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          echo "repo=oyounis19/GP-Tour-Guide" >> $GITHUB_OUTPUT
+
+      - name: Upload Release to Other Repo
+        env:
+          GH_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
+        run: |
+          gh release create "${{ github.ref_name }}" \
+            "release-apk/app-release.apk" \
+            --repo "${{ steps.vars.outputs.repo }}" \
+            --title "Release ${{ steps.vars.outputs.version }}" \
+            --notes "Automated release for version ${{ steps.vars.outputs.version }}"
 
   deploy:
     needs: build

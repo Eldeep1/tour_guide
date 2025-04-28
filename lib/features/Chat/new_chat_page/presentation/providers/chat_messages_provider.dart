@@ -49,65 +49,80 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
     );
   }
 
-  Future<void> sendMessage({
-    required String prompt,
-  }) async {
-    final chatID = ref.read(chatIDProvider);
-    final existing = state.value ?? [];
-    final chatWasEmpty = existing.isEmpty; // <--- check BEFORE adding loading
+   Future<void> sendMessage({
+     required String prompt,
+   }) async {
+     final chatID = ref.read(chatIDProvider);
+     final sendingNotifier = ref.read(sendingMessage.notifier);
+     final formController = ref.read(sendMessageFormController);
+     final appBarHeaderNotifier = ref.read(appBarHeaderProvider.notifier);
+     final chatIDNotifier = ref.read(chatIDProvider.notifier);
 
-    if(ref.read(sendingMessage)){
-      return ;
-    }
-    if(state.value!.isNotEmpty) {
-      scrollToTheEnd();
-    }
-    ref.read(sendingMessage.notifier).state=true;
-    ref.read(sendMessageFormController).text="";
+     final existing = state.value ?? [];
+     final chatWasEmpty = existing.isEmpty;
 
-    // Add a loading placeholder
-    final loadingMessage = Data(prompt: prompt, response: null);
-    final withLoading = [...existing, loadingMessage];
-    state = AsyncData(withLoading);
+     print(chatID);
 
-    print(chatID);
-    final result = await chatRepo!.sendMessage(message: prompt, chatID: chatID);
+     if (sendingNotifier.state ) {
+       return;
+     }
 
-    ref.read(sendingMessage.notifier).state=false;
-    scrollToTheEnd();
+     if(prompt.trim().isEmpty){
+       print(formController.text.toString());
+       return;
+     }
+     if (existing.isNotEmpty) {
+       scrollToTheEnd();
+     }
 
-    result.fold(
-          (failure) {
-            print(failure.message);
-        // Replace the last item (the loading one) with an error message
-        final errorMessage = Data(prompt: prompt, response: "Error: ${failure.message}");
-        final updated = [...existing, errorMessage];
-        state = AsyncData(updated);
-      },
-          (response) {
-        ref.read(chatIDProvider.notifier).state = response.chatId;
+     sendingNotifier.state = true;
+     formController.text = "";
 
+     // Add a loading placeholder
+     final loadingMessage = Data(prompt: prompt, response: null);
+     final withLoading = [...existing, loadingMessage];
+     state = AsyncData(withLoading);
 
+     print("is the chat id is null");
+     print(chatID);
 
-        if (chatWasEmpty) {
-          print("we are here");
-          newHeader(response);
-          ref.read(appBarHeaderProvider.notifier).state=response.chatTitle??"AI TOUR GUIDE";
-        }
-        print(response);
-        print("this is the chat title : ${response.chatTitle}");
-        // Replace the last item (loading) with actual response
-        final successMessage = Data(prompt: prompt, response: response.response);
-        final updated = [...existing, successMessage];
-        state = AsyncData(updated);
-        scrollToTheEnd();
-      },
-    );
-  }
-  void newHeader(response){
-    print("we are here");
-    print("new header!");
+     final result = await chatRepo!.sendMessage(message: prompt, chatID: chatID);
 
+     sendingNotifier.state = false;
+     scrollToTheEnd();
+
+     result.fold(
+           (failure) {
+         print(failure.message);
+         // Replace the last item (the loading one) with an error message
+         final errorMessage = Data(prompt: prompt, response: "Error: ${failure.message}");
+         final updated = [...existing, errorMessage];
+         state = AsyncData(updated);
+       },
+           (response) {
+
+         print("here we are checking for the chat id from the chat_messages_provider");
+         print("the chat id from the response is: ${response.chatId}");
+
+         if (chatWasEmpty) {
+           chatIDNotifier.state = response.chatId;
+           print("we are here");
+           newHeader(response); // Now this is safe
+           appBarHeaderNotifier.state = response.chatTitle ?? "AI TOUR GUIDE";
+         }
+
+         print(response);
+         print("this is the chat title : ${response.chatTitle}");
+         // Replace the last item (loading) with actual response
+         final successMessage = Data(prompt: prompt, response: response.response);
+         final updated = [...existing, successMessage];
+         state = AsyncData(updated);
+         scrollToTheEnd();
+       },
+     );
+   }
+
+   void newHeader(response){
     final currentSideBar=ref.read(sideBarProvider.notifier);
     currentSideBar.addNewHeader(HeadersData(title: response.chatTitle,id: response.chatId));
   }

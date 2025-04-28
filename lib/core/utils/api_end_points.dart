@@ -6,6 +6,7 @@ class ApiEndpoints {
   static const String register = "user/register/";
   static const String refreshAccess = "login-refresh/";
   static const String logOut = "logout/";
+  static const String verify = "login-verify/";
 
   // User
   static const String userData = "user/";

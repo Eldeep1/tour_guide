@@ -32,11 +32,13 @@ class ChatRepoImp extends ChatRepo{
   Future<Either<Failure, ChatResponse>> sendMessage({required String message, int? chatID}) async {
     try{
       Map<String,dynamic> parameters={"prompt":message,"chat_id":chatID};
+      print("chat id from the repo is : $chatID");
       final result=await apiService.post(
         endPoint: ApiEndpoints.askAQuestion,
         bearerToken: accessToken,
         parameters: parameters,
       );
+
       return right(ChatResponse.fromJson(result));
     }catch (e) {
       if (e is DioException) {

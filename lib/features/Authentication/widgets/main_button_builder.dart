@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:tour_guide/core/themes/darkTheme.dart';
 
-Widget mainButtonBuilder(txt,context,Function()? onPressFunction)=> Padding(
-  padding: const EdgeInsets.symmetric(vertical: 15.0),
-  child: ElevatedButton(
-    style: ButtonStyle(
-      backgroundColor: WidgetStatePropertyAll(buttonColor)
+Widget mainButtonBuilder(txt,context,Function()? onPressFunction)=> Row(
+  children: [
+    Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 15.0,horizontal: 30),
+        child: ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(buttonColor)
+          ),
+          onPressed: onPressFunction, child: Text(txt,style: Theme.of(context).textTheme.titleLarge),),
+      ),
     ),
-    onPressed: onPressFunction, child: Text(txt,style: Theme.of(context).textTheme.titleLarge),),
+  ],
 );
 
 //

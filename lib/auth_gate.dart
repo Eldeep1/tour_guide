@@ -9,21 +9,27 @@ import 'features/splash_screen/presentation/providers/provider.dart';
 import 'features/splash_screen/presentation/view/splash_screen.dart';
 
 class AuthGate extends ConsumerStatefulWidget {
-  const AuthGate({super.key});
+   const AuthGate({super.key,required this.animate});
 
+  final bool animate;
   @override
-  ConsumerState<AuthGate> createState() => _AuthGateState();
+  ConsumerState<AuthGate> createState() => _AuthGateState(animate);
 }
 
 class _AuthGateState extends ConsumerState<AuthGate> {
+  _AuthGateState(this.animate);
+  bool animate;
   @override
   void initState() {
-    super.initState();
-    // Start a timer when the widget is initialized
-    Timer(const Duration(seconds: 4), () {
-      // After 2 seconds, update the provider state
-      ref.read(splashTimerProvider.notifier).state = true;
-    });
+    if(animate==true){
+      super.initState();
+      // Start a timer when the widget is initialized
+      Timer(const Duration(seconds: 4), () {
+        // After 2 seconds, update the provider state
+        ref.read(splashTimerProvider.notifier).state = true;
+      });
+    }
+
   }
 
   @override
@@ -33,8 +39,8 @@ class _AuthGateState extends ConsumerState<AuthGate> {
 
     print("are you still alive?");
     // Return splash screen if either auth is loading OR minimum time hasn't passed
-    if (authStatus is AsyncLoading || !splashTimerCompleted) {
-      return SplashScreen();
+    if (animate && (authStatus is AsyncLoading || !splashTimerCompleted)) {
+    return SplashScreen();
     }
 
     // Handle error case

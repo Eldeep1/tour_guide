@@ -1,6 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:tour_guide/core/themes/darkTheme.dart';
+import 'package:tour_guide/features/Authentication/login/presentation/providers/login_page_provider.dart';
 import 'package:tour_guide/features/Authentication/register/presentation/view/register_page_view.dart';
 import 'package:tour_guide/features/Authentication/widgets/text_link_widget.dart';
 import 'package:tour_guide/features/Authentication/widgets/txt_header.dart';
@@ -15,15 +18,15 @@ Widget pageBodyBuilder(BuildContext context, double itemsWidth) {
         children: [
           txtHeader(context, "Sign in", "Log in to your account"),
           const SizedBox(height: 12),
-          LoginForm(itemsWidth: itemsWidth),
+          LoginForm(),
           textLinkWidget(
             "New Tourist?",
             " Create New Account",
                 () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => RegisterPage()),
-              );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RegisterPage()),
+                  );
             },
             context,
           ),
@@ -32,4 +35,3 @@ Widget pageBodyBuilder(BuildContext context, double itemsWidth) {
     ),
   );
 }
-

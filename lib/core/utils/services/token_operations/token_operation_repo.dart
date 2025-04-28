@@ -19,7 +19,7 @@ abstract class TokenOperation{
   });
 
   //is that even useful?
-  Future<Either<Failure,ChatHeaders>> verifyToken({
+  Future<Either<Failure,void>> verifyToken({
     required LoginResponse loginResponse,
   });
 

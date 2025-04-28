@@ -76,19 +76,22 @@ class TokenOperationsImp extends TokenOperation {
   }
 
   @override
-  Future<Either<Failure, ChatHeaders>> verifyToken(
+  Future<Either<Failure, void>> verifyToken(
       {required LoginResponse loginResponse}) async {
     try {
 
+      Map<String,dynamic> parameters={"token":loginResponse.accessToken};
 
-    final chatHeaders= await apiService.get(
-        endPoint: ApiEndpoints.getAllChats,
-        bearerToken: loginResponse.accessToken,
+    final verify= await apiService.post(
+        endPoint: ApiEndpoints.verify,
+        parameters: parameters,
       );
 
-    return right(ChatHeaders.fromJson(chatHeaders));
+    return right(null);
 
     } catch (e) {
+      print(e);
+      print("the verification request error:");
       if (e is DioException) {
         return left(ServerFailure.fromDioError(e));
       }
@@ -124,7 +127,9 @@ class TokenOperationsImp extends TokenOperation {
     required String refreshToken,
 })async {
     Map<String, dynamic> parameters={"refresh":refreshToken};
+    print(parameters);
+    print("that was the logout params");
     await deleteTokens();
-    // await apiService.post(endPoint: ApiEndpoints.logOut,parameters: parameters);
+    await apiService.post(endPoint: ApiEndpoints.logOut,parameters: parameters);
   }
 }

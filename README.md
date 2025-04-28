@@ -21,6 +21,7 @@
 
 ## notes:
 - will dio request headers change over time? ّّ
+- multi threading in dio network requests?
 - think that chat headers provider is uselss
 - - what about adding analytics?
 - when logout, we are simply deleting the token from the storage and call the endpoint

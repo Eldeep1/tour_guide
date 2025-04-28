@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       title: 'AI Tour Guide',
       theme: lightTheme,
       debugShowCheckedModeBanner: false,
-      home: AuthGate(),
+      home: AuthGate(animate: true,),
     );
   }
 }

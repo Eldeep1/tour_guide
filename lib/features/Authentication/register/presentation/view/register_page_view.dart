@@ -22,21 +22,19 @@ class RegisterPage extends ConsumerWidget {
       body: LayoutBuilder(builder: (context, constraints) {
         if(constraints.maxWidth>largeScreenSize)
         {
-          double itemsWidth=constraints.maxWidth/3;
           return Row(
             children: [
-              Expanded(child: SignUpPageBodyBuilder(itemsWidth: itemsWidth)),
+              Expanded(child: SignUpPageBodyBuilder()),
               Expanded(child: backgroundImage(1))
             ],
           );
         }
         else{
-          double itemsWidth=constraints.maxWidth/2;
           return Stack(
 
             children: [
               backgroundGradient,
-              Center(child: SignUpPageBodyBuilder(itemsWidth: itemsWidth)),
+              Center(child: SignUpPageBodyBuilder()),
             ],
           );
         }

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tour_guide/auth_gate.dart';
 import 'package:tour_guide/core/utils/services/auth_service.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class MenuItems extends StatelessWidget {
   const MenuItems({super.key});
@@ -39,9 +40,12 @@ class MenuItems extends StatelessWidget {
         ),        Row(
           children: [
             Expanded(child: TextButton(
-              onPressed: (){
-                callPhoneNumber('01027520808');
-                Navigator.of(context, rootNavigator: true).pop();
+              onPressed: ()async{
+               await callPhoneNumber('01027520808',context);
+
+               WidgetsBinding.instance.addPostFrameCallback((_) {
+                 Navigator.of(context, rootNavigator: true).pop();
+               });
               }, child: Text(
               "Rate The App",
               style: TextStyle(
@@ -57,14 +61,30 @@ class MenuItems extends StatelessWidget {
   }
 }
 
-Future<void> callPhoneNumber(String phoneNumber) async {
-  final Uri phoneUri = Uri(scheme: 'tel', path: phoneNumber);
+Future<void> callPhoneNumber(String phoneNumber,context) async {
+  // Request phone call permission
+  var status = await Permission.phone.request();
 
-  print(phoneUri.toString());
-  if (await canLaunchUrl(phoneUri)) {
-    await launchUrl(phoneUri);
+  if (status.isGranted) {
+    final Uri phoneUri = Uri.parse('tel:$phoneNumber');
+
+    try {
+      if (await canLaunchUrl(phoneUri)) {
+        await launchUrl(phoneUri);
+      } else {
+        // Handle case where dialer can't be launched
+        throw 'Could not launch phone dialer';
+      }
+    } catch (e) {
+      // Show user-friendly error
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Unable to make a call: $e')),
+      );
+    }
   } else {
-    throw Exception('Could not launch $phoneUri');
+    // Permission denied
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Phone call permission is required')),
+    );
   }
 }
-

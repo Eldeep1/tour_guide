@@ -51,25 +51,25 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: release-apk
+          path: .
+
+      - name: List files
+        run: ls -l
 
       - name: Install GitHub CLI
-        run: sudo apt-get update && sudo apt-get install gh -y
-
-      - name: Prepare variables
-        id: vars
         run: |
-          echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
-          echo "repo=oyounis19/GP-Tour-Guide" >> $GITHUB_OUTPUT
+          sudo apt-get update
+          sudo apt-get install gh -y
 
       - name: Upload Release to Other Repo
         env:
           GH_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
         run: |
           gh release create "${{ github.ref_name }}" \
-            "release-apk/app-release.apk" \
-            --repo "${{ steps.vars.outputs.repo }}" \
-            --title "Release ${{ steps.vars.outputs.version }}" \
-            --notes "Automated release for version ${{ steps.vars.outputs.version }}"
+            app-release.apk \
+            --repo oyounis19/GP-Tour-Guide \
+            --title "Release ${{ github.ref_name }}" \
+            --notes "My dreams are now nothing more than recursive functions and error messages, spinning endlessly in a digital purgatory."
 
   deploy:
     needs: build

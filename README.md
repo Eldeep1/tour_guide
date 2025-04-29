@@ -17,6 +17,14 @@
 14. add validation on login, register and chat page!
 15. what about iphone?
 16. delete the form fields when navigating to another pages?
+17. remove single child scroll view of login
+    - login button
+    - register button
+    - loading messages page
+    - is it possible for loading the model page?
+18. sending message animation
+19. receiving message animation
+20. removing the amber colored buttons from the object detection page
 
 
 ## notes:

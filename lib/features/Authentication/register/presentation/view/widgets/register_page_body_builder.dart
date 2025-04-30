@@ -157,7 +157,7 @@ class _SignUpPageBodyBuilderState extends ConsumerState<SignUpPageBodyBuilder> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (_) => const AuthGate(animate: false,)),
+          MaterialPageRoute(builder: (_) => const AuthGate()),
               (Route<dynamic> route) => false, // Remove all previous routes
         );
 

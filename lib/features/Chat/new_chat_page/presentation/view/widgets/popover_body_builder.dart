@@ -24,7 +24,7 @@ class MenuItems extends StatelessWidget {
 
                       ref.read(authServiceProvider.notifier).logOut();
                       Navigator.of(context, rootNavigator: true).pop();
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AuthGate(animate: false,),));
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AuthGate(),));
                       print(ref.read(authServiceProvider));
                     }, child: Text(
                     "Logout",

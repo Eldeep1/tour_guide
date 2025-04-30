@@ -1,44 +1,53 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lottie/lottie.dart';
-import 'package:tour_guide/constants.dart';
-import 'package:tour_guide/core/utils/Assets/assets.dart' ;
-import 'package:tour_guide/features/splash_screen/presentation/view/widgets/delayed_text.dart';
-
+import 'package:tour_guide/features/Authentication/login/presentation/view/login_page_view.dart';
+import 'package:tour_guide/features/Chat/new_chat_page/presentation/view/new_chat_page_view.dart';
 import '../../../../core/utils/services/auth_service.dart';
+import 'widgets/splash_screen_body_builder.dart';
 
-class SplashScreen extends ConsumerWidget{
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    ref.read(authServiceProvider);
-    return Scaffold(
-      body: SizedBox.expand(
-        child: Stack(
-          children: [
-            backgroundGradient,
-            Center(child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(child: Lottie.asset(Assets.splashScreen,repeat: true)),
-                AnimatedTextKit(
-                  repeatForever: false,
-                    totalRepeatCount: 1,
-                    animatedTexts: [
-                      TyperAnimatedText("AI Tour-Guide",textStyle: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18)),
-                    ]
-                ),
-                const SizedBox(height: 20),
-                // This will appear after 1 second
-                const DelayedAnimatedText(),
-              ],
-            )),
-          ],
-        ),
-      ),
-    );
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
+}
+class _SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerProviderStateMixin {
+
+  bool _shouldNavigate=false;
+  Widget? _nextWidget;
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    Future.delayed(Duration(seconds: 10),() {
+      setState(() {
+        _shouldNavigate=true;
+      });
+    });
+    }
+
+  @override
+  void dispose() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
+    super.dispose();
+  }
+  @override
+  Widget build(BuildContext context) {
+    if(_shouldNavigate&&_nextWidget!=null){
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => _nextWidget!,));
+      });
+    }
+    ref.listen<AsyncValue<AuthStatus>>(authServiceProvider, (prev, next) {
+      if (next.hasError || (next.hasValue && next.value == AuthStatus.notAuthenticated)) {
+        _nextWidget=LoginPageView();
+      } else if (next.hasValue && next.value == AuthStatus.authenticated) {
+        _nextWidget=NewChatPageView();
+      }
+      setState(() {});
+    });
+
+    return const SplashScreenBodyBuilder();
   }
 }

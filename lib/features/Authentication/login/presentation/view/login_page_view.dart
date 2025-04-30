@@ -9,6 +9,7 @@ class LoginPageView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    print("we have opened the page");
     return Scaffold(
       body: SafeArea(
         child: LayoutBuilder(

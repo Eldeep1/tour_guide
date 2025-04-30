@@ -1,18 +1,10 @@
-// 1- check if the token is stored locally,
-//  if yes store them on tokensProvider,
-//  if no set isLoggedProvider to false and end
-// 2- check if the stored tokens valid from the server side or not,
-//  if valid, set the isLoggedProvider to true
 
 import 'dart:async';
-
 import 'package:dartz/dartz.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tour_guide/core/errors/failure.dart';
 import 'package:tour_guide/core/utils/services/providers/providers.dart';
 import 'package:tour_guide/features/Authentication/login/data/models/login_response.dart';
-import 'package:tour_guide/features/Chat/chat_headers/data/model/chat_headers_model.dart';
 import 'package:tour_guide/features/Chat/chat_headers/presentation/providers/side_bar_provider.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/chat_messages_provider.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/chat_repo_provider.dart';

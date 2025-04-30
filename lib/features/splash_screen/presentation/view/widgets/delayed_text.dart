@@ -18,7 +18,7 @@ class DelayedAnimatedText extends StatelessWidget {
       builder: (context, snapshot) {
         // Show nothing while waiting for the delay to complete
         if (!snapshot.hasData) {
-          return const SizedBox(height: 25,);
+          return const SizedBox(height: 30,);
         }
 
         // After delay completes, show the AnimatedTextKit

@@ -72,7 +72,7 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
        return;
      }
      if (existing.isNotEmpty) {
-       scrollToTheEnd();
+       // scrollToTheEnd();
      }
 
      sendingNotifier.state = true;
@@ -89,7 +89,7 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
      final result = await chatRepo!.sendMessage(message: prompt, chatID: chatID);
 
      sendingNotifier.state = false;
-     scrollToTheEnd();
+     // scrollToTheEnd();
 
      result.fold(
            (failure) {
@@ -117,7 +117,7 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
          final successMessage = Data(prompt: prompt, response: response.response);
          final updated = [...existing, successMessage];
          state = AsyncData(updated);
-         scrollToTheEnd();
+         // scrollToTheEnd();
        },
      );
    }
@@ -139,19 +139,5 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
     ref.read(sendMessageFormController).text = "";
   }
 
-  void scrollToTheEnd() {
-    print("we should scroll now");
-
-    // Check if the user is at the bottom of the list already
-    if (ref.read(scrollController).position.pixels ==
-        ref.read(scrollController).position.maxScrollExtent) {
-      return; // No need to scroll if we're already at the bottom
-    }
-
-    // If not at the bottom, scroll to the end
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(scrollController).jumpTo(ref.read(scrollController).position.maxScrollExtent);
-    });
-  }
 
 }

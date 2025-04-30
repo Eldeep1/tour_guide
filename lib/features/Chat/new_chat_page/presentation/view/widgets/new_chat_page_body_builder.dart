@@ -8,11 +8,19 @@ import 'messages.dart';
 import 'send_message_form_field_builder.dart';
 
 class NewChatPageBodyBuilder extends ConsumerWidget {
-  const NewChatPageBodyBuilder({super.key});
+   NewChatPageBodyBuilder({super.key});
+  final ScrollController controller = ScrollController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final chatList = ref.watch(chatDataProvider);
+    ref.listen(chatDataProvider, (previous, next) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (controller.hasClients) {
+          controller.jumpTo(controller.position.maxScrollExtent);
+        }
+      });
+    });
 
     return Column(
       children: [
@@ -24,7 +32,7 @@ class NewChatPageBodyBuilder extends ConsumerWidget {
               }
 
               return ListView.builder(
-                controller: ref.watch(scrollController),
+                controller: controller,
                 padding: const EdgeInsets.all(8),
                 itemCount: messages.length,
                 itemBuilder: (context, index) {

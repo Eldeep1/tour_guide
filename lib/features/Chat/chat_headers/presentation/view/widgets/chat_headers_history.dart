@@ -16,36 +16,35 @@ class ChatHeaderHistory extends ConsumerWidget {
     return chatHeaders.when(data: (headers) {
       return Expanded(
         child: ListView.builder(
+          itemCount: headers.data!.length,
           itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: TextButton(
-                style: ButtonStyle(
-                  padding: WidgetStatePropertyAll(
-                      EdgeInsetsDirectional.only(start: 20)),
-                  fixedSize:
-                  WidgetStatePropertyAll(Size.fromHeight(60)),
-                ),
-                onPressed: () {
-                  Scaffold.of(context).closeDrawer();
-                  ref.read(appBarHeaderProvider.notifier).state=headers.data![index].title??"AI TOUR GUIDE";
-                  ref.read(chatIDProvider.notifier).state=headers.data![index].id;
-                  ref.read(chatDataProvider.notifier).fetchOldMessages();
-                },
-                child: Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: Text(
-                    "${headers.data![headers.data!.length-index-1].title}",
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
+            // Reverse the order of the items without changing the actual list
+            final reversedIndex = headers.data!.length - index - 1;
+
+            return TextButton(
+              style: ButtonStyle(
+                padding: WidgetStatePropertyAll(EdgeInsetsDirectional.only(start: 20)),
+                fixedSize: WidgetStatePropertyAll(Size.fromHeight(60)),
+              ),
+              onPressed: () {
+                Scaffold.of(context).closeDrawer();
+                ref.read(appBarHeaderProvider.notifier).state = headers.data![reversedIndex].title ?? "AI TOUR GUIDE";
+                ref.read(chatIDProvider.notifier).state = headers.data![reversedIndex].id;
+                ref.read(chatDataProvider.notifier).fetchOldMessages();
+              },
+              child: Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(
+                  "${headers.data![reversedIndex].title}",
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
             );
           },
-          itemCount: headers.data!.length,
         ),
       );
+
 
     }, error: (error, stackTrace) {
       return Expanded( // <-- Important to expand like your data case

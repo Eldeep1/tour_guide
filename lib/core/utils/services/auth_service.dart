@@ -141,15 +141,12 @@ class AuthServiceNotifier extends AsyncNotifier<AuthStatus>{
       print("but the login response tokens are: ");
       print("refresh : ${ref.watch(loginResponseProvider).refreshToken}");
       print("access : ${ref.watch(loginResponseProvider).accessToken}");
-       ref.read(apiServiceProvider).cancelAllRequests();
-
-       ref.invalidate(loginResponseProvider);
-       ref.invalidate(chatHeadersProvider);
-       ref.invalidate(sideBarProvider);
-       ref.invalidate(sideBarProvider);
+      ref.invalidate(loginResponseProvider);
+      ref.invalidate(sideBarProvider);
        ref.invalidate(chatDataProvider);
        ref.invalidate(chatRepoProvider);
        ref.invalidate(appBarHeaderProvider);
+       ref.invalidate(isLoggingOutProvider);
 
       state = AsyncData(AuthStatus.notAuthenticated);
 

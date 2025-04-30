@@ -23,6 +23,7 @@ final tokenOperationsProvider=Provider<TokenOperation>((ref){
 
 final loginResponseProvider = StateProvider<LoginResponse>((ref) => LoginResponse(accessToken: "", refreshToken: ""));
 
+final isLoggingOutProvider = StateProvider<bool>((ref) => false);
 
 final chatHeadersProvider = StateProvider<ChatHeaders>((ref) {
   return ChatHeaders();

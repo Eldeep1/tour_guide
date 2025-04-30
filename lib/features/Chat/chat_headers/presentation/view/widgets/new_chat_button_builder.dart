@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tour_guide/constants.dart';
 import 'package:tour_guide/core/themes/darkTheme.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/chat_messages_provider.dart';
-import 'package:tour_guide/features/Chat/new_chat_page/presentation/view/new_chat_page_view.dart';
 
 class NewChatButtonBuilder extends ConsumerWidget{
   const NewChatButtonBuilder({super.key});

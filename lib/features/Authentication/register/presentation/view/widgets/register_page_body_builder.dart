@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:tour_guide/auth_gate.dart';
 import 'package:tour_guide/core/themes/darkTheme.dart';
 import 'package:tour_guide/features/Authentication/login/presentation/view/login_page_view.dart';
 import 'package:tour_guide/features/Authentication/register/data/models/register_request.dart';
@@ -157,7 +156,7 @@ class _SignUpPageBodyBuilderState extends ConsumerState<SignUpPageBodyBuilder> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (_) => const AuthGate()),
+          MaterialPageRoute(builder: (_) => const LoginPageView()),
               (Route<dynamic> route) => false, // Remove all previous routes
         );
 

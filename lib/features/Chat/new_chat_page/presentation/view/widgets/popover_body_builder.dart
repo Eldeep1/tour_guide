@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tour_guide/auth_gate.dart';
 import 'package:tour_guide/core/utils/services/auth_service.dart';
+import 'package:tour_guide/core/utils/services/providers/providers.dart';
+import 'package:tour_guide/features/Authentication/login/presentation/view/login_page_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -21,10 +22,12 @@ class MenuItems extends StatelessWidget {
                 builder: (context, ref, child) {
                   return TextButton(
                     onPressed: (){
-
-                      ref.read(authServiceProvider.notifier).logOut();
+                      ref.read(isLoggingOutProvider.notifier).state = true;
                       Navigator.of(context, rootNavigator: true).pop();
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AuthGate(),));
+
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPageView(),));
+                      ref.read(authServiceProvider.notifier).logOut();
+                      // Navigator.of(context, rootNavigator: true).pop();
                       print(ref.read(authServiceProvider));
                     }, child: Text(
                     "Logout",
@@ -37,7 +40,8 @@ class MenuItems extends StatelessWidget {
               ),
             ),
           ],
-        ),        Row(
+        ),
+        Row(
           children: [
             Expanded(child: TextButton(
               onPressed: ()async{

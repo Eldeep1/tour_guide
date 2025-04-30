@@ -69,7 +69,7 @@ jobs:
             app-release.apk \
             --repo oyounis19/GP-Tour-Guide \
             --title "Release ${{ github.ref_name }}" \
-            --notes "My dreams are now nothing more than recursive functions and error messages, spinning endlessly in a digital purgatory."
+            --notes " - fixing scrolling bug \n - fixing side bar headers bug \n - fixing the logout bug \n - enhancing internal splash screen structure for upcoming features ."
 
   deploy:
     needs: build

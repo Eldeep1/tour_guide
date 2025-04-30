@@ -64,10 +64,5 @@ class ApiService {
     return response.data;
   }
 
-  void cancelAllRequests() {
-    if (!_cancelToken.isCancelled) {
-      _cancelToken.cancel("Requests cancelled by user (e.g., logout)");
-      _cancelToken = CancelToken(); // reset for future use
-    }
-  }
+
 }

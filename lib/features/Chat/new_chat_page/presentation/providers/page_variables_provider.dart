@@ -21,5 +21,3 @@ final sendMessageFormController = Provider.autoDispose<TextEditingController>(
 final sendingMessage=StateProvider<bool>((ref) {
   return false;
 },);
-
-final scrollController=Provider.autoDispose<ScrollController>((ref) => ScrollController(),);

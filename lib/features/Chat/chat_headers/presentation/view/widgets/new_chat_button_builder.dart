@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tour_guide/core/themes/darkTheme.dart';
+import 'package:tour_guide/core/themes/dark_theme.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/chat_messages_provider.dart';
 
 class NewChatButtonBuilder extends ConsumerWidget{
@@ -27,8 +27,7 @@ class NewChatButtonBuilder extends ConsumerWidget{
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context)
                 .textTheme
-                .titleLarge
-                ?.copyWith(color: freeTextColor),
+                .titleLarge,
           ),
         ),
       ),

@@ -26,6 +26,7 @@
 19. receiving message animation
 20. removing the amber colored buttons from the object detection page
 21. shimmer effect when loading messages
+22. unfocus when send a message
 
 
 ## notes:

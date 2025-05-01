@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/chat_messages_provider.dart';
 import 'package:tour_guide/features/object_detection_page/presentation/providers/model_provider.dart';
 
 class ChatButton extends ConsumerWidget {
@@ -10,26 +11,15 @@ class ChatButton extends ConsumerWidget {
     final state = ref.watch(detectionProvider).value;
     final detectionState = ref.watch(detectionProvider.notifier);
 
-    print("here comes the error");
-    print(detectionState.detectionOutput.index);
     if(detectionState.detectionOutput.index==0){
       return OutlinedButton(
         style: ButtonStyle(
           backgroundColor: WidgetStatePropertyAll(Colors.amber),
         ),
-        onPressed: () {showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            backgroundColor: Colors.black,
-            content: Column(
-              mainAxisSize: MainAxisSize.min, // 👈 VERY IMPORTANT
-              children: const [
-                Text("الحقنا بال endpoint يا لطفي",textDirection: TextDirection.rtl,),
-              ],
-            ),
-          ),
-        );
-
+        onPressed: () {
+          String prompt="Can you tell me more about ${state.detections.map((d) => d['class'].toString()).join(', ')}";
+          ref.read(chatDataProvider.notifier).sendMessage(prompt: prompt);
+          Navigator.pop(context);
         },
         child: Text(
           "Chat About ${state!.detections.map((d) => d['class'].toString()).join(', ')}",

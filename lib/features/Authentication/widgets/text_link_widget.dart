@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tour_guide/core/themes/darkTheme.dart';
+import 'package:tour_guide/core/themes/dark_theme.dart';
 
 Widget textLinkWidget(String txt1, String txt2,Function()? onPressFunction, context){
   return Row(

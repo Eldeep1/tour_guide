@@ -24,6 +24,7 @@ class DetectionNotifier extends AsyncNotifier<DetectionState> {
   FutureOr<DetectionState> build() async {
     _yolo = YOLO(modelPath: 'best_float16.tflite', task: YOLOTask.detect);
     try {
+
       await _yolo.loadModel();
       return DetectionState(isModelLoaded: true);
     } catch (e, st) {
@@ -43,7 +44,6 @@ class DetectionNotifier extends AsyncNotifier<DetectionState> {
 
       final filteredDetections = List<Map<String, dynamic>>.from(result['boxes']);
 
-      // 🔥 Filter detections based on threshold
       final detections = filteredDetections.where((detection) {
         final double? confidence = detection['confidence']?.toDouble();
         return confidence != null && confidence >= .6;
@@ -59,9 +59,7 @@ class DetectionNotifier extends AsyncNotifier<DetectionState> {
         annotatedImage: annotatedImage,
         detections: detections,
       ));
-      print(detections);
-      print(detections.runtimeType);
-      print("testttttttttttttttt");
+
       if(detections.isEmpty){
         detectionOutput=DetectionOutput.noDetection;
       }

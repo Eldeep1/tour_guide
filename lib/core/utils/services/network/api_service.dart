@@ -8,8 +8,6 @@ class ApiService {
   };
   final _baseUrl = ApiEndpoints.baseUrl;
 
-  CancelToken _cancelToken = CancelToken(); // <-- add a cancel token
-
   ApiService(this._dio);
 
   Future<Map<String, dynamic>> get({
@@ -31,7 +29,6 @@ class ApiService {
       '$_baseUrl$endPoint',
       queryParameters: parameters,
       options: Options(headers: tmpRequestHeaders),
-      cancelToken: _cancelToken, // <-- attach it here
     );
     return response.data;
   }
@@ -45,15 +42,12 @@ class ApiService {
     Map<String,dynamic> tmpRequestHeaders={};
 
     if (bearerToken != null) {
-      print("are we here really?");
       tmpRequestHeaders["Authorization"] = "Bearer $bearerToken";
     }
     if (headers != null) {
       tmpRequestHeaders.addAll(headers);
     }
-    print("and here's the request headers");
-    print(requestHeaders);
-    print(bearerToken);
+
     var response = await _dio.post(
       '$_baseUrl$endPoint',
       data: parameters,

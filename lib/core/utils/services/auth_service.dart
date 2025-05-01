@@ -28,9 +28,6 @@ class AuthServiceNotifier extends AsyncNotifier<AuthStatus>{
 
   @override
   Future<AuthStatus> build() async {
-    ref.onDispose(() {
-      print("the most important one disposed!");
-    },);
     tokenOperation = ref.watch(tokenOperationsProvider); 
 
     state = AsyncValue.loading();
@@ -41,7 +38,6 @@ class AuthServiceNotifier extends AsyncNotifier<AuthStatus>{
     }
 
     final exists = tokenExist.getOrElse(() => false);
-    print("from auth service, the token exists");
 
     if (!exists) {
       print("from auth service, the token not exists");
@@ -133,7 +129,7 @@ class AuthServiceNotifier extends AsyncNotifier<AuthStatus>{
   }
   Future<void> logOut()async{
     print("we are on the logut");
-
+    state = AsyncData(AuthStatus.notAuthenticated);
     // state = AsyncData(AuthStatus.notAuthenticated);
     state = AsyncData(AuthStatus.notAuthenticated);
     try{
@@ -148,7 +144,6 @@ class AuthServiceNotifier extends AsyncNotifier<AuthStatus>{
        ref.invalidate(appBarHeaderProvider);
        ref.invalidate(isLoggingOutProvider);
 
-      state = AsyncData(AuthStatus.notAuthenticated);
 
 
     }

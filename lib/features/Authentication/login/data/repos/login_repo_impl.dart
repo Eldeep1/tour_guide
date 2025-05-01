@@ -19,7 +19,6 @@ class LoginRepoImpl extends LoginRepo{
   @override
   Future<Either<Failure, LoginResponse>> login({required LoginRequest loginRequest}) async {
     try {
-      print(loginRequest.toJson());
 
       // 1. Send request to backend
       final response = await apiService.post(

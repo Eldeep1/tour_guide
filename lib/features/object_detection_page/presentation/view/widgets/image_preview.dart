@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lottie/lottie.dart';
 import 'package:tour_guide/features/object_detection_page/presentation/providers/model_provider.dart';
 
 class ImagePreview extends ConsumerWidget {

@@ -27,7 +27,6 @@ class RegisterPageNotifier extends AsyncNotifier<RegisterResponse>{
   return response.fold((failure){
     state = AsyncError(failure.message, StackTrace.current);
   }, (response){
-    print(response.data!.name);
     state= AsyncData(response);
   });
 }

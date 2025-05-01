@@ -9,6 +9,7 @@ Widget formFieldBuilder({
   IconData? prefixIcon,
   IconData? suffixIcon,
   VoidCallback? suffixIconClick,
+  Function(String)? onFieldSubmitted,
   TextInputType? keyBoardType,
   bool enabled = true,
   bool obscureText = false,
@@ -27,14 +28,6 @@ Widget formFieldBuilder({
         enabled: enabled,
         keyboardType: keyBoardType,
         decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white, width: 2),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey, width: 2),
-            borderRadius: BorderRadius.circular(8),
-          ),
           label: Text(label),
           prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
           suffixIcon: suffixIcon != null
@@ -44,6 +37,8 @@ Widget formFieldBuilder({
           )
               : null,
         ),
+
+        onFieldSubmitted: onFieldSubmitted,
       ),
     ),
   );

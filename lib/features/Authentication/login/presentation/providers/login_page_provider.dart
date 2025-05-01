@@ -35,7 +35,6 @@ class LoginPageNotifier extends AsyncNotifier<LoginResponse>{
         state = AsyncValue.error(failure.message, StackTrace.current);
       },
           (loginResponse) {
-            print("we are actually here");
         loginResponseNotifier.state = loginResponse;
         authStatusNotifier.state = const AsyncValue.data(AuthStatus.authenticated);
         state = AsyncValue.data(loginResponse);

@@ -21,7 +21,7 @@ class Validators{
     return null;
   }
 
-  String? validateName(String? value) {
+  static String? validateName(String? value) {
     if (value == null || value.isEmpty) {
       return 'Name is required';
     }

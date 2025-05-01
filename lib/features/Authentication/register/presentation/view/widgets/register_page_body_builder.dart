@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:tour_guide/core/themes/darkTheme.dart';
+import 'package:tour_guide/core/themes/dark_theme.dart';
+import 'package:tour_guide/core/utils/services/validators/validators.dart';
 import 'package:tour_guide/features/Authentication/login/presentation/view/login_page_view.dart';
 import 'package:tour_guide/features/Authentication/register/data/models/register_request.dart';
 import 'package:tour_guide/features/Authentication/register/presentation/providers/register_form_provider.dart';
@@ -16,7 +17,7 @@ class SignUpPageBodyBuilder extends ConsumerStatefulWidget {
   const SignUpPageBodyBuilder({super.key});
 
   @override
-  _SignUpPageBodyBuilderState createState() => _SignUpPageBodyBuilderState();
+  ConsumerState createState() => _SignUpPageBodyBuilderState();
 }
 
 class _SignUpPageBodyBuilderState extends ConsumerState<SignUpPageBodyBuilder> {
@@ -71,19 +72,19 @@ class _SignUpPageBodyBuilderState extends ConsumerState<SignUpPageBodyBuilder> {
       child: Column(
         children: [
           formFieldBuilder(
-            validator: validateName,
+            validator: Validators.validateName,
             label: "Name",
             textEditingController: nameController,
             keyBoardType: TextInputType.name,
           ),
           formFieldBuilder(
-            validator: validateEmail,
+            validator: Validators.validateEmail,
             label: "Email",
             textEditingController: emailController,
             keyBoardType: TextInputType.emailAddress,
           ),
           formFieldBuilder(
-            validator: validatePassword,
+            validator: Validators.validatePassword,
             label: "Password",
             textEditingController: passwordController,
             obscureText: !passwordVisibility,
@@ -165,33 +166,4 @@ class _SignUpPageBodyBuilderState extends ConsumerState<SignUpPageBodyBuilder> {
   }
 }
 
-// Validation function for email
-String? validateEmail(String? value) {
-  if (value == null || value.isEmpty) {
-    return 'Email is required';
-  }
-  final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
-  if (!emailRegex.hasMatch(value)) {
-    return 'Enter a valid email address';
-  }
-  return null;
-}
 
-// Validation function for name
-String? validateName(String? value) {
-  if (value == null || value.isEmpty) {
-    return 'Name is required';
-  }
-  return null;
-}
-
-// Validation function for password
-String? validatePassword(String? value) {
-  if (value == null || value.isEmpty) {
-    return 'Password is required';
-  }
-  if (value.length < 6) {
-    return 'Password must be at least 6 characters';
-  }
-  return null;
-}

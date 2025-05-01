@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:popover/popover.dart';
-import 'package:tour_guide/constants.dart';
-import 'package:tour_guide/core/themes/darkTheme.dart';
-import 'package:tour_guide/core/utils/Assets/assets.dart';
+import 'package:tour_guide/core/themes/dark_theme.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/page_variables_provider.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/presentation/view/widgets/popover_body_builder.dart';
-import 'package:tour_guide/features/object_detection_page/presentation/view/object_detection_page.dart';
 
 class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
@@ -16,7 +12,6 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final headerText = ref.watch(appBarHeaderProvider);
 
-    print("hello from the appbar$headerText");
     return AppBar(
       backgroundColor: appBarColor,
       leading: Builder(builder: (context) {
@@ -42,7 +37,7 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
                 context: buttonContext,
                 bodyBuilder: (context) => MenuItems(),
                 direction: PopoverDirection.top,
-                width: 120,
+                width: 142,
                 height: 100,
                 backgroundColor:Color(0xff1e2f73),
               );

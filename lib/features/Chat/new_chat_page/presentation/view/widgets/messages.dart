@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:lottie/lottie.dart';
-import 'package:tour_guide/core/themes/darkTheme.dart';
+import 'package:tour_guide/core/themes/dark_theme.dart';
 import 'package:tour_guide/core/utils/Assets/assets.dart';
 
 BoxDecoration responseMessageDecoration=    BoxDecoration(

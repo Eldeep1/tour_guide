@@ -16,7 +16,7 @@ class SplashScreenBodyBuilder extends StatelessWidget{
       body: SizedBox.expand(
         child: Stack(
           children: [
-            backgroundGradient,
+            backgroundGradient(),
             Center(child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,

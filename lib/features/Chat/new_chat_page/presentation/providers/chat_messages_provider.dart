@@ -1,8 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tour_guide/core/utils/services/providers/providers.dart';
 import 'package:tour_guide/features/Chat/chat_headers/data/model/chat_headers_model.dart';
 import 'package:tour_guide/features/Chat/chat_headers/presentation/providers/side_bar_provider.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/data/model/chat_history.dart';
@@ -28,22 +26,17 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
 
   }
   Future<void> fetchOldMessages() async {
-    print("the chat id from the provider${ref.read(chatIDProvider)}");
-    
+
     //1. delete old messages
     // state = const AsyncData([]);
     state = const AsyncLoading();
     final result = await chatRepo!.gelAllChats(ref.read(chatIDProvider));
     result.fold(
           (failure) {
-            print("no messssssssssssages");
-            print(failure.message);
             return state = AsyncError(failure.message, StackTrace.current);
           },
 
           (messages) {
-            print("we got the messsssagesss");
-            print(messages.data![0].prompt);
             return state = AsyncData(messages.data ?? []);
           },
     );
@@ -61,14 +54,11 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
      final existing = state.value ?? [];
      final chatWasEmpty = existing.isEmpty;
 
-     print(chatID);
-
      if (sendingNotifier.state ) {
        return;
      }
 
      if(prompt.trim().isEmpty){
-       print(formController.text.toString());
        return;
      }
      if (existing.isNotEmpty) {
@@ -83,9 +73,6 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
      final withLoading = [...existing, loadingMessage];
      state = AsyncData(withLoading);
 
-     print("is the chat id is null");
-     print(chatID);
-
      final result = await chatRepo!.sendMessage(message: prompt, chatID: chatID);
 
      sendingNotifier.state = false;
@@ -93,7 +80,6 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
 
      result.fold(
            (failure) {
-         print(failure.message);
          // Replace the last item (the loading one) with an error message
          final errorMessage = Data(prompt: prompt, response: "Error: ${failure.message}");
          final updated = [...existing, errorMessage];
@@ -101,18 +87,12 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
        },
            (response) {
 
-         print("here we are checking for the chat id from the chat_messages_provider");
-         print("the chat id from the response is: ${response.chatId}");
 
          if (chatWasEmpty) {
            chatIDNotifier.state = response.chatId;
-           print("we are here");
            newHeader(response); // Now this is safe
            appBarHeaderNotifier.state = response.chatTitle ?? "AI TOUR GUIDE";
          }
-
-         print(response);
-         print("this is the chat title : ${response.chatTitle}");
          // Replace the last item (loading) with actual response
          final successMessage = Data(prompt: prompt, response: response.response);
          final updated = [...existing, successMessage];
@@ -138,6 +118,5 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
     // Reset the input field as well if needed
     ref.read(sendMessageFormController).text = "";
   }
-
 
 }

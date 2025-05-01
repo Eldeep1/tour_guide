@@ -13,7 +13,6 @@ class ChatRepoImp extends ChatRepo{
   ChatRepoImp(this.apiService,this.accessToken);
   @override
   Future<Either<Failure, ChatHistory>> gelAllChats(chatID) async {
-    print("this is the chat id: $chatID");
     try{
       final chats=await apiService.get(
         endPoint: ApiEndpoints.getAllMessages(chatID: chatID!),
@@ -32,7 +31,6 @@ class ChatRepoImp extends ChatRepo{
   Future<Either<Failure, ChatResponse>> sendMessage({required String message, int? chatID}) async {
     try{
       Map<String,dynamic> parameters={"prompt":message,"chat_id":chatID};
-      print("chat id from the repo is : $chatID");
       final result=await apiService.post(
         endPoint: ApiEndpoints.askAQuestion,
         bearerToken: accessToken,

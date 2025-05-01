@@ -14,7 +14,6 @@ class ChatHeadersRepoImp extends ChatHeadersRepo {
 
   @override
   Future<Either<Failure, ChatHeaders>> getChatHeaders() async {
-    print("we are fetching the request....");
     try {
       final result = await apiService.get(
           endPoint: ApiEndpoints.getAllChats,

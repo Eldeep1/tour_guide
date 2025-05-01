@@ -61,7 +61,6 @@ class SideBarNotifier extends AsyncNotifier<ChatHeaders> {
         state = AsyncData(chatHeaders);
       } else {
         // Optional: handle cases where current state is loading/error
-        print('Cannot add header because state is not ready.');
       }
     }
 }

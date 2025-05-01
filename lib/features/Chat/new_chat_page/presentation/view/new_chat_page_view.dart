@@ -14,7 +14,7 @@ class NewChatPageView extends StatelessWidget {
       drawer: ChatPageSideBar(),
       body: Stack(
         children: [
-          reversedBackgroundGradient,
+          reversedBackgroundGradient(),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: NewChatPageBodyBuilder(),

@@ -7,7 +7,6 @@ import 'package:tour_guide/core/utils/services/network/api_service.dart';
 import 'package:tour_guide/core/utils/services/storage/secure_storage.dart';
 import 'package:tour_guide/core/utils/services/token_operations/token_operation_repo.dart';
 import 'package:tour_guide/features/Authentication/login/data/models/login_response.dart';
-import 'package:tour_guide/features/Chat/chat_headers/data/model/chat_headers_model.dart';
 
 class TokenOperationsImp extends TokenOperation {
   final secureStorage = SecureStorage();
@@ -41,8 +40,6 @@ class TokenOperationsImp extends TokenOperation {
       String? accessToken = await secureStorage.readValue("access_token") ?? "";
       String? refreshToken =
           await secureStorage.readValue("refresh_token") ?? "";
-      print(refreshToken);
-      print("we got the tokens!");
       final loginResponse =
           LoginResponse(accessToken: accessToken, refreshToken: refreshToken);
       return right(loginResponse);
@@ -82,7 +79,7 @@ class TokenOperationsImp extends TokenOperation {
 
       Map<String,dynamic> parameters={"token":loginResponse.accessToken};
 
-    final verify= await apiService.post(
+    await apiService.post(
         endPoint: ApiEndpoints.verify,
         parameters: parameters,
       );
@@ -90,8 +87,7 @@ class TokenOperationsImp extends TokenOperation {
     return right(null);
 
     } catch (e) {
-      print(e);
-      print("the verification request error:");
+
       if (e is DioException) {
         return left(ServerFailure.fromDioError(e));
       }
@@ -122,13 +118,12 @@ class TokenOperationsImp extends TokenOperation {
       return left(NewFailure(e.toString()));
     }
   }
-  
+  @override
   Future<void> logout({
     required String refreshToken,
 })async {
     Map<String, dynamic> parameters={"refresh":refreshToken};
-    print(parameters);
-    print("that was the logout params");
+
     await deleteTokens();
     await apiService.post(endPoint: ApiEndpoints.logOut,parameters: parameters);
   }

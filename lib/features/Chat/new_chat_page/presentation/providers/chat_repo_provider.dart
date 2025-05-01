@@ -5,7 +5,6 @@ import 'package:tour_guide/core/utils/services/providers/providers.dart';
 import 'package:tour_guide/features/Authentication/login/data/models/login_response.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/data/repo/chat_repo.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/data/repo/chat_repo_imp.dart';
-import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/page_variables_provider.dart';
 
 final chatRepoProvider=Provider<ChatRepo>((ref) {
   final ApiService apiService=ref.watch(apiServiceProvider);

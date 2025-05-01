@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tour_guide/constants.dart';
-import 'package:tour_guide/core/themes/darkTheme.dart';
+import 'package:tour_guide/core/themes/dark_theme.dart';
 import 'package:tour_guide/features/object_detection_page/presentation/view/widgets/object_detection_body.dart';
 
 class ObjectDetectionPage extends StatelessWidget {
@@ -17,7 +17,7 @@ class ObjectDetectionPage extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          backgroundGradient,
+          backgroundGradient(),
           ObjectDetectionBody(),
         ],
       ),

@@ -1,6 +1,6 @@
 class ChatResponse {
   String? status;
-  Null? error;
+  Null error;
   int? chatId;
   String? chatTitle;
   String? response;

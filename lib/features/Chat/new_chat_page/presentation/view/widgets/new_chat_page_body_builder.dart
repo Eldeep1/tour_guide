@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/chat_messages_provider.dart';
-import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/page_variables_provider.dart';
 
 
 import 'messages.dart';
@@ -69,8 +68,7 @@ class NewChatPageBodyBuilder extends ConsumerWidget {
             },
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (error, _) {
-              print("hmm, interesting");
-              print(error);
+
               return SingleChildScrollView(child: Center(child: Text("Error: $error")));
             },
           ),

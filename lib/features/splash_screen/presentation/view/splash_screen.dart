@@ -20,7 +20,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerPr
   void initState() {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-    Future.delayed(Duration(seconds: 10),() {
+    Future.delayed(Duration(seconds: 4),() {
       setState(() {
         _shouldNavigate=true;
       });

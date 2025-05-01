@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tour_guide/core/utils/services/auth_service.dart';
 import 'package:tour_guide/core/utils/services/providers/providers.dart';
 import 'package:tour_guide/features/Authentication/login/presentation/view/login_page_view.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class MenuItems extends StatelessWidget {
   const MenuItems({super.key});
@@ -13,82 +11,72 @@ class MenuItems extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-
-
-        Row(
-          children: [
-            Expanded(
-              child: Consumer(
-                builder: (context, ref, child) {
-                  return TextButton(
-                    onPressed: (){
-                      ref.read(isLoggingOutProvider.notifier).state = true;
-                      Navigator.of(context, rootNavigator: true).pop();
-
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPageView(),));
-                      ref.read(authServiceProvider.notifier).logOut();
-                      // Navigator.of(context, rootNavigator: true).pop();
-                      print(ref.read(authServiceProvider));
-                    }, child: Text(
-                    "Logout",
-                    style: TextStyle(
-                        color: Colors.white
-                    ),
-                  ),
-                  );
-                },
-              ),
-            ),
-          ],
+        Consumer(
+          builder: (BuildContext context, WidgetRef ref, Widget? child) {
+            return buttonBuilder(context, function: (){
+              ref.read(isLoggingOutProvider.notifier).state = true;
+              Navigator.of(context, rootNavigator: true).pop();
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPageView(),));
+              ref.read(authServiceProvider.notifier).logOut();
+            }, text: "Logout");
+          },
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween, // Distributes elements across available space
           children: [
-            Expanded(child: TextButton(
-              onPressed: ()async{
-               await callPhoneNumber('01027520808',context);
+            SizedBox(width: 4,),
+            Text('Dark Mode', style: Theme.of(context).textTheme.bodyMedium),
 
-               WidgetsBinding.instance.addPostFrameCallback((_) {
-                 Navigator.of(context, rootNavigator: true).pop();
-               });
-              }, child: Text(
-              "Rate The App",
-              style: TextStyle(
-                  color: Colors.white
-              ),
+            Switch( // Move switch to the start
+              value: true,
+              onChanged: (val) {
+                // ref.read(themeProvider.notifier).state = val ? AppTheme.dark : AppTheme.light;
+              },
             ),
-            )),
           ],
-        ),
+        )
+
+
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     Text('Theme'),
+        //     IconButton(
+        //       onPressed: () {
+        //         // if (_themeProvider.currentTheme == ThemeEnum.Light) {
+        //         //   _themeProvider.changeTheme(ThemeEnum.Dark);
+        //         // } else {
+        //         //   _themeProvider.changeTheme(ThemeEnum.Light);
+        //         // }
+        //       },
+        //       icon: Icon(
+        //           Icons.light_mode,
+        //         // _themeProvider.currentTheme == ThemeEnum.Light
+        //         //     ? Icons.light_mode
+        //         //     : Icons.dark_mode,
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        // buttonBuilder(context,function: (){}, text: "rate the app"),
 
       ],
     );
   }
 }
 
-Future<void> callPhoneNumber(String phoneNumber,context) async {
-  // Request phone call permission
-  var status = await Permission.phone.request();
-
-  if (status.isGranted) {
-    final Uri phoneUri = Uri.parse('tel:$phoneNumber');
-
-    try {
-      if (await canLaunchUrl(phoneUri)) {
-        await launchUrl(phoneUri);
-      } else {
-        // Handle case where dialer can't be launched
-        throw 'Could not launch phone dialer';
-      }
-    } catch (e) {
-      // Show user-friendly error
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Unable to make a call: $e')),
-      );
-    }
-  } else {
-    // Permission denied
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Phone call permission is required')),
-    );
-  }
+Widget buttonBuilder(context,{
+  required void Function()? function,
+  required String text,
+}){
+  return  Row(
+    children: [
+      Expanded(child: TextButton(
+        onPressed: function, child: Text(
+        text,
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+      )),
+    ],
+  );
 }

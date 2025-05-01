@@ -9,19 +9,23 @@ const String newChatMessage="What Can I Help With";
 const String apiLink="http://4.156.161.197/";
 
 const String sendingMessageEndPoint="nlp/response";
-Widget backgroundGradient=            Container(
+Widget backgroundGradient ({Widget? child})=>Container(
   decoration: BoxDecoration(
     gradient: LinearGradient(
       colors: [Color(0xff000412),  Color(0xff070E26),Colors.deepPurple,],
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
     ),
-  ),);
-Widget reversedBackgroundGradient=            Container(
+  ),
+  child: child,
+);
+Widget reversedBackgroundGradient({Widget? child})=>Container(
   decoration: BoxDecoration(
     gradient: LinearGradient(
       colors: [Color(0xff000412),  Color(0xff070E26),],
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
     ),
-  ),);
+  ),
+child: child,
+);

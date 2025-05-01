@@ -1,6 +1,6 @@
 class ChatHistory {
   String? status;
-  Null? error;
+  Null error;
   List<Data>? data;
 
   ChatHistory({this.status, this.error, this.data});
@@ -11,15 +11,15 @@ class ChatHistory {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add( Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['error'] = this.error;
+    final Map<String, dynamic> data =  <String, dynamic>{};
+    data['status'] = status;
+    data['error'] = error;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -43,11 +43,11 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['prompt'] = this.prompt;
-    data['response'] = this.response;
-    data['chat_id'] = this.chatId;
+    final Map<String, dynamic> data =  <String, dynamic>{};
+    data['id'] = id;
+    data['prompt'] = prompt;
+    data['response'] = response;
+    data['chat_id'] = chatId;
     return data;
   }
 }

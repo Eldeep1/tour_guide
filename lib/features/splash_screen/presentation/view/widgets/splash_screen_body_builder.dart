@@ -2,7 +2,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:tour_guide/constants.dart';
+import 'package:tour_guide/core/themes/dark_theme.dart';
 import 'package:tour_guide/core/utils/Assets/assets.dart';
 
 import 'delayed_text.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tour_guide/constants.dart';
+import 'package:tour_guide/core/themes/dark_theme.dart';
 import 'widgets/login_page_body.dart';
 
 class LoginPageView extends ConsumerWidget {

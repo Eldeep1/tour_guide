@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:tour_guide/constants.dart';
 import 'package:tour_guide/core/themes/dark_theme.dart';
 import 'chat_headers_history.dart';
 import 'new_chat_button_builder.dart';
@@ -11,7 +10,7 @@ class SideBarBodyBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return backgroundGradient(child: Padding(
+    return backgroundGradient(childWidget: Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
@@ -31,6 +30,6 @@ Widget separator(){
         border: Border.all(
             style: BorderStyle.solid,
             width: 2,
-            color: mainColor)),
+            color: mainColorDark)),
   );
 }

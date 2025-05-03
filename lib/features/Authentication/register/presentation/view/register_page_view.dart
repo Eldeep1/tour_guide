@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tour_guide/core/themes/dark_theme.dart';
 import 'package:tour_guide/features/Authentication/widgets/back_ground_image.dart';
-import 'package:tour_guide/constants.dart';
 
 import 'widgets/register_page_body_builder.dart';
 
@@ -13,9 +12,11 @@ class RegisterPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        iconTheme: Theme.of(context).iconTheme,
+      ),
       body: LayoutBuilder(builder: (context, constraints) {
-        if(constraints.maxWidth>largeScreenSize)
+        if(constraints.maxWidth>700)
         {
           return Row(
             children: [

@@ -11,7 +11,7 @@ Widget textLinkWidget(String txt1, String txt2,Function()? onPressFunction, cont
         ),
         onPressed:
         onPressFunction
-        , child: Text(txt2,style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: mainColor),),
+        , child: Text(txt2,style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: mainColorDark),),
       ),
     ],
   );

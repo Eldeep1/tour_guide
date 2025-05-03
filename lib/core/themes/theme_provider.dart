@@ -3,20 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tour_guide/core/themes/dark_theme.dart';
 
-final themeProvider = ChangeNotifierProvider((ref) => ThemeNotifier());
+import 'light_theme.dart';
+final themeProvider = ChangeNotifierProvider<ThemeNotifier>((ref) => ThemeNotifier());
 
 class ThemeNotifier extends ChangeNotifier {
-  ThemeData _themeData = ThemeData.light();
+  ThemeData themeData = lightTheme;
 
-  ThemeData get themeData => _themeData;
-
-  void toggleDark() {
-    _themeData = darkTheme;
-    notifyListeners();
-  }
-
-  void toggleLight() {
-    _themeData = ThemeData.light();
-    notifyListeners();
+  void changeTheme() {
+    print("we entered the function");
+    if (themeData == darkTheme) {
+      themeData = lightTheme; // ✅ FIXED
+      print("this is the light theme");
+    } else {
+      themeData = darkTheme;
+      print("this is the dark theme");
+    }
+    notifyListeners(); // ✅ Rebuild listeners
   }
 }

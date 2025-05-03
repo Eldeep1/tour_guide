@@ -49,9 +49,9 @@ class SendMessageFormFieldBuilder extends StatelessWidget {
                         },));
                       },
                       icon: CircleAvatar(
-                        backgroundColor: buttonColor,
+                        backgroundColor: Theme.of(context).primaryColor,
                         radius: 30,
-                        child: Icon(Icons.smart_toy_outlined,color: Colors.white,),
+                        child: Icon(Icons.smart_toy_outlined,color: Theme.of(context).iconTheme.color,),
                       ),
                     ),
 
@@ -63,9 +63,9 @@ class SendMessageFormFieldBuilder extends StatelessWidget {
                         newMessage.sendMessage(prompt: controller.text);
                       },
                       icon: CircleAvatar(
-                        backgroundColor: buttonColor,
+                        backgroundColor: Theme.of(context).primaryColor,
                         radius: 30,
-                        child: Icon(Icons.send_outlined,color: Colors.white,),
+                        child: Icon(Icons.send_outlined,color: Theme.of(context).iconTheme.color,),
                       ),
                     ),
                   ],

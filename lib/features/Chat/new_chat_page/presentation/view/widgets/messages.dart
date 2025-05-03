@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tour_guide/core/themes/dark_theme.dart';
+import 'package:tour_guide/core/themes/theme_provider.dart';
 import 'package:tour_guide/core/utils/Assets/assets.dart';
 
-BoxDecoration responseMessageDecoration=    BoxDecoration(
-  color: Color(0xff10183a),
-  borderRadius: BorderRadius.circular(12), // Add border radius once
-);
+
+
+BoxDecoration responseMessageDecoration(WidgetRef ref) {
+  final theme = ref.watch(themeProvider.notifier).themeData;
+
+  bool isDark=theme==darkTheme;
+
+  return BoxDecoration(
+    color: isDark ? const Color(0xff10183a) : Colors.white,
+    borderRadius: BorderRadius.circular(12),
+  );
+}
+
 
 BoxDecoration errorMessageDecoration= BoxDecoration(
   color: Colors.red,
@@ -28,25 +39,39 @@ Widget chatIcon = Image.asset(
 
 const messagePadding = EdgeInsets.all(16.0);
 
-Color answerMessageColor = mainColor.withAlpha(51);
-Color promptMessageColor = mainColor;
-Color shimmerBaseColor = Colors.grey;
 
 Widget responseMessageContainer(context,String message,{bool error=false}){
-  final messageStyle = Theme.of(context).textTheme.bodyMedium;
 
-  return Container(
 
-    decoration:error? errorMessageDecoration:responseMessageDecoration,
-    child: Padding(
-      padding: messagePadding,
-      child: MarkdownBody(
-        data: message,
-        styleSheet: MarkdownStyleSheet(
-          h3: messageStyle!.copyWith(fontWeight: FontWeight.bold),
+  return Consumer(
+    builder: (BuildContext context, WidgetRef ref, Widget? child) {
+      final theme = ref.watch(themeProvider.notifier).themeData;
+      bool isDark=theme==darkTheme;
+      TextStyle? messageStyle;
+      if(isDark||error){
+        messageStyle= Theme.of(context).textTheme.titleMedium;
+
+      }
+      else {
+        messageStyle = Theme.of(context).textTheme.titleMedium!.copyWith(color: Color(0xFF5A5B5F));
+      }
+
+
+      return Container(
+
+        decoration:error? errorMessageDecoration:responseMessageDecoration(ref),
+        child: Padding(
+          padding: messagePadding,
+          child: MarkdownBody(
+            data: message,
+            styleSheet: MarkdownStyleSheet(
+              p: messageStyle, // 👈 for normal paragraph text
+              h3: messageStyle!.copyWith(fontWeight: FontWeight.bold),
+            ),
+          ),
         ),
-      ),
-    ),
+      );
+    },
   );
 }
 

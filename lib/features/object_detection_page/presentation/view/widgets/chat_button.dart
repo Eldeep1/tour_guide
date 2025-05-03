@@ -30,7 +30,7 @@ class ChatButton extends ConsumerWidget {
     if(detectionState.detectionOutput.index==1){
       return Text(
         "No Detections!",
-        style: TextStyle(fontSize: 16,color: Colors.white,fontWeight: FontWeight.bold),
+        style: Theme.of(context).textTheme.bodyMedium,
       );
     }
     else{

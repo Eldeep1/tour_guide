@@ -28,11 +28,7 @@ class DelayedAnimatedText extends StatelessWidget {
 
             FlickerAnimatedText(
               "GP 911",
-              textStyle: TextStyle(
-                color: Colors.grey,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
+              textStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.grey),
             ),
           ],
         );

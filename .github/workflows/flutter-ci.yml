@@ -69,7 +69,7 @@ jobs:
             app-release.apk \
             --repo oyounis19/GP-Tour-Guide \
             --title "Release ${{ github.ref_name }}" \
-            --notes " - fixing scrolling bug \n - fixing side bar headers bug \n - fixing the logout bug \n - enhancing internal splash screen structure for upcoming features ."
+            --notes " و انا كل شوية هانسى احط الريليس نوتس ولا ايه"
 
   deploy:
     needs: build

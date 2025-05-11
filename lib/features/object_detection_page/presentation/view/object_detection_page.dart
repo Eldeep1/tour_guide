@@ -9,6 +9,7 @@ class ObjectDetectionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: Theme.of(context).iconTheme,
         title: Container(
           margin: EdgeInsets.only(right: 40),
           alignment: AlignmentDirectional.center,

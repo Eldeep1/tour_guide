@@ -26,7 +26,7 @@ class SplashScreenBodyBuilder extends StatelessWidget{
                     repeatForever: false,
                     totalRepeatCount: 1,
                     animatedTexts: [
-                      TyperAnimatedText("AI Tour-Guide",textStyle: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18)),
+                      TyperAnimatedText("AI Tour-Guide",textStyle: Theme.of(context).textTheme.bodyMedium),
                     ]
                 ),
                 const SizedBox(height: 20),

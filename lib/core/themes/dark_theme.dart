@@ -44,7 +44,9 @@ Widget backgroundGradient ({Widget? childWidget})=>Consumer(
 
 Widget reversedBackgroundGradient({Widget? childWidget})=>Consumer(
   builder: (BuildContext context, WidgetRef ref, Widget? child) {
-    if(ref.watch(themeProvider.notifier).themeData ==lightTheme){
+    final themeNotifier = ref.watch(themeProvider); // ✅ listens for changes
+    final themeMode = themeNotifier.themeData;
+    if(themeMode ==lightTheme){
       return Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(topLeft: Radius.circular(60),topRight: Radius.circular(60)),

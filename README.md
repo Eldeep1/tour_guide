@@ -10,7 +10,7 @@
 ## technologies:
 - **Flutter**
 - **Riverpod** – State management
-- **Ultralytics YOLOv8 (TFLite)** – Local object detection
+- **Ultralytics_YOLO** – Loading the TFLite Model and Doing the Local Object Detection
 - **image_picker** – Select/upload images
 - **Lottie Animations** – Smooth animated visuals
 - **shimmer_effect** – Loading UI shimmer effects

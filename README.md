@@ -19,24 +19,27 @@
 - **secure_storage** – Secure user data handling
 - **shared_preferences** – Local storage for user settings
 
-## Screenshots:
-- ![dark theme](screenshots/1.png)
-- ![light theme](screenshots/2.png)
-- ![detection page](screenshots/3.png)
 ## Architecture:
 - in that application clean MVVM pattern is used
 - the architecture is devided into two main sections
-  - core  
-  - features
-    - while the core is responsible for the shared logic, shared providers and the custom theme information
-    - while features is responsible for the holding the normal Model, View and ViewModel
-  - in the features directory, we have added new layer called repo, so we are holding the calls between the network layer and the view model layer
-  - breaking the features to smaller directory:
-    - data where we are storing the models and the repos so we call the backend from
-      - and the repos are abstract classes so that the code is easy to maintain and not breaking the open-closed principle and Liskov principle
-    - presentation where we have:
-      - view that holds the UI code
-      - providers that is the actual view model for us
+    - core
+    - features
+        - while the core is responsible for the shared logic, shared providers and the custom theme information
+        - while features is responsible for the holding the normal Model, View and ViewModel
+    - in the features directory, we have added new layer called repo, so we are holding the calls between the network layer and the view model layer
+    - breaking the features to smaller directory:
+        - data where we are storing the models and the repos so we call the backend from
+            - and the repos are abstract classes so that the code is easy to maintain and not breaking the open-closed principle and Liskov principle
+        - presentation where we have:
+            - view that holds the UI code
+            - providers that is the actual view model for us
+
+## Screenshots:
+- Dark Theme
+- ![dark theme](screenshots/1.png)
+- Light Theme
+- ![light theme](screenshots/2.png)
+
 ## tasks:
 1. ~~adding scrolling controller~~
 2. ~~lottie animation~~

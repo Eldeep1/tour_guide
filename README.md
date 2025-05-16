@@ -20,11 +20,9 @@
 - **shared_preferences** – Local storage for user settings
 
 ## Screenshots:
-- `/screenshots/1.png`
-- `/screenshots/2.png`
-- `/screenshots/3.png`
-- `/screenshots/4.png`
-- `/screenshots/5.png`
+- `screenshots/1.png`
+- `screenshots/2.png`
+- `screenshots/3.png`
 ## Architecture:
 - in that application clean MVVM pattern is used
 - the architecture is devided into two main sections

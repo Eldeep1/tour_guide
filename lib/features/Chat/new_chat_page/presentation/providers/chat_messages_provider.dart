@@ -45,6 +45,9 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
    Future<void> sendMessage({
      required String prompt,
    }) async {
+    print(prompt);
+    print(ref.read(chatIDProvider));
+    print(ref.read(chatIDProvider));
      final chatID = ref.read(chatIDProvider);
      final sendingNotifier = ref.read(sendingMessage.notifier);
      final formController = ref.read(sendMessageFormController);

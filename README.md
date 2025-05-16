@@ -1,6 +1,45 @@
-# tour_guide
+# AI Tour Guide
+## vision:
 
-## didn't done yet:
+- The application is built to help tourists have a better trip to Egypt by allowing them to chat with a virtual guide about any ancient Egyptian topic.
+- Users can upload an image of a statue, and the app will identify which king figure it is related to.
+- After detection, users can initiate a dedicated chat about that specific king.
+- The app supports both **dark and light themes**, designed according to modern UI/UX standards for optimal user comfort.
+- Users can seamlessly switch between themes to suit their preferences.
+
+## technologies:
+- **Flutter**
+- **Riverpod** – State management
+- **Ultralytics YOLOv8 (TFLite)** – Local object detection
+- **image_picker** – Select/upload images
+- **Lottie Animations** – Smooth animated visuals
+- **shimmer_effect** – Loading UI shimmer effects
+- **Dio** – Networking
+- **animated_text_kit** – Typing effects for chatbot
+- **secure_storage** – Secure user data handling
+- **shared_preferences** – Local storage for user settings
+
+## Screenshots:
+- `/screenshots/1.png`
+- `/screenshots/2.png`
+- `/screenshots/3.png`
+- `/screenshots/4.png`
+- `/screenshots/5.png`
+## Architecture:
+- in that application clean MVVM pattern is used
+- the architecture is devided into two main sections
+  - core  
+  - features
+    - while the core is responsible for the shared logic, shared providers and the custom theme information
+    - while features is responsible for the holding the normal Model, View and ViewModel
+  - in the features directory, we have added new layer called repo, so we are holding the calls between the network layer and the view model layer
+  - breaking the features to smaller directory:
+    - data where we are storing the models and the repos so we call the backend from
+      - and the repos are abstract classes so that the code is easy to maintain and not breaking the open-closed principle and Liskov principle
+    - presentation where we have:
+      - view that holds the UI code
+      - providers that is the actual view model for us
+## tasks:
 1. ~~adding scrolling controller~~
 2. ~~lottie animation~~
 3. navigation animations
@@ -34,7 +73,7 @@
 added white theme to storage
 added default light theme
 fixed login bugs
-## notes:
+## thoughts:
 - will dio request headers change over time? ّّ
 - multi threading in dio network requests?
 - think that chat headers provider is uselss

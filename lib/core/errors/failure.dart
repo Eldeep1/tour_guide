@@ -99,6 +99,7 @@ class ServerFailure extends Failure {
                   : ServerErrorType.client,
             );
           } else if (statusCode >= 500) {
+            print(e);
             return ServerFailure(
               "Server error occurred. Please try again later.",
               type: ServerErrorType.server,

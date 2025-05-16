@@ -36,9 +36,9 @@
 
 ## Screenshots:
 - Dark Theme
-- ![dark theme](screenshots/1.png)
+![dark theme](screenshots/1.png)
 - Light Theme
-- ![light theme](screenshots/2.png)
+![light theme](screenshots/2.png)
 
 ## tasks:
 1. ~~adding scrolling controller~~

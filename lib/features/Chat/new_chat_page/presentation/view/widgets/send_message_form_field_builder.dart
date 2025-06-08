@@ -13,73 +13,70 @@ class SendMessageFormFieldBuilder extends StatelessWidget {
       builder: (context, ref, child) {
         final newMessage = ref.read(chatDataProvider.notifier);
         final controller = ref.read(sendMessageFormController);
-        return Padding(
-          padding: const EdgeInsets.all(14.0),
-          child: SizedBox(
-            height: 70,
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    controller: controller,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    minLines: null,
-                    maxLines: null,
-                    expands: true,
-                    // textAlignVertical: TextAlignVertical.top,
-                    decoration: InputDecoration(
-                      hintText: "Ask anything",
-                      // contentPadding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+        return SizedBox(
+          height: 70,
+          child: Row(
+            children: [
+              Expanded(
+                child: TextFormField(
+                  controller: controller,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  minLines: null,
+                  maxLines: null,
+                  expands: true,
+                  // textAlignVertical: TextAlignVertical.top,
+                  decoration: InputDecoration(
+                    hintText: "Ask anything",
+                    // contentPadding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      padding: EdgeInsetsDirectional.zero,
+                      visualDensity: VisualDensity.compact,
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return ObjectDetectionPage();
+                          },
+                        ));
+                      },
+                      icon: CircleAvatar(
+                        backgroundColor: Theme.of(context).primaryColor,
+                        radius: 30,
+                        child: Icon(
+                          Icons.smart_toy_outlined,
+                          color: Theme.of(context).iconTheme.color,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        padding: EdgeInsetsDirectional.zero,
-                        visualDensity: VisualDensity.compact,
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return ObjectDetectionPage();
-                            },
-                          ));
-                        },
-                        icon: CircleAvatar(
-                          backgroundColor: Theme.of(context).primaryColor,
-                          radius: 30,
-                          child: Icon(
-                            Icons.smart_toy_outlined,
-                            color: Theme.of(context).iconTheme.color,
-                          ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    IconButton(
+                      padding: EdgeInsetsDirectional.zero,
+                      visualDensity: VisualDensity.compact,
+                      onPressed: () {
+                        newMessage.sendMessage(prompt: controller.text);
+                      },
+                      icon: CircleAvatar(
+                        backgroundColor: Theme.of(context).primaryColor,
+                        radius: 30,
+                        child: Icon(
+                          Icons.send_outlined,
+                          color: Theme.of(context).iconTheme.color,
                         ),
                       ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      IconButton(
-                        padding: EdgeInsetsDirectional.zero,
-                        visualDensity: VisualDensity.compact,
-                        onPressed: () {
-                          newMessage.sendMessage(prompt: controller.text);
-                        },
-                        icon: CircleAvatar(
-                          backgroundColor: Theme.of(context).primaryColor,
-                          radius: 30,
-                          child: Icon(
-                            Icons.send_outlined,
-                            color: Theme.of(context).iconTheme.color,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },

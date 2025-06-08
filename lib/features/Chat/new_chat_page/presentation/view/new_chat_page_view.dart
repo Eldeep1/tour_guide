@@ -5,21 +5,23 @@ import 'package:tour_guide/features/Chat/new_chat_page/presentation/view/widgets
 import 'package:tour_guide/features/Chat/new_chat_page/presentation/view/widgets/app_bar_builder.dart';
 
 class NewChatPageView extends StatelessWidget {
-    const NewChatPageView({super.key});
+  const NewChatPageView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
       drawer: ChatPageSideBar(),
-      body: Stack(
-        children: [
-          reversedBackgroundGradient(),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: NewChatPageBodyBuilder(),
-          ),
-        ],
+      body: SafeArea(
+        child: Stack(
+          children: [
+            reversedBackgroundGradient(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: NewChatPageBodyBuilder(),
+            ),
+          ],
+        ),
       ),
     );
   }

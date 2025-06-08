@@ -6,8 +6,10 @@ class ChatPageSideBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: SideBarBodyBuilder(),
+    return SafeArea(
+      child: Drawer(
+        child: SideBarBodyBuilder(),
+      ),
     );
   }
 }

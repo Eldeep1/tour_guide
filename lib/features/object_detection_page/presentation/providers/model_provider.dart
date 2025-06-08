@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'dart:typed_data';
 
@@ -7,24 +6,21 @@ import 'package:tour_guide/features/object_detection_page/data/model/detection_s
 import 'package:tour_guide/features/object_detection_page/presentation/providers/image_path_provider.dart';
 import 'package:ultralytics_yolo/yolo.dart';
 
-enum DetectionOutput{
-  detected,
-  noDetection,
-  firstTime
-}
-final detectionProvider = AsyncNotifierProvider<DetectionNotifier, DetectionState>(() {
+enum DetectionOutput { detected, noDetection, firstTime }
+
+final detectionProvider =
+    AsyncNotifierProvider<DetectionNotifier, DetectionState>(() {
   return DetectionNotifier();
 });
 
 class DetectionNotifier extends AsyncNotifier<DetectionState> {
   late YOLO _yolo;
-  DetectionOutput detectionOutput=DetectionOutput.firstTime;
+  DetectionOutput detectionOutput = DetectionOutput.firstTime;
 
   @override
   FutureOr<DetectionState> build() async {
-    _yolo = YOLO(modelPath: 'best_float16.tflite', task: YOLOTask.detect);
+    _yolo = YOLO(modelPath: 'yolo', task: YOLOTask.detect);
     try {
-
       await _yolo.loadModel();
       return DetectionState(isModelLoaded: true);
     } catch (e, st) {
@@ -35,14 +31,15 @@ class DetectionNotifier extends AsyncNotifier<DetectionState> {
 
   Future<void> predict() async {
     state = AsyncLoading();
-    try{
-      final  file = ref.read(imagePathProvider);
+    try {
+      final file = ref.read(imagePathProvider);
       if (file == null) return;
 
       final bytes = await file.readAsBytes();
       final result = await _yolo.predict(bytes);
 
-      final filteredDetections = List<Map<String, dynamic>>.from(result['boxes']);
+      final filteredDetections =
+          List<Map<String, dynamic>>.from(result['boxes']);
 
       final detections = filteredDetections.where((detection) {
         final double? confidence = detection['confidence']?.toDouble();
@@ -53,24 +50,20 @@ class DetectionNotifier extends AsyncNotifier<DetectionState> {
           ? result['annotatedImage'] as Uint8List
           : null;
 
-
       state = AsyncData(state.value!.copyWith(
         imageBytes: bytes,
         annotatedImage: annotatedImage,
         detections: detections,
       ));
 
-      if(detections.isEmpty){
-        detectionOutput=DetectionOutput.noDetection;
-      }
-      else {
+      if (detections.isEmpty) {
+        detectionOutput = DetectionOutput.noDetection;
+      } else {
         detectionOutput = DetectionOutput.detected;
       }
-    }
-    catch(e){
-      state=AsyncError(e.toString(), StackTrace.current);
-      detectionOutput=DetectionOutput.noDetection;
-
+    } catch (e) {
+      state = AsyncError(e.toString(), StackTrace.current);
+      detectionOutput = DetectionOutput.noDetection;
     }
   }
 }

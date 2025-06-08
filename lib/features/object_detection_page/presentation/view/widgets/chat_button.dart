@@ -11,33 +11,35 @@ class ChatButton extends ConsumerWidget {
     final state = ref.watch(detectionProvider).value;
     final detectionState = ref.watch(detectionProvider.notifier);
 
-    if(detectionState.detectionOutput.index==0){
+    if (detectionState.detectionOutput.index == 0) {
+      print(detectionState.detectionOutput);
+      print("hmmmm");
+      print(state!.detections[0]['cls']);
       return OutlinedButton(
         style: ButtonStyle(
           backgroundColor: WidgetStatePropertyAll(Colors.amber),
         ),
         onPressed: () {
-          String prompt="Can you tell me more about ${state.detections.map((d) => d['class'].toString()).join(', ')}";
+          String prompt =
+              "Can you tell me more about ${state.detections.map((d) => d['cls'].toString()).join(', ')}";
           ref.read(chatDataProvider.notifier).sendMessage(prompt: prompt);
           Navigator.pop(context);
         },
         child: Text(
-          "Chat About ${state!.detections.map((d) => d['class'].toString()).join(', ')}",
-          style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),
+          "Chat About ${state!.detections.map((d) => d['cls'].toString()).join(', ')}",
+          style: TextStyle(
+              fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
         ),
       );
     }
-    if(detectionState.detectionOutput.index==1){
+    if (detectionState.detectionOutput.index == 1) {
       return Text(
         "No Detections!",
         style: Theme.of(context).textTheme.bodyMedium,
       );
-    }
-    else{
+    } else {
       return SizedBox();
     }
     // TODO: implement build
-
   }
-
 }

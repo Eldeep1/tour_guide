@@ -13,23 +13,26 @@ class ImagePreview extends ConsumerWidget {
       data: (state) => Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-
           // if (state.annotatedImage != null)
           //   Image.memory(state.annotatedImage!, width: double.infinity,fit: BoxFit.fill,)
-           if (state.imageBytes != null)
-             SizedBox(
-                 width: MediaQuery.of(context).size.width/2,
-                 height: MediaQuery.of(context).size.height/2,
-                 child: Image.memory(state.imageBytes!,width: double.infinity,fit: BoxFit.fill,)),
+          if (state.imageBytes != null)
+            SizedBox(
+                width: MediaQuery.of(context).size.width / 2,
+                height: MediaQuery.of(context).size.height / 2,
+                child: Image.memory(
+                  state.imageBytes!,
+                  width: double.infinity,
+                  fit: BoxFit.fill,
+                )),
           const SizedBox(height: 10),
-
         ],
       ),
       loading: () {
-        return CircularProgressIndicator(backgroundColor: Colors.red,);
-
+        return CircularProgressIndicator(
+          backgroundColor: Colors.red,
+        );
       },
-      error: (e, st) => Text('Error: $e'),
+      error: (e, st) => Center(child: Text('Error: $e')),
     );
   }
 }

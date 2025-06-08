@@ -12,38 +12,48 @@ class SplashScreen extends ConsumerStatefulWidget {
   @override
   ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
-class _SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerProviderStateMixin {
 
-  bool _shouldNavigate=false;
+class _SplashScreenState extends ConsumerState<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  bool _shouldNavigate = false;
   Widget? _nextWidget;
   @override
   void initState() {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-    Future.delayed(Duration(seconds: 4),() {
+    Future.delayed(Duration(seconds: 4), () {
       setState(() {
-        _shouldNavigate=true;
+        _shouldNavigate = true;
       });
     });
-    }
+  }
 
   @override
   void dispose() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: SystemUiOverlay.values);
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-    if(_shouldNavigate&&_nextWidget!=null){
+    if (_shouldNavigate && _nextWidget != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => _nextWidget!,));
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => _nextWidget!,
+            ));
       });
     }
     ref.listen<AsyncValue<AuthStatus>>(authServiceProvider, (prev, next) {
-      if (next.hasError || (next.hasValue && next.value == AuthStatus.notAuthenticated)) {
-        _nextWidget=LoginPageView();
+      if (next.hasError ||
+          (next.hasValue && next.value == AuthStatus.notAuthenticated)) {
+        _nextWidget = LoginPageView();
       } else if (next.hasValue && next.value == AuthStatus.authenticated) {
-        _nextWidget=NewChatPageView();
+        _nextWidget = NewChatPageView();
+      } else {
+        _nextWidget = LoginPageView();
       }
       setState(() {});
     });

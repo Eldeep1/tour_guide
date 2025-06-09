@@ -41,8 +41,12 @@ class DetectionNotifier extends AsyncNotifier<DetectionState> {
       final filteredDetections =
           List<Map<String, dynamic>>.from(result['boxes']);
 
+      print(result);
+      print("the above is the result for the yolo model..");
+      print(filteredDetections);
       final detections = filteredDetections.where((detection) {
         final double? confidence = detection['confidence']?.toDouble();
+        //TODO: adding threshold?
         return confidence != null && confidence >= .6;
       }).toList();
 

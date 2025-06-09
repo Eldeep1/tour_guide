@@ -1,9 +1,12 @@
 import 'dart:async';
 
+import 'package:dartz/dartz.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tour_guide/core/errors/failure.dart';
 import 'package:tour_guide/features/Chat/chat_headers/data/model/chat_headers_model.dart';
 import 'package:tour_guide/features/Chat/chat_headers/presentation/providers/side_bar_provider.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/data/model/chat_history.dart';
+import 'package:tour_guide/features/Chat/new_chat_page/data/model/chat_response.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/data/repo/chat_repo.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/page_variables_provider.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/chat_repo_provider.dart';
@@ -54,6 +57,8 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
      final appBarHeaderNotifier = ref.read(appBarHeaderProvider.notifier);
      final chatIDNotifier = ref.read(chatIDProvider.notifier);
 
+     final String talkingAboutMonument=ref.read(foundMonument);
+
      final existing = state.value ?? [];
      final chatWasEmpty = existing.isEmpty;
 
@@ -61,22 +66,40 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
        return;
      }
 
-     if(prompt.trim().isEmpty){
+     if(prompt.trim().isEmpty&&talkingAboutMonument.isEmpty){
        return;
      }
      if (existing.isNotEmpty) {
        // scrollToTheEnd();
      }
 
+
      sendingNotifier.state = true;
      formController.text = "";
+     bool emptyPrompt=prompt.isEmpty;
 
-     // Add a loading placeholder
-     final loadingMessage = Data(prompt: prompt, response: null);
-     final withLoading = [...existing, loadingMessage];
-     state = AsyncData(withLoading);
+     if(emptyPrompt){
+       prompt="can you tell me more about $talkingAboutMonument";
+     }
+    final loadingMessage = Data(prompt: prompt, response: null);
+    final withLoading = [...existing, loadingMessage];
+    state = AsyncData(withLoading);
 
-     final result = await chatRepo!.sendMessage(message: prompt, chatID: chatID);
+    late final Either<Failure, ChatResponse> result;
+    print(prompt);
+
+     if (talkingAboutMonument.isNotEmpty && !emptyPrompt){
+      //send the actual written prompt
+      //TODO : create new function called send message about specific king or something
+       ref.read(foundMonument.notifier).state="";
+
+       result = await chatRepo!.sendMessage(message: prompt, chatID: chatID);
+    }
+    else{
+      //send the actual written prompt
+       ref.read(foundMonument.notifier).state="";
+      result = await chatRepo!.sendMessage(message: prompt, chatID: chatID);
+    }
 
      sendingNotifier.state = false;
      // scrollToTheEnd();

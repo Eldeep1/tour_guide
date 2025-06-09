@@ -15,8 +15,10 @@ class PageButtons extends ConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         OutlinedButton(
-            style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.amber)
+            style: OutlinedButton.styleFrom(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+
+                backgroundColor: Colors.amber
             ),
             onPressed: ()  async {
 
@@ -29,8 +31,9 @@ class PageButtons extends ConsumerWidget {
             }, child: Text("Take Picture!",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 16),)),
         SizedBox(width: 12,),
         OutlinedButton(
-            style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.amber)
+            style: OutlinedButton.styleFrom(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                backgroundColor: Colors.amber,
             ),
             onPressed: ()async{
               final path = await ImagePickerService.uploadImage();

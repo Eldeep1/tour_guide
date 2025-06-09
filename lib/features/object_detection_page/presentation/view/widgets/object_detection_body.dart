@@ -13,7 +13,7 @@ class ObjectDetectionBody extends StatelessWidget {
       children: [
         SizedBox(height: 15,),
         PageButtons(),
-        Flexible(fit: FlexFit.loose,child: ImagePreview()),
+        Expanded(child: SingleChildScrollView(child: ImagePreview())),
         ChatButton(),
         SizedBox(height: 15,),
 

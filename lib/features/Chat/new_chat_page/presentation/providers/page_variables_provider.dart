@@ -11,6 +11,11 @@ final appBarHeaderProvider = StateProvider<String>(
     return "AI TOUR GUIDE";
   },
 );
+final foundMonument = StateProvider<String>(
+  (ref) {
+    return "";
+  },
+);
 
 final sendMessageFormController = Provider.autoDispose<TextEditingController>(
       (ref) {

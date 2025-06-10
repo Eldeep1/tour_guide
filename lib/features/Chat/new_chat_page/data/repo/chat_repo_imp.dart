@@ -7,6 +7,8 @@ import 'package:tour_guide/features/Chat/new_chat_page/data/model/chat_history.d
 import 'package:tour_guide/features/Chat/new_chat_page/data/model/chat_response.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/data/repo/chat_repo.dart';
 
+import '../model/chat_request.dart';
+
 class ChatRepoImp extends ChatRepo{
   final String accessToken;
   final ApiService apiService;
@@ -28,13 +30,12 @@ class ChatRepoImp extends ChatRepo{
   }
 
   @override
-  Future<Either<Failure, ChatResponse>> sendMessage({required String message, int? chatID}) async {
+  Future<Either<Failure, ChatResponse>> sendMessage({required ChatRequest chatRequest}) async {
     try{
-      Map<String,dynamic> parameters={"prompt":message,"chat_id":chatID};
       final result=await apiService.post(
         endPoint: ApiEndpoints.askAQuestion,
         bearerToken: accessToken,
-        parameters: parameters,
+        parameters: chatRequest.toJson(),
       );
 
       return right(ChatResponse.fromJson(result));

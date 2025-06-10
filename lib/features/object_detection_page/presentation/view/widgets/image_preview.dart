@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tour_guide/features/object_detection_page/presentation/providers/model_provider.dart';
-import 'package:ultralytics_yolo/yolo.dart';
 
 class ImagePreview extends ConsumerWidget {
   const ImagePreview({super.key});

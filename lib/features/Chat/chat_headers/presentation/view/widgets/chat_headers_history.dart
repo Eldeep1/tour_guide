@@ -29,7 +29,7 @@ class ChatHeaderHistory extends ConsumerWidget {
               onPressed: () {
                 Scaffold.of(context).closeDrawer();
                 ref.read(appBarHeaderProvider.notifier).state = headers.data![reversedIndex].title ?? "AI TOUR GUIDE";
-                ref.read(chatIDProvider.notifier).state = headers.data![reversedIndex].id;
+                ref.read(messageRequestProvider.notifier).state.chatID = headers.data![reversedIndex].id;
                 ref.read(chatDataProvider.notifier).fetchOldMessages();
               },
               child: Align(

@@ -3,6 +3,8 @@ import 'package:tour_guide/core/errors/failure.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/data/model/chat_history.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/data/model/chat_response.dart';
 
+import '../model/chat_request.dart';
+
 abstract class ChatRepo {
   //1. get all messages
   //2. send message
@@ -10,7 +12,6 @@ abstract class ChatRepo {
   Future<Either<Failure,ChatHistory>> gelAllChats(chatID);
 
   Future<Either<Failure,ChatResponse>> sendMessage({
-    required String message,
-    int? chatID,
+    required ChatRequest chatRequest
 });
 }

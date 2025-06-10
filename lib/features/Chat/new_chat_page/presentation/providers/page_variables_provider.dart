@@ -1,27 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tour_guide/features/Chat/new_chat_page/data/model/chat_request.dart';
 
-final chatIDProvider = StateProvider<int?>(
-  (ref) {
-    return null;
-  },
-);
+final messageRequestProvider=StateProvider<ChatRequest>((ref) {
+  return ChatRequest();
+},);
+
 final appBarHeaderProvider = StateProvider<String>(
   (ref) {
     return "AI TOUR GUIDE";
   },
 );
-final foundMonument = StateProvider<String>(
-  (ref) {
-    return "";
-  },
-);
 
-final sendMessageFormController = Provider.autoDispose<TextEditingController>(
-      (ref) {
-    return TextEditingController();
-  },
-);
+
 
 final sendingMessage=StateProvider<bool>((ref) {
   return false;

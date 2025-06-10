@@ -47,7 +47,7 @@ class DetectionNotifier extends AsyncNotifier<DetectionState> {
       final detections = filteredDetections.where((detection) {
         final double? confidence = detection['confidence']?.toDouble();
         //TODO: adding threshold?
-        return confidence != null && confidence >= .6;
+        return confidence != null && confidence >= .2;
       }).toList();
 
       final annotatedImage = result['annotatedImage'] is Uint8List

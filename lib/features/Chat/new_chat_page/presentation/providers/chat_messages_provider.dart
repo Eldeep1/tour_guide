@@ -33,7 +33,8 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
     //1. delete old messages
     // state = const AsyncData([]);
     state = const AsyncLoading();
-    final result = await chatRepo!.gelAllChats(ref.read(chatIDProvider));
+    int? chatID=ref.read(messageRequestProvider.notifier).state.chatID;
+    final result = await chatRepo!.gelAllChats(chatID);
     result.fold(
           (failure) {
             return state = AsyncError(failure.message, StackTrace.current);
@@ -48,16 +49,13 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
    Future<void> sendMessage({
      required String prompt,
    }) async {
-    print(prompt);
-    print(ref.read(chatIDProvider));
-    print(ref.read(chatIDProvider));
-     final chatID = ref.read(chatIDProvider);
-     final sendingNotifier = ref.read(sendingMessage.notifier);
-     final formController = ref.read(sendMessageFormController);
-     final appBarHeaderNotifier = ref.read(appBarHeaderProvider.notifier);
-     final chatIDNotifier = ref.read(chatIDProvider.notifier);
 
-     final String talkingAboutMonument=ref.read(foundMonument);
+    final messageRequest=ref.read(messageRequestProvider);
+    messageRequest.prompt=prompt;
+    print(messageRequest.chatID);
+    print(messageRequest.prompt);
+     final sendingNotifier = ref.read(sendingMessage.notifier);
+     final appBarHeaderNotifier = ref.read(appBarHeaderProvider.notifier);
 
      final existing = state.value ?? [];
      final chatWasEmpty = existing.isEmpty;
@@ -66,7 +64,7 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
        return;
      }
 
-     if(prompt.trim().isEmpty&&talkingAboutMonument.isEmpty){
+     if(prompt.trim().isEmpty){
        return;
      }
      if (existing.isNotEmpty) {
@@ -75,31 +73,14 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
 
 
      sendingNotifier.state = true;
-     formController.text = "";
-     bool emptyPrompt=prompt.isEmpty;
 
-     if(emptyPrompt){
-       prompt="can you tell me more about $talkingAboutMonument";
-     }
+
     final loadingMessage = Data(prompt: prompt, response: null);
     final withLoading = [...existing, loadingMessage];
     state = AsyncData(withLoading);
 
     late final Either<Failure, ChatResponse> result;
-    print(prompt);
-
-     if (talkingAboutMonument.isNotEmpty && !emptyPrompt){
-      //send the actual written prompt
-      //TODO : create new function called send message about specific king or something
-       ref.read(foundMonument.notifier).state="";
-
-       result = await chatRepo!.sendMessage(message: prompt, chatID: chatID);
-    }
-    else{
-      //send the actual written prompt
-       ref.read(foundMonument.notifier).state="";
-      result = await chatRepo!.sendMessage(message: prompt, chatID: chatID);
-    }
+    result = await chatRepo!.sendMessage(chatRequest: messageRequest);
 
      sendingNotifier.state = false;
      // scrollToTheEnd();
@@ -115,7 +96,7 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
 
 
          if (chatWasEmpty) {
-           chatIDNotifier.state = response.chatId;
+           messageRequest.chatID = response.chatId;
            newHeader(response); // Now this is safe
            appBarHeaderNotifier.state = response.chatTitle ?? "AI TOUR GUIDE";
          }
@@ -138,11 +119,10 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
     // Clear the chat messages
     state = const AsyncData([]);
     // Reset chat ID to null (new session)
-    ref.read(chatIDProvider.notifier).state = null;
+    ref.read(messageRequestProvider.notifier).state.chatID = null;
     // Optionally reset app bar title
     ref.read(appBarHeaderProvider.notifier).state = "AI TOUR GUIDE";
     // Reset the input field as well if needed
-    ref.read(sendMessageFormController).text = "";
   }
 
 }

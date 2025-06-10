@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tour_guide/features/Chat/new_chat_page/data/model/chat_image.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/chat_messages_provider.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/page_variables_provider.dart';
+import 'package:tour_guide/features/object_detection_page/presentation/providers/image_path_provider.dart';
 import 'package:tour_guide/features/object_detection_page/presentation/providers/model_provider.dart';
 
 class ChatButton extends ConsumerWidget {
@@ -24,17 +26,16 @@ class ChatButton extends ConsumerWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-          
               Wrap(
                 spacing: 12,
                 runSpacing: 12,
-                children: List.generate(state.detections.length, (index) {
+                children: List.generate(state!.detections.length, (index) {
                   final item = state.detections[index];
                   final label = Platform.isAndroid ? item["class"] : item["cls"];
 
                   double width =  MediaQuery.of(context).size.width * 0.4;
+
                   if(index==state.detections.length-1 && index%2 ==0 ){
-                    print("we are here?");
                     width=width*2;
                   }
                   return SizedBox(
@@ -44,10 +45,16 @@ class ChatButton extends ConsumerWidget {
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         backgroundColor: Colors.amber,
                       ),
-                      onPressed: () {
-                        ref.read(foundMonument.notifier).state=label;
-                        // String prompt = "Can you tell me more about ${item["cls"]}";
-                        // ref.read(chatDataProvider.notifier).sendMessage(prompt: prompt);
+                      onPressed: () async {
+                        final imagePath = ref.read(imagePathProvider);
+                        final chatImage = await ChatImage.fromFile(imagePath!);
+
+                        final current = ref.read(messageRequestProvider);
+                        ref.read(messageRequestProvider.notifier).state = current.copyWith(
+                          label: label,
+                          image: chatImage,
+                        );
+
                         Navigator.pop(context);
                       },
                       child: Text(
@@ -63,33 +70,6 @@ class ChatButton extends ConsumerWidget {
                   );
                 }),
               )
-          
-          
-              //   shrinkWrap: true,
-              //   itemBuilder: (context, index) {
-              //   return OutlinedButton(
-              //     style: ButtonStyle(
-              //       backgroundColor: WidgetStatePropertyAll(Colors.amber),
-              //     ),
-              //     onPressed: () {
-              //       String prompt =
-              //           "Can you tell me more about ${state.detections.map((d) => d['cls'].toString()).join(', ')}";
-              //       ref.read(chatDataProvider.notifier).sendMessage(prompt: prompt);
-              //       Navigator.pop(context);
-              //     },
-              //     child: Text(
-              //       Platform.isAndroid?
-              //         "Chat About ${state.detections[0]["class"]}":
-              //       "Chat About ${state.detections[0]["cls"]}",
-              //
-              //       // "Chat About ${state.detections.[map((d) => d['cls'].toString()).join(', ')]}",
-              //       style: TextStyle(
-              //           fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
-              //     ),
-              //   );
-              //   },
-              // itemCount: 4,
-              // ),
             ],
           ),
         ),

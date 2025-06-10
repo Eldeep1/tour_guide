@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
-        android:label="tour_guide"
+        android:label="Rosetta"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"
         android:usesCleartextTraffic="true"

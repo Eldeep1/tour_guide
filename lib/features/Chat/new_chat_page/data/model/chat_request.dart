@@ -1,7 +1,3 @@
-import 'dart:io';
-
-import 'package:dio/dio.dart';
-import 'package:path/path.dart';
 
 import 'chat_image.dart';
 
@@ -17,7 +13,7 @@ class ChatRequest{
     return {
       "prompt": prompt,
       "chat_id": chatID,
-      "label": label,
+      "classes": label,
       "image":image?.toBase64()
     };
   }

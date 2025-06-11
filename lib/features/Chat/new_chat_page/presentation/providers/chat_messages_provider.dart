@@ -74,6 +74,8 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
 
      sendingNotifier.state = true;
 
+     messageRequest.image=null;
+     messageRequest.label=null;
 
     final loadingMessage = Data(prompt: prompt, response: null);
     final withLoading = [...existing, loadingMessage];

@@ -142,7 +142,7 @@ class _SendMessageFormFieldBuilderState extends ConsumerState<SendMessageFormFie
                       padding: EdgeInsetsDirectional.zero,
                       visualDensity: VisualDensity.compact,
                       onPressed: () {
-                        if(ref.read(sendingMessage)==false&&sendMessageTextEditingController.text.isNotEmpty){
+                        if(ref.read(sendingMessage)==false&&(sendMessageTextEditingController.text.isNotEmpty || messageRequest.image!=null)){
                           newMessage.sendMessage(prompt: sendMessageTextEditingController.text);
                           sendMessageTextEditingController.text="";
                         }

@@ -1,11 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tour_guide/core/themes/dark_theme.dart';
 import 'package:tour_guide/core/themes/theme_provider.dart';
-import 'package:tour_guide/core/utils/Assets/assets.dart';
-
 
 
 BoxDecoration responseMessageDecoration(WidgetRef ref) {
@@ -30,12 +30,12 @@ BoxDecoration requestMessageDecoration=
       borderRadius: BorderRadius.circular(12), // Add border radius once
     );
 
-Widget chatIcon = Image.asset(
-  width: 60,
-  height: 70,
-  Assets.modelIcon,
-  fit: BoxFit.cover, // or BoxFit.fill depending on how you want it
-);
+// Widget chatIcon = Image.asset(
+//   width: 60,
+//   height: 70,
+//   Assets.modelIcon,
+//   fit: BoxFit.cover, // or BoxFit.fill depending on how you want it
+// );
 
 const messagePadding = EdgeInsets.all(16.0);
 
@@ -78,17 +78,15 @@ Widget responseMessageContainer(context,String message,{bool error=false}){
 Widget answerMessageBuilder({required String message, bool isLoading = false}) {
   return LayoutBuilder(
     builder: (context, constraints) {
-      // Extract common container decoration
-
       return Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          chatIcon,
+          // chatIcon,
           Container(
             alignment: AlignmentDirectional.topStart,
-            width: constraints.maxWidth/1.3 ,
+            width: constraints.maxWidth/1.2 ,
             child: isLoading
                 ? Align(
                 alignment: AlignmentDirectional.topStart,
@@ -101,8 +99,7 @@ Widget answerMessageBuilder({required String message, bool isLoading = false}) {
   );
 }
 
-Widget promptMessageBuilder(
-  String message) {
+Widget promptMessageBuilder(String message, {Uint8List? byteImage,String? linkImage}) {
   return LayoutBuilder(
     builder: (context, constraints) => Row(
       mainAxisSize: MainAxisSize.max,
@@ -116,11 +113,31 @@ Widget promptMessageBuilder(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Stack(
-                  children: [
-                    promptMessageContainer(context,message),
-                  ],
-                ),
+                if(byteImage!=null)
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.memory(
+
+                      alignment: AlignmentDirectional.topEnd,
+                      byteImage,
+                      width: 200,
+                      fit: BoxFit.fill, // This is the key!
+                      height: 200,
+                    ),
+                  ),
+                if(linkImage!=null)
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.network(
+                      alignment: AlignmentDirectional.topEnd,
+                      fit: BoxFit.fill,
+                      linkImage,
+                      width: 200,
+                      height: 200,
+                    ),
+                  ),
+                if(message.isNotEmpty)
+                promptMessageContainer(context,message),
               ],
             ),
           ),
@@ -154,7 +171,7 @@ Widget errorMessageBuilder(String message) {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          chatIcon,
+          // chatIcon,
           Container(
             alignment: AlignmentDirectional.topStart,
             width: (constraints.maxWidth / 2) + 30,

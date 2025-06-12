@@ -40,7 +40,7 @@ class NewChatPageBodyBuilder extends ConsumerWidget {
                   if (message.response == null) {
                     return Column(
                       children: [
-                        promptMessageBuilder(message.prompt!),
+                        promptMessageBuilder(message.prompt!,byteImage: message.byteImage,linkImage: message.linkImage),
                         answerMessageBuilder(message:"Loading Response",isLoading: true),
                       ],
                     );
@@ -50,7 +50,7 @@ class NewChatPageBodyBuilder extends ConsumerWidget {
                   if (message.response!.startsWith("Error:")) {
                     return Column(
                       children: [
-                        promptMessageBuilder(message.prompt ?? ""),
+                        promptMessageBuilder(message.prompt ?? "",byteImage: message.byteImage,linkImage: message.linkImage),
                         errorMessageBuilder(message.response!),
                       ],
                     );
@@ -59,7 +59,7 @@ class NewChatPageBodyBuilder extends ConsumerWidget {
                   // Normal message
                   return Column(
                     children: [
-                      promptMessageBuilder(message.prompt ?? ""),
+                      promptMessageBuilder(message.prompt ?? "",byteImage: message.byteImage,linkImage: message.linkImage),
                       answerMessageBuilder(message: message.response ?? ""),
                     ],
                   );

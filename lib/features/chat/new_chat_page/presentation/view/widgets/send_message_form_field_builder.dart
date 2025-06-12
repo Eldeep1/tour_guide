@@ -51,35 +51,36 @@ class _SendMessageFormFieldBuilderState extends ConsumerState<SendMessageFormFie
 
             if(image!=null) {
               return SizedBox(
-                width: 150,
-                height: 150,
+                width: 80,
+                height: 80,
                 child: Stack(
                   children: [
-                    Image.memory(
-                      image,
-                      width: 150,
-                      height: 150,
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.memory(
+                        fit: BoxFit.fill,
+                        image,
+                        width: 80,
+                        height: 80,
+                      ),
                     ),
                     Align(
                       alignment: Alignment.topRight,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 16.0,right: 2),
-                        child: CircleAvatar(
-                          backgroundColor: Colors.black,
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.close,
-                              size: 20,
-                              color: Colors.white,
-                            ),
-                            onPressed: (){
-                              setState(() {
-
-                              });
-                              messageRequest.image=null;
-                              messageRequest.label=null;
-                            },
+                      child: CircleAvatar(
+                        backgroundColor: Colors.black,
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.close,
+                            size: 20,
+                            color: Colors.white,
                           ),
+                          onPressed: (){
+                            setState(() {
+
+                            });
+                            messageRequest.image=null;
+                            messageRequest.label=null;
+                          },
                         ),
                       ),
                     ),

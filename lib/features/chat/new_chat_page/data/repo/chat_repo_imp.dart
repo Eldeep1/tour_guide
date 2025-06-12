@@ -4,10 +4,10 @@ import 'package:tour_guide/core/errors/failure.dart';
 import 'package:tour_guide/core/utils/api_end_points.dart';
 import 'package:tour_guide/core/utils/services/network/api_service.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/data/model/chat_history.dart';
+import 'package:tour_guide/features/Chat/new_chat_page/data/model/chat_request.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/data/model/chat_response.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/data/repo/chat_repo.dart';
 
-import '../model/chat_request.dart';
 
 class ChatRepoImp extends ChatRepo{
   final String accessToken;

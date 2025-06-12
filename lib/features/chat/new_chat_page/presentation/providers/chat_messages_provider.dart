@@ -39,7 +39,6 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
           (failure) {
             return state = AsyncError(failure.message, StackTrace.current);
           },
-
           (messages) {
             return state = AsyncData(messages.data ?? []);
           },
@@ -54,6 +53,13 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
     messageRequest.prompt=prompt;
     print(messageRequest.chatID);
     print(messageRequest.prompt);
+    final requestCopy = messageRequest.copyWith(
+      prompt: prompt,
+      chatID: messageRequest.chatID,
+      image: messageRequest.image,
+      label: messageRequest.label,
+    );
+
      final sendingNotifier = ref.read(sendingMessage.notifier);
      final appBarHeaderNotifier = ref.read(appBarHeaderProvider.notifier);
 
@@ -64,7 +70,7 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
        return;
      }
 
-     if(prompt.trim().isEmpty){
+     if(prompt.trim().isEmpty&&messageRequest.image==null){
        return;
      }
      if (existing.isNotEmpty) {
@@ -72,17 +78,19 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
      }
 
 
+     print("we are actually sending a message");
      sendingNotifier.state = true;
 
      messageRequest.image=null;
      messageRequest.label=null;
+     messageRequest.prompt=null;
 
-    final loadingMessage = Data(prompt: prompt, response: null);
+    final loadingMessage = Data(prompt: prompt, response: null,byteImage: requestCopy.image?.bytes);
     final withLoading = [...existing, loadingMessage];
     state = AsyncData(withLoading);
 
     late final Either<Failure, ChatResponse> result;
-    result = await chatRepo!.sendMessage(chatRequest: messageRequest);
+    result = await chatRepo!.sendMessage(chatRequest: requestCopy);
 
      sendingNotifier.state = false;
      // scrollToTheEnd();
@@ -90,7 +98,7 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
      result.fold(
            (failure) {
          // Replace the last item (the loading one) with an error message
-         final errorMessage = Data(prompt: prompt, response: "Error: ${failure.message}");
+         final errorMessage = Data(prompt: prompt, response: "Error: ${failure.message}",byteImage: requestCopy.image?.bytes);
          final updated = [...existing, errorMessage];
          state = AsyncData(updated);
        },
@@ -103,7 +111,7 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
            appBarHeaderNotifier.state = response.chatTitle ?? "AI TOUR GUIDE";
          }
          // Replace the last item (loading) with actual response
-         final successMessage = Data(prompt: prompt, response: response.response);
+         final successMessage = Data(prompt: prompt, response: response.response,byteImage: requestCopy.image?.bytes);
          final updated = [...existing, successMessage];
          state = AsyncData(updated);
          // scrollToTheEnd();

@@ -1,10 +1,8 @@
 import 'dart:io';
 
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/data/model/chat_image.dart';
-import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/chat_messages_provider.dart';
 import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/page_variables_provider.dart';
 import 'package:tour_guide/features/object_detection_page/presentation/providers/image_path_provider.dart';
 import 'package:tour_guide/features/object_detection_page/presentation/providers/model_provider.dart';
@@ -29,7 +27,7 @@ class ChatButton extends ConsumerWidget {
               Wrap(
                 spacing: 12,
                 runSpacing: 12,
-                children: List.generate(state!.detections.length, (index) {
+                children: List.generate(state.detections.length, (index) {
                   final item = state.detections[index];
                   final label = Platform.isAndroid ? item["class"] : item["cls"];
 
@@ -54,7 +52,6 @@ class ChatButton extends ConsumerWidget {
                           label: label,
                           image: chatImage,
                         );
-
                         Navigator.pop(context);
                       },
                       child: Text(
@@ -77,13 +74,38 @@ class ChatButton extends ConsumerWidget {
 
     }
     if (detectionState.detectionOutput.index == 1) {
-      return Text(
-        "No Detections!",
-        style: Theme.of(context).textTheme.bodyMedium,
+      return Padding(
+        padding: const EdgeInsets.only(top: 16.0),
+        child: Column(
+          children: [
+            Text(
+              "Couldn't detect monument but you can ",
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            TextButton(
+              onPressed: () async {
+                final imagePath = ref.read(imagePathProvider);
+                final chatImage = await ChatImage.fromFile(imagePath!);
+
+                final current = ref.read(messageRequestProvider);
+                ref.read(messageRequestProvider.notifier).state = current.copyWith(
+                  image: chatImage,
+                );
+
+                Navigator.pop(context);
+              },
+              child: Text(
+                "Chat About Uploaded Image",
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.amber),
+              ),
+            ),
+          ],
+        ),
       );
     } else {
       return SizedBox();
     }
     // TODO: implement build
+
   }
 }

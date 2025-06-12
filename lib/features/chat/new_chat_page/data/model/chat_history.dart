@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 class ChatHistory {
   String? status;
   Null error;
@@ -15,16 +17,6 @@ class ChatHistory {
       });
     }
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  <String, dynamic>{};
-    data['status'] = status;
-    data['error'] = error;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
 }
 
 class Data {
@@ -32,22 +24,15 @@ class Data {
   String? prompt;
   String? response;
   int? chatId;
-
-  Data({this.id, this.prompt, this.response, this.chatId});
+  Uint8List? byteImage;
+  String? linkImage;
+  Data({this.id, this.prompt, this.response, this.chatId,this.byteImage,this.linkImage});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     prompt = json['prompt'];
     response = json['response'];
     chatId = json['chat_id'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  <String, dynamic>{};
-    data['id'] = id;
-    data['prompt'] = prompt;
-    data['response'] = response;
-    data['chat_id'] = chatId;
-    return data;
+    linkImage=json['image'];
   }
 }

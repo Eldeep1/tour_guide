@@ -3,14 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:tour_guide/core/themes/dark_theme.dart';
 import 'package:tour_guide/core/utils/services/validators/validators.dart';
-import 'package:tour_guide/features/Authentication/login/presentation/view/login_page_view.dart';
-import 'package:tour_guide/features/Authentication/register/data/models/register_request.dart';
-import 'package:tour_guide/features/Authentication/register/presentation/providers/register_form_provider.dart';
-import 'package:tour_guide/features/Authentication/register/presentation/providers/register_page_provider.dart';
-import 'package:tour_guide/features/Authentication/widgets/form_field_builder.dart';
-import 'package:tour_guide/features/Authentication/widgets/main_button_builder.dart';
-import 'package:tour_guide/features/Authentication/widgets/text_link_widget.dart';
-import 'package:tour_guide/features/Authentication/widgets/txt_header.dart';
+import 'package:tour_guide/features/authentication/login/presentation/view/login_page_view.dart';
+import 'package:tour_guide/features/authentication/register/data/models/register_request.dart';
+import 'package:tour_guide/features/authentication/register/presentation/providers/register_form_provider.dart';
+import 'package:tour_guide/features/authentication/register/presentation/providers/register_page_provider.dart';
+import 'package:tour_guide/features/authentication/widgets/form_field_builder.dart';
+import 'package:tour_guide/features/authentication/widgets/main_button_builder.dart';
+import 'package:tour_guide/features/authentication/widgets/text_link_widget.dart';
+import 'package:tour_guide/features/authentication/widgets/txt_header.dart';
 
 class SignUpPageBodyBuilder extends ConsumerStatefulWidget {
 

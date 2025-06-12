@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tour_guide/core/utils/services/validators/validators.dart';
-import 'package:tour_guide/features/Authentication/login/data/models/login_request.dart';
-import 'package:tour_guide/features/Authentication/login/presentation/providers/login_page_provider.dart';
-import 'package:tour_guide/features/Authentication/login/presentation/view/widgets/login_button_builder.dart';
-import 'package:tour_guide/features/Authentication/widgets/form_field_builder.dart';
+import 'package:tour_guide/features/authentication/login/data/models/login_request.dart';
+import 'package:tour_guide/features/authentication/login/presentation/providers/login_page_provider.dart';
+import 'package:tour_guide/features/authentication/login/presentation/view/widgets/login_button_builder.dart';
+import 'package:tour_guide/features/authentication/widgets/form_field_builder.dart';
 
 /// Use ConsumerStatefulWidget & ConsumerState
 class LoginForm extends ConsumerStatefulWidget {

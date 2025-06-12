@@ -4,7 +4,7 @@ import 'package:tour_guide/core/themes/dark_theme.dart';
 import 'package:tour_guide/core/themes/theme_provider.dart';
 import 'package:tour_guide/core/utils/services/auth_service.dart';
 import 'package:tour_guide/core/utils/services/providers/providers.dart';
-import 'package:tour_guide/features/Authentication/login/presentation/view/login_page_view.dart';
+import 'package:tour_guide/features/authentication/login/presentation/view/login_page_view.dart';
 
 class MenuItems extends StatelessWidget {
   const MenuItems({super.key});

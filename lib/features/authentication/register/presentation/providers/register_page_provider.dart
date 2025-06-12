@@ -3,10 +3,10 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tour_guide/features/Authentication/register/data/models/register_request.dart';
-import 'package:tour_guide/features/Authentication/register/data/models/register_response.dart';
-import 'package:tour_guide/features/Authentication/register/data/repos/register_repo.dart';
-import 'package:tour_guide/features/Authentication/register/presentation/providers/register_repo_provider.dart';
+import 'package:tour_guide/features/authentication/register/data/models/register_request.dart';
+import 'package:tour_guide/features/authentication/register/data/models/register_response.dart';
+import 'package:tour_guide/features/authentication/register/data/repos/register_repo.dart';
+import 'package:tour_guide/features/authentication/register/presentation/providers/register_repo_provider.dart';
 
 final registerPageProvider = AsyncNotifierProvider<RegisterPageNotifier,RegisterResponse>(() => RegisterPageNotifier(),);
 

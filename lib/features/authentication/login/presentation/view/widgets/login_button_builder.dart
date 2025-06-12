@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:tour_guide/core/utils/services/auth_service.dart';
-import 'package:tour_guide/features/Authentication/login/data/models/login_request.dart';
-import 'package:tour_guide/features/Authentication/login/presentation/providers/login_page_provider.dart';
-import 'package:tour_guide/features/Authentication/widgets/main_button_builder.dart';
+import 'package:tour_guide/features/authentication/login/data/models/login_request.dart';
+import 'package:tour_guide/features/authentication/login/presentation/providers/login_page_provider.dart';
+import 'package:tour_guide/features/authentication/widgets/main_button_builder.dart';
 import 'package:tour_guide/features/chat/new_chat_page/presentation/view/new_chat_page_view.dart';
 
 class LoginButtonBuilder extends ConsumerWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tour_guide/core/themes/dark_theme.dart';
-import 'package:tour_guide/features/Authentication/register/presentation/view/register_page_view.dart';
-import 'package:tour_guide/features/Authentication/widgets/text_link_widget.dart';
-import 'package:tour_guide/features/Authentication/widgets/txt_header.dart';
+import 'package:tour_guide/features/authentication/register/presentation/view/register_page_view.dart';
+import 'package:tour_guide/features/authentication/widgets/text_link_widget.dart';
+import 'package:tour_guide/features/authentication/widgets/txt_header.dart';
 import 'login_form.dart';
 
 class LoginPageBody extends StatelessWidget {

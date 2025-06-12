@@ -3,9 +3,9 @@ import 'package:dio/dio.dart';
 import 'package:tour_guide/core/errors/failure.dart';
 import 'package:tour_guide/core/utils/api_end_points.dart';
 import 'package:tour_guide/core/utils/services/network/api_service.dart';
-import 'package:tour_guide/features/Authentication/register/data/models/register_request.dart';
-import 'package:tour_guide/features/Authentication/register/data/models/register_response.dart';
-import 'package:tour_guide/features/Authentication/register/data/repos/register_repo.dart';
+import 'package:tour_guide/features/authentication/register/data/models/register_request.dart';
+import 'package:tour_guide/features/authentication/register/data/models/register_response.dart';
+import 'package:tour_guide/features/authentication/register/data/repos/register_repo.dart';
 
 class RegisterRepoImp extends RegisterRepo {
   final ApiService apiService;

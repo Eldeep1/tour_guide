@@ -14,6 +14,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>Rosetta</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>This app needs access to location when open.</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

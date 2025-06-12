@@ -33,18 +33,3 @@ class ChatImage {
     );
   }
 }
-
-// From file picker
-//   final file = File(pickedFile.path);
-//   final chatImage = await ChatImage.fromFile(file);
-//
-// // Display in UI
-//   Image.memory(chatImage.bytes)
-//
-// // Send to backend
-//   final request = ChatRequest(
-//   prompt: "What's in this image?",
-//   chatID: 123,
-//   image: chatImage,
-//   );
-//   final json = request.toJson(); // Ready to send

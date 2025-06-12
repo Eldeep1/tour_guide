@@ -49,6 +49,7 @@ dependencies:
   animated_text_kit: ^4.2.3
   shared_preferences: ^2.5.3
   path: ^1.9.1
+  geolocator: ^14.0.1
 
 
 dev_dependencies:

@@ -51,8 +51,7 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
 
     final messageRequest=ref.read(messageRequestProvider);
     messageRequest.prompt=prompt;
-    print(messageRequest.longitude);
-    return;
+
     print(messageRequest.chatID);
     print(messageRequest.prompt);
     final requestCopy = messageRequest.copyWith(

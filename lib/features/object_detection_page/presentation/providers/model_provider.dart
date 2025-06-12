@@ -38,6 +38,7 @@ class DetectionNotifier extends AsyncNotifier<DetectionState> {
       final bytes = await file.readAsBytes();
       final result = await _yolo.predict(bytes);
 
+
       final filteredDetections =
           List<Map<String, dynamic>>.from(result['boxes']);
 
@@ -47,7 +48,7 @@ class DetectionNotifier extends AsyncNotifier<DetectionState> {
       final detections = filteredDetections.where((detection) {
         final double? confidence = detection['confidence']?.toDouble();
         //TODO: adding threshold?
-        return confidence != null && confidence >= .2;
+        return confidence != null && confidence >= .5;
       }).toList();
 
       final annotatedImage = result['annotatedImage'] is Uint8List

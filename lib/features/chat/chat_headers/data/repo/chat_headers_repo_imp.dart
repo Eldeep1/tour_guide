@@ -3,8 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:tour_guide/core/errors/failure.dart';
 import 'package:tour_guide/core/utils/api_end_points.dart';
 import 'package:tour_guide/core/utils/services/network/api_service.dart';
-import 'package:tour_guide/features/Chat/chat_headers/data/model/chat_headers_model.dart';
-import 'package:tour_guide/features/Chat/chat_headers/data/repo/chat_headers_repo.dart';
+import 'package:tour_guide/features/chat/chat_headers/data/model/chat_headers_model.dart';
+import 'package:tour_guide/features/chat/chat_headers/data/repo/chat_headers_repo.dart';
 
 class ChatHeadersRepoImp extends ChatHeadersRepo {
   final ApiService apiService;

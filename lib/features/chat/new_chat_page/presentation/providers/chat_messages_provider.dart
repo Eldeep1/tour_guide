@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tour_guide/core/errors/failure.dart';
-import 'package:tour_guide/features/Chat/chat_headers/data/model/chat_headers_model.dart';
-import 'package:tour_guide/features/Chat/chat_headers/presentation/providers/side_bar_provider.dart';
-import 'package:tour_guide/features/Chat/new_chat_page/data/model/chat_history.dart';
-import 'package:tour_guide/features/Chat/new_chat_page/data/model/chat_response.dart';
-import 'package:tour_guide/features/Chat/new_chat_page/data/repo/chat_repo.dart';
-import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/page_variables_provider.dart';
-import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/chat_repo_provider.dart';
+import 'package:tour_guide/features/chat/chat_headers/data/model/chat_headers_model.dart';
+import 'package:tour_guide/features/chat/chat_headers/presentation/providers/side_bar_provider.dart';
+import 'package:tour_guide/features/chat/new_chat_page/data/model/chat_history.dart';
+import 'package:tour_guide/features/chat/new_chat_page/data/model/chat_response.dart';
+import 'package:tour_guide/features/chat/new_chat_page/data/repo/chat_repo.dart';
+import 'package:tour_guide/features/chat/new_chat_page/presentation/providers/page_variables_provider.dart';
+import 'package:tour_guide/features/chat/new_chat_page/presentation/providers/chat_repo_provider.dart';
 
 final chatDataProvider = AsyncNotifierProvider<ChatDataNotifier, List<Data>>(
       () => ChatDataNotifier(),

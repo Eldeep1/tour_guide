@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tour_guide/features/Chat/chat_headers/data/model/chat_headers_model.dart';
-import 'package:tour_guide/features/Chat/chat_headers/data/repo/chat_headers_repo.dart';
-import 'package:tour_guide/features/Chat/chat_headers/presentation/providers/chat_headers_repo_provider.dart';
+import 'package:tour_guide/features/chat/chat_headers/data/model/chat_headers_model.dart';
+import 'package:tour_guide/features/chat/chat_headers/data/repo/chat_headers_repo.dart';
+import 'package:tour_guide/features/chat/chat_headers/presentation/providers/chat_headers_repo_provider.dart';
 
 final sideBarProvider = AsyncNotifierProvider<SideBarNotifier,ChatHeaders>(() {
   return SideBarNotifier();

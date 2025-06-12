@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tour_guide/features/Authentication/login/presentation/view/login_page_view.dart';
-import 'package:tour_guide/features/Chat/new_chat_page/presentation/view/new_chat_page_view.dart';
+import 'package:tour_guide/features/chat/new_chat_page/presentation/view/new_chat_page_view.dart';
 import '../../../../core/utils/services/auth_service.dart';
 import 'widgets/splash_screen_body_builder.dart';
 

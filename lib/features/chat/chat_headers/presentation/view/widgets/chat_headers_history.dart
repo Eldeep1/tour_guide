@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:tour_guide/features/Chat/chat_headers/presentation/providers/side_bar_provider.dart';
-import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/page_variables_provider.dart';
-import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/chat_messages_provider.dart';
+import 'package:tour_guide/features/chat/chat_headers/presentation/providers/side_bar_provider.dart';
+import 'package:tour_guide/features/chat/new_chat_page/presentation/providers/page_variables_provider.dart';
+import 'package:tour_guide/features/chat/new_chat_page/presentation/providers/chat_messages_provider.dart';
 
 class ChatHeaderHistory extends ConsumerWidget {
   const ChatHeaderHistory({super.key});

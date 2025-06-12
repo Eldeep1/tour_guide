@@ -4,8 +4,8 @@ import 'package:popover/popover.dart';
 import 'package:tour_guide/core/themes/dark_theme.dart';
 import 'package:tour_guide/core/themes/light_theme.dart';
 import 'package:tour_guide/core/themes/theme_provider.dart';
-import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/page_variables_provider.dart';
-import 'package:tour_guide/features/Chat/new_chat_page/presentation/view/widgets/popover_body_builder.dart';
+import 'package:tour_guide/features/chat/new_chat_page/presentation/providers/page_variables_provider.dart';
+import 'package:tour_guide/features/chat/new_chat_page/presentation/view/widgets/popover_body_builder.dart';
 
 class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});

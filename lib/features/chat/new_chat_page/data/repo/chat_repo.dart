@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:tour_guide/core/errors/failure.dart';
-import 'package:tour_guide/features/Chat/new_chat_page/data/model/chat_history.dart';
-import 'package:tour_guide/features/Chat/new_chat_page/data/model/chat_request.dart';
-import 'package:tour_guide/features/Chat/new_chat_page/data/model/chat_response.dart';
+import 'package:tour_guide/features/chat/new_chat_page/data/model/chat_history.dart';
+import 'package:tour_guide/features/chat/new_chat_page/data/model/chat_request.dart';
+import 'package:tour_guide/features/chat/new_chat_page/data/model/chat_response.dart';
 
 
 abstract class ChatRepo {

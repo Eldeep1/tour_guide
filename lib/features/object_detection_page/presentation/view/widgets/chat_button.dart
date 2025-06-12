@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tour_guide/features/Chat/new_chat_page/data/model/chat_image.dart';
-import 'package:tour_guide/features/Chat/new_chat_page/presentation/providers/page_variables_provider.dart';
+import 'package:tour_guide/features/chat/new_chat_page/data/model/chat_image.dart';
+import 'package:tour_guide/features/chat/new_chat_page/presentation/providers/page_variables_provider.dart';
 import 'package:tour_guide/features/object_detection_page/presentation/providers/image_path_provider.dart';
 import 'package:tour_guide/features/object_detection_page/presentation/providers/model_provider.dart';
 

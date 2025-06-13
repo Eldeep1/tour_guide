@@ -105,7 +105,5 @@ class ChatButton extends ConsumerWidget {
     } else {
       return SizedBox();
     }
-    // TODO: implement build
-
   }
 }

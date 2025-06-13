@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tour_guide/core/themes/theme_provider.dart';
 
-import 'light_theme.dart';
+import '../light/light_theme.dart';
+
 const Color mainColorDark=Colors.amber;
 const Color widgetsInMainColorDark=Colors.white;
 // const Color iconColor=Colors.white;
@@ -14,13 +15,13 @@ const buttonColorDark=Color(0xff1e2f73);
 const Color textColor=Colors.white;
 
 const Color messageTextColor=Colors.white;
-Widget backgroundGradient ({Widget? childWidget})=>Consumer(
+Widget backgroundGradient ({Widget? childWidget,double? radius})=>Consumer(
   builder: (BuildContext context, WidgetRef ref, Widget? child) {
     final themeMode=ref.watch(themeProvider.notifier).themeData;
     if( themeMode==lightTheme){
       return Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(60),topRight: Radius.circular(60)),
+          borderRadius: radius==null?BorderRadius.only(topLeft: Radius.circular(60),topRight: Radius.circular(60)):BorderRadius.circular(radius),
           color: Color(0xFFECF1FF),
 
         ),

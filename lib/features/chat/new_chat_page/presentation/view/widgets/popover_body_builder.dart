@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tour_guide/core/themes/dark_theme.dart';
+import 'package:tour_guide/core/themes/dark/dark_theme.dart';
 import 'package:tour_guide/core/themes/theme_provider.dart';
 import 'package:tour_guide/core/utils/services/auth_service.dart';
 import 'package:tour_guide/core/utils/services/providers/providers.dart';

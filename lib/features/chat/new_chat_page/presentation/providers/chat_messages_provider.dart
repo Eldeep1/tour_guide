@@ -30,8 +30,6 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
   }
   Future<void> fetchOldMessages() async {
 
-    //1. delete old messages
-    // state = const AsyncData([]);
     state = const AsyncLoading();
     int? chatID=ref.read(messageRequestProvider.notifier).state.chatID;
     final result = await chatRepo!.gelAllChats(chatID);
@@ -52,8 +50,6 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
     final messageRequest=ref.read(messageRequestProvider);
     messageRequest.prompt=prompt;
 
-    print(messageRequest.chatID);
-    print(messageRequest.prompt);
     final requestCopy = messageRequest.copyWith(
       prompt: prompt,
       chatID: messageRequest.chatID,
@@ -74,12 +70,7 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
      if(prompt.trim().isEmpty&&messageRequest.image==null){
        return;
      }
-     if (existing.isNotEmpty) {
-       // scrollToTheEnd();
-     }
 
-
-     print("we are actually sending a message");
      sendingNotifier.state = true;
 
      messageRequest.image=null;
@@ -94,11 +85,9 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
     result = await chatRepo!.sendMessage(chatRequest: requestCopy);
 
      sendingNotifier.state = false;
-     // scrollToTheEnd();
 
      result.fold(
            (failure) {
-         // Replace the last item (the loading one) with an error message
          final errorMessage = Data(prompt: prompt, response: "Error: ${failure.message}",byteImage: requestCopy.image?.bytes);
          final updated = [...existing, errorMessage];
          state = AsyncData(updated);
@@ -108,14 +97,12 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
 
          if (chatWasEmpty) {
            messageRequest.chatID = response.chatId;
-           newHeader(response); // Now this is safe
+           newHeader(response);
            appBarHeaderNotifier.state = response.chatTitle ?? "AI TOUR GUIDE";
          }
-         // Replace the last item (loading) with actual response
          final successMessage = Data(prompt: prompt, response: response.response,byteImage: requestCopy.image?.bytes);
          final updated = [...existing, successMessage];
          state = AsyncData(updated);
-         // scrollToTheEnd();
        },
      );
    }
@@ -127,13 +114,9 @@ class ChatDataNotifier extends AsyncNotifier<List<Data>> {
 
 
   void newChat() {
-    // Clear the chat messages
+    // clear the chat messages
     state = const AsyncData([]);
-    // Reset chat ID to null (new session)
     ref.read(messageRequestProvider.notifier).state.chatID = null;
-    // Optionally reset app bar title
     ref.read(appBarHeaderProvider.notifier).state = "AI TOUR GUIDE";
-    // Reset the input field as well if needed
   }
-
 }

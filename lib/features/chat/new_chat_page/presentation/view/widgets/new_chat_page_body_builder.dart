@@ -257,9 +257,6 @@ class _NewChatPageBodyBuilderState extends ConsumerState<NewChatPageBodyBuilder>
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Location error: $e')),
-        );
         setState(() {
           _locationPermissionChecked = true;
         });
@@ -273,11 +270,6 @@ class _NewChatPageBodyBuilderState extends ConsumerState<NewChatPageBodyBuilder>
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
 
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Location services are still disabled.')),
-          );
-        }
         return;
       }
 
@@ -286,21 +278,11 @@ class _NewChatPageBodyBuilderState extends ConsumerState<NewChatPageBodyBuilder>
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Location permissions are denied')),
-            );
-          }
           return;
         }
       }
 
       if (permission == LocationPermission.deniedForever) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Location permissions are permanently denied')),
-          );
-        }
         return;
       }
 
@@ -315,9 +297,7 @@ class _NewChatPageBodyBuilderState extends ConsumerState<NewChatPageBodyBuilder>
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Location error: $e')),
-        );
+
       }
     }
   }

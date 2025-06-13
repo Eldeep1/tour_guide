@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:popover/popover.dart';
-import 'package:tour_guide/core/themes/dark_theme.dart';
-import 'package:tour_guide/core/themes/light_theme.dart';
+import 'package:tour_guide/core/themes/dark/dark_theme.dart';
+import 'package:tour_guide/core/themes/light/light_theme.dart';
 import 'package:tour_guide/core/themes/theme_provider.dart';
 import 'package:tour_guide/features/chat/new_chat_page/presentation/providers/page_variables_provider.dart';
 import 'package:tour_guide/features/chat/new_chat_page/presentation/view/widgets/popover_body_builder.dart';
@@ -16,6 +16,7 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
     final theme = ref.watch(themeProvider.notifier).themeData;
     bool isDark=theme==darkTheme;
     return AppBar(
+      scrolledUnderElevation: 0,
       iconTheme: Theme.of(context).iconTheme,
       leading: Builder(builder: (context) {
         return IconButton(

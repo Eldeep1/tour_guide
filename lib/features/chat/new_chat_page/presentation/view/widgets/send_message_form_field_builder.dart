@@ -121,12 +121,27 @@ class _SendMessageFormFieldBuilderState extends ConsumerState<SendMessageFormFie
                       padding: EdgeInsetsDirectional.zero,
                       visualDensity: VisualDensity.compact,
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return ObjectDetectionPage();
-                          },
-                        ));
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation, secondaryAnimation) => ObjectDetectionPage(),
+                            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                              var begin = Offset(1.0, 0.0); // Slide in from the right
+                              var end = Offset.zero;
+                              var curve = Curves.easeInOut;
+
+                              var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                              var offsetAnimation = animation.drive(tween);
+
+                              return SlideTransition(
+                                position: offsetAnimation,
+                                child: child,
+                              );
+                            },
+                          ),
+                        );
                       },
+
                       icon: CircleAvatar(
                         backgroundColor: Theme.of(context).primaryColor,
                         radius: 30,

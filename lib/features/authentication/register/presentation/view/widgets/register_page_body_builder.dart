@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:tour_guide/core/themes/dark_theme.dart';
+import 'package:tour_guide/core/themes/dark/dark_theme.dart';
 import 'package:tour_guide/core/utils/services/validators/validators.dart';
 import 'package:tour_guide/features/authentication/login/presentation/view/login_page_view.dart';
 import 'package:tour_guide/features/authentication/register/data/models/register_request.dart';

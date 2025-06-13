@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tour_guide/core/themes/theme_provider.dart';
-import 'package:tour_guide/features/chat/new_chat_page/presentation/view/new_chat_page_view.dart';
-import 'package:tour_guide/features/object_detection_page/presentation/view/object_detection_page.dart';
 import 'package:tour_guide/features/splash_screen/presentation/view/splash_screen.dart';
 
 void main() async {
@@ -27,10 +25,10 @@ class MyApp extends StatelessWidget {
     return Consumer(
       builder: (BuildContext context, WidgetRef ref, Widget? child) {
         final themeNotifier =
-            ref.watch(themeProvider); // 👈 watch the whole notifier
+            ref.watch(themeProvider);
         return MaterialApp(
           title: 'AI Tour Guide',
-          theme: themeNotifier.themeData, // 👈 this will now update properly
+          theme: themeNotifier.themeData,
           debugShowCheckedModeBanner: false,
           home: SplashScreen(),
         );

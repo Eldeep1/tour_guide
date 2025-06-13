@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
-import 'package:tour_guide/core/themes/dark_theme.dart';
+import 'package:tour_guide/core/themes/dark/dark_theme.dart';
 import 'package:tour_guide/core/themes/theme_provider.dart';
 
 

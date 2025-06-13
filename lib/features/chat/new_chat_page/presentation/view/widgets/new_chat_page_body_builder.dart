@@ -121,7 +121,7 @@ class _NewChatPageBodyBuilderState extends ConsumerState<NewChatPageBodyBuilder>
     bool serviceEnabled;
     LocationPermission permission;
 
-    // ✅ First check permission
+
     permission = await Geolocator.checkPermission();
 
     if (permission == LocationPermission.always || permission == LocationPermission.whileInUse) {

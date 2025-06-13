@@ -16,9 +16,6 @@ class ChatButton extends ConsumerWidget {
     final detectionState = ref.watch(detectionProvider.notifier);
 
     if (detectionState.detectionOutput.index == 0) {
-      print(detectionState.detectionOutput);
-      print("hmmmm");
-      print(state!.detections[0]['cls']);
       return SizedBox(
         height: 140,
         child: SingleChildScrollView(
@@ -27,7 +24,7 @@ class ChatButton extends ConsumerWidget {
               Wrap(
                 spacing: 12,
                 runSpacing: 12,
-                children: List.generate(state.detections.length, (index) {
+                children: List.generate(state!.detections.length, (index) {
                   final item = state.detections[index];
                   final label = Platform.isAndroid ? item["class"] : item["cls"];
 

@@ -40,46 +40,37 @@ class AuthServiceNotifier extends AsyncNotifier<AuthStatus>{
     final exists = tokenExist.getOrElse(() => false);
 
     if (!exists) {
-      print("from auth service, the token not exists");
 
       return AuthStatus.notAuthenticated;
     }
     final tokenVerified = await verifyTheToken();
     if (tokenVerified.isRight()) {
-      print("from auth service, the token verified");
       return AuthStatus.authenticated;
     }
-    print("from auth service, the token is not verified");
 
     final failure = tokenVerified.swap().getOrElse(() => NewFailure("unknown"));
     if (failure is ServerFailure &&( failure.type != ServerErrorType.authentication || failure.type !=ServerErrorType.client )) {
 
-      print("from auth service, the token is not verified due to network errors");
       return AuthStatus.networkError;
     }
 
     final tokenRefreshed = await refreshTheToken();
     if (tokenRefreshed.isRight()) {
-      print("from auth service, the token is refreshed");
 
       return AuthStatus.authenticated;
     }
-    print("from auth service, the token is not refreshed");
 
     final refreshFailure = tokenRefreshed.swap().getOrElse(() => NewFailure("unknown"));
     if (refreshFailure is ServerFailure &&( refreshFailure.type != ServerErrorType.authentication || refreshFailure.type !=ServerErrorType.client )) {
-      print("from auth service, the token is not due to network error");
       return AuthStatus.networkError;
     }
     // clear the tokens if it exists and expired
     clearTheTokens();
-    print("did we really hit it!");
     return AuthStatus.notAuthenticated;
   }
 
 
   Future<Either<Failure,bool>> isTokensStored()async{
-    print("we caught it 1");
 
     //should save the retrieved tokens.
     final Either<Failure,LoginResponse>tokens =await tokenOperation.retrieveTokens();
@@ -89,7 +80,6 @@ class AuthServiceNotifier extends AsyncNotifier<AuthStatus>{
         ref.read(loginResponseProvider.notifier).state=loginResponse;
 
         if(loginResponse.accessToken.isEmpty){
-          print("we caught it2");
 
           return right(false);
         }
@@ -102,12 +92,9 @@ class AuthServiceNotifier extends AsyncNotifier<AuthStatus>{
     final Either<Failure,void>tokens =await tokenOperation.verifyToken(loginResponse: ref.read(loginResponseProvider));
     return tokens.fold(
             (failure) {
-              print("verification errrror");
-              print(failure.message);
               return left(failure);
             },
             (loginResponse){
-              print("token verified yaaay");
               return right(true);
         }
     );
@@ -128,15 +115,12 @@ class AuthServiceNotifier extends AsyncNotifier<AuthStatus>{
     await tokenOperation.deleteTokens();
   }
   Future<void> logOut()async{
-    print("we are on the logut");
     state = AsyncData(AuthStatus.notAuthenticated);
     // state = AsyncData(AuthStatus.notAuthenticated);
     state = AsyncData(AuthStatus.notAuthenticated);
     try{
       await tokenOperation.logout(refreshToken: ref.read(loginResponseProvider).refreshToken);
-      print("but the login response tokens are: ");
-      print("refresh : ${ref.watch(loginResponseProvider).refreshToken}");
-      print("access : ${ref.watch(loginResponseProvider).accessToken}");
+
       ref.invalidate(loginResponseProvider);
       ref.invalidate(sideBarProvider);
        ref.invalidate(chatDataProvider);
@@ -149,9 +133,6 @@ class AuthServiceNotifier extends AsyncNotifier<AuthStatus>{
     }
     catch(e){
       state = AsyncData(AuthStatus.notAuthenticated);
-
-      print(e);
-    print("we are having an error");
     }
   }
 }

@@ -31,10 +31,7 @@ class _SendMessageFormFieldBuilderState extends ConsumerState<SendMessageFormFie
     final currentRequest = ref.watch(messageRequestProvider);
 
     final messageRequest=ref.read(messageRequestProvider.notifier).state;
-    print(messageRequest.image);
-    print(messageRequest.label);
-    print(messageRequest.chatID);
-    print(messageRequest.prompt);
+
     if(previousChatID!=currentRequest.chatID){
       previousChatID=currentRequest.chatID;
       sendMessageTextEditingController.clear();
@@ -146,7 +143,7 @@ class _SendMessageFormFieldBuilderState extends ConsumerState<SendMessageFormFie
                         backgroundColor: Theme.of(context).primaryColor,
                         radius: 30,
                         child: Icon(
-                          Icons.smart_toy_outlined,
+                          Icons.camera_alt_outlined,
                           color: Theme.of(context).iconTheme.color,
                         ),
                       ),

@@ -4,7 +4,7 @@ import 'chat_image.dart';
 class ChatRequest{
   String? prompt;
   int? chatID;
-  String? label;
+  List<String>? label;
   ChatImage? image;
   double? longitude;
   double? latitude;
@@ -24,7 +24,7 @@ class ChatRequest{
   ChatRequest copyWith({
     String? prompt,
     int? chatID,
-    String? label,
+    List<String>? label,
     ChatImage? image,
     double? longitude,
     double? latitude,

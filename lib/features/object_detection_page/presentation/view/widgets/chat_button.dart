@@ -47,9 +47,10 @@ class ChatButton extends ConsumerWidget {
                         final imagePath = ref.read(imagePathProvider);
                         final chatImage = await ChatImage.fromFile(imagePath!);
 
+                        List<String> labelList=["$label"];
                         final current = ref.read(messageRequestProvider);
                         ref.read(messageRequestProvider.notifier).state = current.copyWith(
-                          label: label,
+                          label: labelList,
                           image: chatImage,
                         );
                         Navigator.pop(context);

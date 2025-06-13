@@ -23,13 +23,16 @@ class _NewChatPageBodyBuilderState extends ConsumerState<NewChatPageBodyBuilder>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    // Schedule the location permission check after the first frame
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // Add short delay
+      await Future.delayed(const Duration(milliseconds: 300));
       if (!_locationPermissionChecked) {
         _checkLocationPermission();
       }
     });
   }
+
 
   @override
   void dispose() {
@@ -118,66 +121,60 @@ class _NewChatPageBodyBuilderState extends ConsumerState<NewChatPageBodyBuilder>
     bool serviceEnabled;
     LocationPermission permission;
 
-    // Show dialog and wait for user response
-    bool? userAccepted = await showDialog<bool>(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) {
-        return AlertDialog(
-          // backgroundColor: Colors.amber,
-          title: const Text("Location Service"),
-          content: const Text(
-            "The application needs your location to answer your questions based on your current location.",
-            style: TextStyle(
-          color: Colors.black,
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(false); // User denied
-              },
-              child: const Text("Cancel",style: TextStyle(color: Colors.black),),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(true); // User accepted
-              },
-              child: const Text("Grant Location",style: TextStyle(color: Colors.black),),
-            ),
-          ],
-        );
-      },
-    );
+    // ✅ First check permission
+    permission = await Geolocator.checkPermission();
 
-    if (userAccepted != true) {
-      return Future.error('User declined location access');
+    if (permission == LocationPermission.always || permission == LocationPermission.whileInUse) {
+      // Permission already granted, skip dialog and continue
+    } else {
+      // Show dialog and wait for user response
+      bool? userAccepted = await showDialog<bool>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Location Service"),
+            content: const Text(
+              "The application needs your location to answer your questions based on your current location.",
+              style: TextStyle(color: Colors.black),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: const Text("Cancel", style: TextStyle(color: Colors.black)),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: const Text("Grant Location", style: TextStyle(color: Colors.black)),
+              ),
+            ],
+          );
+        },
+      );
+
+      if (userAccepted != true) {
+        return Future.error('User declined location access');
+      }
     }
 
-    // Check location service
+    // Continue with service enabled check
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      // Show dialog to inform user they need to enable location
+      // Show dialog to ask to enable location service
       bool? shouldOpenSettings = await showDialog<bool>(
         context: context,
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
             title: const Text("Enable Location Services"),
-            content: const Text(
-              "Location services are disabled. Please enable them in settings to continue.",
-            ),
+            content: const Text("Location services are disabled. Please enable them in settings to continue."),
             actions: [
               TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(false);
-                },
+                onPressed: () => Navigator.of(context).pop(false),
                 child: const Text("Cancel"),
               ),
               TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                },
+                onPressed: () => Navigator.of(context).pop(true),
                 child: const Text("Open Settings"),
               ),
             ],
@@ -188,14 +185,13 @@ class _NewChatPageBodyBuilderState extends ConsumerState<NewChatPageBodyBuilder>
       if (shouldOpenSettings == true) {
         _waitingForLocationService = true;
         await Geolocator.openLocationSettings();
-        // The app will handle the rest when it comes back to foreground
         return Future.error('Waiting for location service to be enabled');
       } else {
         return Future.error('Location services are disabled.');
       }
     }
 
-    // Check permissions
+    // Re-check permissions after possible dialog
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
@@ -205,27 +201,20 @@ class _NewChatPageBodyBuilderState extends ConsumerState<NewChatPageBodyBuilder>
     }
 
     if (permission == LocationPermission.deniedForever) {
-      // Show dialog to inform user they need to grant permission in settings
       bool? shouldOpenAppSettings = await showDialog<bool>(
         context: context,
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
             title: const Text("Location Permission Required"),
-            content: const Text(
-              "Location permissions are permanently denied. Please enable them in app settings.",
-            ),
+            content: const Text("Location permissions are permanently denied. Please enable them in app settings."),
             actions: [
               TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(false);
-                },
+                onPressed: () => Navigator.of(context).pop(false),
                 child: const Text("Cancel"),
               ),
               TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                },
+                onPressed: () => Navigator.of(context).pop(true),
                 child: const Text("Open App Settings"),
               ),
             ],

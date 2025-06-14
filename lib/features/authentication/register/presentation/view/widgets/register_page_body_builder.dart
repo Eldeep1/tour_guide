@@ -47,7 +47,7 @@ class _SignUpPageBodyBuilderState extends ConsumerState<SignUpPageBodyBuilder> {
             children: [
               _buildHeader(context),
               _buildForm(context, ref, nameController, emailController, passwordController, passwordVisibility),
-              _buildAgreeTermsRow(),
+              // _buildAgreeTermsRow(),
               _buildSignUpButton(context, ref, nameController, emailController, passwordController),
             ],
           ),
@@ -96,14 +96,14 @@ class _SignUpPageBodyBuilderState extends ConsumerState<SignUpPageBodyBuilder> {
     );
   }
 
-  Widget _buildAgreeTermsRow() {
-    return Row(
-      children: [
-        Checkbox(value: true, onChanged: (value) {}),
-        textLinkWidget("I agree to the ", "Terms and Conditions", () {}, context),
-      ],
-    );
-  }
+  // Widget _buildAgreeTermsRow() {
+  //   return Row(
+  //     children: [
+  //       Checkbox(value: true, onChanged: (value) {}),
+  //       textLinkWidget("I agree to the ", "Terms and Conditions", () {}, context),
+  //     ],
+  //   );
+  // }
 
   Widget _buildSignUpButton(BuildContext context, WidgetRef ref, TextEditingController nameController,
       TextEditingController emailController, TextEditingController passwordController) {
